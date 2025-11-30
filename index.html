@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仕事のストレス診断ツール - Eliminate Work Stress</title>
+    <meta name="description" content="働き方を科学する。脳の状態を知る。4つの診断ツールであなたに最適な働き方を見つけましょう。">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 50px;
+            border: 3px solid #000000;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 18px;
+            font-weight: normal;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .intro {
+            background-color: #f9f9f9;
+            border-left: 4px solid #ffff00;
+            padding: 20px 25px;
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .intro strong {
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .test-card {
+            background-color: #fafafa;
+            border: 2px solid #e0e0e0;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .test-card:hover {
+            border-color: #ffff00;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .test-number {
+            display: inline-block;
+            background-color: #ffff00;
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #000000;
+        }
+
+        .test-card h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .test-card p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .test-button {
+            display: inline-block;
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .test-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        .features {
+            background-color: #fffef0;
+            border: 2px solid #ffff00;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .features h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #000000;
+            text-align: center;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+        }
+
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ffff00;
+            background-color: #000000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+                padding: 30px 15px;
+            }
+
+            h1 small {
+                font-size: 14px;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .test-card {
+                padding: 25px;
+            }
+
+            .intro {
+                padding: 15px 20px;
+                font-size: 14px;
+            }
+
+            .features {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            仕事のストレス診断ツール
+            <small>Eliminate Work Stress</small>
+        </h1>
+
+        <div class="intro">
+            <p>
+                <strong>働き方を科学する。脳の状態を知る。</strong><br>
+                あなたに最適な働き方を見つけるための4つの診断ツールです。<br>
+                各診断は5〜10分程で完了します。結果はPDFで保存できます。
+            </p>
+        </div>
+
+        <div class="features">
+            <h3>📊 診断ツールの特徴</h3>
+            <ul>
+                <li>科学的根拠に基づいた診断（ビッグファイブ理論など）</li>
+                <li>所要時間：各5〜10分で気軽にチェック</li>
+                <li>結果のPDF保存機能付き</li>
+                <li>スマートフォンでも快適に利用可能</li>
+                <li>完全無料・登録不要</li>
+            </ul>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card" onclick="location.href='brain-state.html'">
+                <div class="test-number">PART 1</div>
+                <h2>脳の状態診断</h2>
+                <p>脳内物質の状態をチェック。やる気や集中力が十分に保たれているか診断します。</p>
+                <p><strong>質問数：10問</strong></p>
+                <a href="brain-state.html" class="test-button">診断を始める →</a>
+            </div>
+
+            <div class="test-card" onclick="location.href='job-fit.html'">
+                <div class="test-number">PART 2</div>
+                <h2>適職度診断</h2>
+                <p>今の仕事があなたの特性に合っているかを診断。適職度を測定します。</p>
+                <p><strong>質問数：10問</strong></p>
+                <a href="job-fit.html" class="test-button">診断を始める →</a>
+            </div>
+
+            <div class="test-card" onclick="location.href='stress-check.html'">
+                <div class="test-number">PART 3</div>
+                <h2>ストレス診断</h2>
+                <p>扁桃体の警報レベルをチェック。仕事のストレスと脳疲労度を測定します。</p>
+                <p><strong>質問数：15問</strong></p>
+                <a href="stress-check.html" class="test-button">診断を始める →</a>
+            </div>
+
+            <div class="test-card" onclick="location.href='bigfive.html'">
+                <div class="test-number">PART 4</div>
+                <h2>ビッグファイブ診断</h2>
+                <p>あなたの思考パターンを測定。最適な働き方がわかる性格診断です。</p>
+                <p><strong>質問数：10問</strong></p>
+                <a href="bigfive.html" class="test-button">診断を始める →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
+            <p>西剛志</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビッグファイブ診断</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .instruction {
+            background-color: #f9f9f9;
+            border-left: 4px solid #ffff00;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .slider-container {
+            padding: 10px 0;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .slider-labels span {
+            flex: 1;
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        .slider-labels span:first-child {
+            text-align: left;
+        }
+
+        .slider-labels span:last-child {
+            text-align: right;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d3d3d3;
+            outline: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #ffff00;
+            border: 2px solid #000000;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #ffff00;
+            border: 2px solid #000000;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .result-box {
+            background-color: #fffef0;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h3 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            font-size: 18px;
+        }
+
+        .result-item {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffffff;
+            border-left: 4px solid #ffff00;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .submit-button, .pdf-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover, .pdf-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        .pdf-button {
+            display: none;
+        }
+
+        .pdf-button.show {
+            display: inline-block;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .result-box, .result-box * {
+                visibility: visible;
+            }
+            .result-box {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .pdf-button, .submit-button, .question, .instruction, h1 {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .question {
+                padding: 20px 15px;
+            }
+
+            .slider-labels {
+                font-size: 11px;
+            }
+
+            .slider-labels span {
+                padding: 0 2px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .submit-button, .pdf-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ビッグファイブ診断<br>あなたの思考パターン測定</h1>
+
+        <div class="instruction">
+            以下の質問について、当てはまる回答を選んでください。
+        </div>
+
+        <form id="diagnosisForm">
+            <div class="question">
+                <div class="question-text">1. 私は、人への思いやりがあり、親切な行動をとり、他人を差別しない。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q1" min="0" max="4" value="2" step="1" class="slider" data-question="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. 私は、いつも起きてもいないことを考えて、不安や気分の浮き沈みが多い人間だ。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q2" min="0" max="4" value="2" step="1" class="slider" data-question="2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. 私は、知的な活動が得意で、創造性が高くて好奇心があり、新しいことが好きだ。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q3" min="0" max="4" value="2" step="1" class="slider" data-question="3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. 私は、しっかり物事をこなし、テキパキ行動し、適切に物事を行おうとする。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q4" min="0" max="4" value="2" step="1" class="slider" data-question="4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. 私は、話すことが好きで、成功に興味があり、人と会うのを楽しめる人間だ。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q5" min="0" max="4" value="2" step="1" class="slider" data-question="5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. 私は、物静かで、人が多いパーティなどは苦手だ。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q6" min="0" max="4" value="2" step="1" class="slider" data-question="6">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. 私は、多くの場合リラックスしていて、落ち着きがあり、めったに問題について悩まない。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q7" min="0" max="4" value="2" step="1" class="slider" data-question="7">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. 私は、多くのことを現実的に考え、伝統的な考え方を好み、めったに空想で時間を浪費しない。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q8" min="0" max="4" value="2" step="1" class="slider" data-question="8">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">9. 私は、思ったことをすぐ口にし、冷淡なときがあり、相手に同情を感じることはめったにない。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q9" min="0" max="4" value="2" step="1" class="slider" data-question="9">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. 私は、深く考えずに行動し、あまりきちんと行動せず、ギリギリまで物事に手をつけない。</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>かなり当てはまる</span>
+                        <span>当てはまる</span>
+                        <span>どちらでもない</span>
+                        <span>当てはまらない</span>
+                        <span>かなり当てはまらない</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q10" min="0" max="4" value="2" step="1" class="slider" data-question="10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <h3>診断結果</h3>
+                <div id="resultContent"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-button">診断結果を表示</button>
+                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // 8つのタイプ定義
+        const personalityTypes = {
+            '創造型-楽観型-外向型': {
+                name: '発想で導くビジョナリー',
+                description: '火をつけて走る人・元気を運ぶ人'
+            },
+            '実行型-楽観型-外向型': {
+                name: '信頼でまとめるコンダクター',
+                description: '安心を届ける人・チームを動かす実行屋'
+            },
+            '創造型-楽観型-内向型': {
+                name: '新しい種をまくプランナー',
+                description: '発想を届ける人・静かに広げる着想力'
+            },
+            '実行型-楽観型-内向型': {
+                name: '着実な道を築くアーキテクト',
+                description: '現在と未来を守る人・丁寧に、確実に'
+            },
+            '創造型-問題志向型-外向型': {
+                name: '見えない課題を照らすファシリテーター',
+                description: '挑戦を導く人・危機をチャンスに変える'
+            },
+            '実行型-問題志向型-外向型': {
+                name: 'チームを守るメディエーター',
+                description: '陰で支える人・安定を支える実行力'
+            },
+            '創造型-問題志向型-内向型': {
+                name: '解の地図を描くストラテジスト',
+                description: '分析で導く人・静かな戦略家'
+            },
+            '実行型-問題志向型-内向型': {
+                name: '精度を磨くガーディアン',
+                description: '緻密さで支える人・完成度の職人'
+            }
+        };
+
+        // フォーム送信処理
+        document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // スコア計算（逆転項目を考慮）
+            const agreeableness = parseInt(formData.get('q1')) + (4 - parseInt(formData.get('q9')));
+            const neuroticism = parseInt(formData.get('q2')) + (4 - parseInt(formData.get('q7')));
+            const openness = parseInt(formData.get('q3')) + (4 - parseInt(formData.get('q8')));
+            const conscientiousness = parseInt(formData.get('q4')) + (4 - parseInt(formData.get('q10')));
+            const extraversion = parseInt(formData.get('q5')) + (4 - parseInt(formData.get('q6')));
+            
+            // タイプ判定
+            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
+            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
+            const opennessType = openness >= 5 ? '創造型' : '実行型';
+            
+            const typeKey = `${opennessType}-${neuroticismType}-${extraversionType}`;
+            const personalityType = personalityTypes[typeKey];
+            
+            // データ準備
+            const data = {
+                test_type: 'ビッグファイブ診断',
+                date: new Date().toLocaleDateString('ja-JP'),
+                time: new Date().toLocaleTimeString('ja-JP'),
+                timestamp: new Date().toLocaleString('ja-JP')
+            };
+            
+            // 各質問の回答を取得
+            for (let i = 1; i <= 10; i++) {
+                data[`q${i}`] = formData.get(`q${i}`);
+            }
+            
+            data.extraversion = extraversion;
+            data.neuroticism = neuroticism;
+            data.openness = openness;
+            data.agreeableness = agreeableness;
+            data.conscientiousness = conscientiousness;
+            data.personality_type = `${personalityType.name}（${personalityType.description}）`;
+            
+            // 結果を表示
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-item">
+                    <strong>各特性のスコア</strong><br>
+                    外向性：${extraversion}点（${extraversionType}）<br>
+                    神経症傾向：${neuroticism}点（${neuroticismType}）<br>
+                    開放性：${openness}点（${opennessType}）<br>
+                    協調性：${agreeableness}点<br>
+                    誠実性：${conscientiousness}点
+                </div>
+                <div class="result-item">
+                    <strong>あなたのパーソナリティタイプ</strong><br>
+                    <span style="font-size: 18px; color: #000000;">${personalityType.name}</span><br>
+                    ${personalityType.description}
+                </div>
+            `;
+            
+            document.getElementById('resultBox').classList.add('show');
+            document.getElementById('pdfButton').classList.add('show');
+            
+            // スプレッドシートに送信
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('データ送信成功:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            
+            // 結果まで自動スクロール
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

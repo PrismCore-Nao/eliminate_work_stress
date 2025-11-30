@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>適職度診断</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .instruction {
+            background-color: #f9f9f9;
+            border-left: 4px solid #ffff00;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .question label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .question input[type="checkbox"] {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .result-box {
+            background-color: #fffef0;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h3 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            font-size: 18px;
+        }
+
+        .result-item {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffffff;
+            border-left: 4px solid #ffff00;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .submit-button, .pdf-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover, .pdf-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        .pdf-button {
+            display: none;
+        }
+
+        .pdf-button.show {
+            display: inline-block;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .result-box, .result-box * {
+                visibility: visible;
+            }
+            .result-box {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .pdf-button, .submit-button, .question, .instruction, h1 {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .submit-button, .pdf-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PART 2　適職度診断</h1>
+
+        <div class="instruction">
+            ※こちらも最近1か月を振り返り、当てはまる項目にチェックしてください。
+        </div>
+
+        <form id="diagnosisForm">
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q1" value="1">
+                    得意分野や強みが仕事で活かせていない
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q2" value="1">
+                    苦手な作業に多くの時間を取られている
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q3" value="1">
+                    「この仕事は自分に向いていない」と感じることがある
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q4" value="1">
+                    周囲と比べて同じ業務でも時間がかかる
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q5" value="1">
+                    会社の評価軸と自分の価値観がズレている
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q6" value="1">
+                    心からやりたいと思える業務が少ない
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q7" value="1">
+                    成長実感が持てない
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q8" value="1">
+                    自分らしさを出す余地がない
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q9" value="1">
+                    将来この仕事を続けたいと思えない
+                </label>
+            </div>
+
+            <div class="question">
+                <label>
+                    <input type="checkbox" name="q10" value="1">
+                    別の職種や職場を想像してしまう
+                </label>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <h3>診断結果</h3>
+                <div id="resultContent"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-button">診断結果を表示</button>
+                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // チェック数を計算（内部処理のみ）
+        function calculateTotal() {
+            const form = document.getElementById('diagnosisForm');
+            const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+            return checkboxes.length;
+        }
+
+        // フォーム送信処理
+        document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const totalCount = calculateTotal();
+            const formData = new FormData(this);
+            const data = {
+                test_type: '適職度診断',
+                date: new Date().toLocaleDateString('ja-JP'),
+                time: new Date().toLocaleTimeString('ja-JP'),
+                timestamp: new Date().toLocaleString('ja-JP')
+            };
+            
+            // 各質問の回答を取得
+            for (let i = 1; i <= 10; i++) {
+                data[`q${i}`] = formData.get(`q${i}`) ? '1' : '0';
+            }
+            data.total_count = totalCount;
+            
+            // 結果判定
+            let resultText = '';
+            let resultLevel = '';
+            
+            if (totalCount >= 0 && totalCount <= 5) {
+                resultLevel = '適職度【高】';
+                resultText = 'あなたの特性が活かされやすい仕事です。この強みをさらに伸ばしましょう。';
+            } else {
+                resultLevel = '適職度【低】';
+                resultText = '脳の特性と仕事内容が合っていない可能性大。業務内容の調整や環境変更を検討しましょう。';
+            }
+            
+            data.result_level = resultLevel;
+            data.result_text = resultText;
+            
+            // 結果を表示
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-item">
+                    <strong>チェック数：${totalCount}個</strong>
+                </div>
+                <div class="result-item">
+                    <strong>判定：${resultLevel}</strong><br>
+                    ${resultText}
+                </div>
+            `;
+            
+            document.getElementById('resultBox').classList.add('show');
+            document.getElementById('pdfButton').classList.add('show');
+            
+            // スプレッドシートに送信
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('データ送信成功:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            
+            // 結果まで自動スクロール
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仕事のストレスと脳疲労度診断</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .instruction {
+            background-color: #f9f9f9;
+            border-left: 4px solid #ffff00;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .slider-container {
+            padding: 10px 0;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .slider-labels span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .slider-labels span:first-child {
+            text-align: left;
+        }
+
+        .slider-labels span:last-child {
+            text-align: right;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d3d3d3;
+            outline: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #ffff00;
+            border: 2px solid #000000;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #ffff00;
+            border: 2px solid #000000;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .result-box {
+            background-color: #fffef0;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h3 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 10px;
+            margin: -20px -20px 15px -20px;
+            font-size: 18px;
+        }
+
+        .result-item {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffffff;
+            border-left: 4px solid #ffff00;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .submit-button, .pdf-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover, .pdf-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        .pdf-button {
+            display: none;
+        }
+
+        .pdf-button.show {
+            display: inline-block;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .result-box, .result-box * {
+                visibility: visible;
+            }
+            .result-box {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .pdf-button, .submit-button, .question, .instruction, h1 {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .question {
+                padding: 20px 15px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .submit-button, .pdf-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>仕事のストレスと脳疲労度を診断！<br>あなたの扁桃体の警報レベルをチェック</h1>
+
+        <div class="instruction">
+            下記の項目に当てはまる回答を選んでください。
+        </div>
+
+        <form id="diagnosisForm">
+            <div class="question">
+                <div class="question-text">①仕事をしていても週末のことを考えてしまう</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q1" min="0" max="2" value="1" step="1" class="slider" data-question="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">②目覚ましをかけてもすぐに起きれないことが多い</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q2" min="0" max="2" value="1" step="1" class="slider" data-question="2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">③小さなことでもイライラしやすい</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q3" min="0" max="2" value="1" step="1" class="slider" data-question="3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">④メールを見てもすぐに返せないことがある</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q4" min="0" max="2" value="1" step="1" class="slider" data-question="4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑤気づいたら寝落ちしているときがある</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q5" min="0" max="2" value="1" step="1" class="slider" data-question="5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑥1日を長く感じてしまう</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q6" min="0" max="2" value="1" step="1" class="slider" data-question="6">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑦人が自分のことをどう思っているか気になる</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q7" min="0" max="2" value="1" step="1" class="slider" data-question="7">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑧PCのファイルや書類がどこにあるかわからなくなることがある</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q8" min="0" max="2" value="1" step="1" class="slider" data-question="8">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑨個人的に趣味と言えるものがない</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q9" min="0" max="2" value="1" step="1" class="slider" data-question="9">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑩ほぼ毎日会社と自宅の往復になりがちだ</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q10" min="0" max="2" value="1" step="1" class="slider" data-question="10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑪食欲がない、または過食傾向がある（お酒も含む）</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q11" min="0" max="2" value="1" step="1" class="slider" data-question="11">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑫急に泣いたり怒ったりすることがある</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q12" min="0" max="2" value="1" step="1" class="slider" data-question="12">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑬仕事をしていても他のことを考えてしまう</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q13" min="0" max="2" value="1" step="1" class="slider" data-question="13">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑭簡単な作業でもミスしたり、疲れてやる気が出ない</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q14" min="0" max="2" value="1" step="1" class="slider" data-question="14">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">⑮会社に行こうと思うと胃痛や動悸がする</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>その通りだ</span>
+                        <span>どちらでもない</span>
+                        <span>全く違う</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" name="q15" min="0" max="2" value="1" step="1" class="slider" data-question="15">
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <h3>診断結果</h3>
+                <div id="resultContent"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-button">診断結果を表示</button>
+                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // 合計点数を計算（内部処理のみ）
+        function calculateTotal() {
+            const form = document.getElementById('diagnosisForm');
+            const sliders = form.querySelectorAll('.slider');
+            let total = 0;
+            
+            sliders.forEach(slider => {
+                total += parseInt(slider.value);
+            });
+            
+            return total;
+        }
+
+        // フォーム送信処理
+        document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const total = calculateTotal();
+            const formData = new FormData(this);
+            const data = {
+                test_type: 'ストレス診断',
+                date: new Date().toLocaleDateString('ja-JP'),
+                time: new Date().toLocaleTimeString('ja-JP'),
+                timestamp: new Date().toLocaleString('ja-JP')
+            };
+            
+            // 各質問の回答を取得
+            for (let i = 1; i <= 15; i++) {
+                data[`q${i}`] = formData.get(`q${i}`);
+            }
+            data.total_score = total;
+            
+            // 結果判定
+            let resultText = '';
+            let resultLevel = '';
+            let brainState = '';
+            
+            if (total >= 0 && total <= 6) {
+                resultLevel = '安定モード（発火なし）';
+                brainState = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い。';
+            } else if (total >= 7 && total <= 12) {
+                resultLevel = '軽度警戒モード（低発火）';
+                brainState = 'ストレス刺激に軽く反応。集中力に波がある。';
+            } else if (total >= 13 && total <= 18) {
+                resultLevel = '中度警報モード（発火持続）';
+                brainState = '扁桃体が断続的に発火。イライラ・思考のブレが出始める。';
+            } else if (total >= 19 && total <= 24) {
+                resultLevel = '高警報モード（常時発火）';
+                brainState = '扁桃体が警報ボタンを押しっぱなし。前頭前野の制御が低下。';
+            } else {
+                resultLevel = '危険モード（過発火・暴走状態）';
+                brainState = '感情と理性の回路がショート。心身の異変が出ている可能性あり。';
+            }
+            
+            data.result_level = resultLevel;
+            data.result_text = brainState;
+            
+            // 結果を表示
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-item">
+                    <strong>合計点数：${total}点</strong>
+                </div>
+                <div class="result-item">
+                    <strong>警報レベル：${resultLevel}</strong><br>
+                    脳の状態イメージ：${brainState}
+                </div>
+            `;
+            
+            document.getElementById('resultBox').classList.add('show');
+            document.getElementById('pdfButton').classList.add('show');
+            
+            // スプレッドシートに送信
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('データ送信成功:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            
+            // 結果まで自動スクロール
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
