@@ -506,10 +506,10 @@
             console.log('誠実性スコア:', conscientiousness, '点');
             console.log('=====================================');
             
-            // タイプ判定（※スコアが低い=その特性が強い）
-            const extraversionType = extraversion <= 4 ? '外向型' : '内向型';
-            const neuroticismType = neuroticism <= 4 ? '楽観型' : '問題志向型';
-            const opennessType = openness <= 4 ? '実行型' : '創造型';
+            // タイプ判定（PDFの基準通り：5点以上=該当、4点以下=非該当）
+            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
+            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
+            const opennessType = openness >= 5 ? '創造型' : '実行型';
             
             const typeKey = `${opennessType}-${neuroticismType}-${extraversionType}`;
             const personalityType = personalityTypes[typeKey];
