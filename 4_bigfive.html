@@ -477,11 +477,11 @@
             const formData = new FormData(this);
             
             // スコア計算（逆転項目を考慮）
-            const agreeableness = parseInt(formData.get('q1')) + (4 - parseInt(formData.get('q9')));
+            const extraversion = parseInt(formData.get('q1')) + (4 - parseInt(formData.get('q6')));
             const neuroticism = parseInt(formData.get('q2')) + (4 - parseInt(formData.get('q7')));
             const openness = parseInt(formData.get('q3')) + (4 - parseInt(formData.get('q8')));
-            const conscientiousness = parseInt(formData.get('q4')) + (4 - parseInt(formData.get('q10')));
-            const extraversion = parseInt(formData.get('q5')) + (4 - parseInt(formData.get('q6')));
+            const agreeableness = parseInt(formData.get('q4')) + (4 - parseInt(formData.get('q9')));
+            const conscientiousness = parseInt(formData.get('q5')) + (4 - parseInt(formData.get('q10')));
             
             // タイプ判定
             const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
