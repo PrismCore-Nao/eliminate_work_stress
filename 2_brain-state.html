@@ -25,6 +25,11 @@
             background: #ffffff;
         }
 
+        /* PDF印刷時のタイトル（非表示→印刷時のみ表示） */
+        .print-title {
+            display: none;
+        }
+
         h1 {
             background-color: #ffff00;
             color: #000000;
@@ -66,26 +71,39 @@
             flex-shrink: 0;
         }
 
-        .submit-button {
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .submit-button, .pdf-button {
             background-color: #ffff00;
             color: #000000;
             border: 2px solid #000000;
-            padding: 15px 50px;
+            padding: 15px 40px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            display: block;
-            margin: 40px auto;
             transition: all 0.3s;
         }
 
-        .submit-button:hover {
+        .submit-button:hover, .pdf-button:hover {
             background-color: #000000;
             color: #ffff00;
         }
 
         .submit-button.hide {
             display: none;
+        }
+
+        .pdf-button {
+            display: none;
+        }
+
+        .pdf-button.show {
+            display: inline-block;
         }
 
         .result-box {
@@ -100,10 +118,14 @@
             display: block;
         }
 
-        .result-box h2 {
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
             color: #000000;
             margin-bottom: 20px;
-            font-size: 24px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffff00;
         }
 
         .result-item {
@@ -111,51 +133,46 @@
             padding: 15px;
             background-color: #ffffff;
             border-left: 4px solid #ffff00;
-            font-size: 16px;
             line-height: 1.8;
         }
 
-        .pdf-button {
-            background-color: #000000;
-            color: #ffff00;
-            border: 2px solid #ffff00;
-            padding: 15px 40px;
+        .result-item strong {
             font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: none;
-            margin: 20px auto;
-            transition: all 0.3s;
-        }
-
-        .pdf-button:hover {
-            background-color: #ffff00;
             color: #000000;
-            border-color: #000000;
         }
 
-        .pdf-button.show {
-            display: block;
-        }
-
+        /* PDF印刷用スタイル */
         @media print {
-            .submit-button, .pdf-button {
-                display: none !important;
+            body {
+                padding: 0;
+                margin: 0;
             }
-            .result-box {
-                border: 2px solid #000000;
-                page-break-inside: avoid;
+            .container {
+                position: relative;
+                padding-top: 100px;
             }
-            body::before {
-                content: "PART 2　脳の状態診断";
+            .print-title {
                 display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background-color: #ffff00;
+                color: #000000;
+                padding: 20px;
+                text-align: center;
                 font-size: 24px;
                 font-weight: bold;
-                text-align: center;
-                padding: 20px;
-                background-color: #ffff00;
                 border: 2px solid #000000;
-                margin-bottom: 20px;
+            }
+            .result-box {
+                position: absolute;
+                left: 0;
+                top: 80px;
+                width: 100%;
+            }
+            .pdf-button, .submit-button, .question, .instruction, h1 {
+                display: none !important;
             }
         }
 
@@ -164,25 +181,26 @@
                 font-size: 22px;
                 padding: 20px 15px;
             }
-            
+
             .question {
                 padding: 15px;
             }
 
-            .question label {
-                font-size: 14px;
+            .button-group {
+                flex-direction: column;
             }
 
             .submit-button, .pdf-button {
-                padding: 12px 30px;
-                font-size: 16px;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>PART 2　脳の状態診断</h1>
+        <div class="print-title">脳の状態診断</div>
+
+        <h1>脳の状態診断</h1>
 
         <div class="instruction">
             ※最近1か月を振り返って、当てはまる項目にチェックしてください。
@@ -195,54 +213,63 @@
                     朝起きても「仕事モード」に切り替わらない
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q2" value="1">
                     新しいことに挑戦する意欲がわかない
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q3" value="1">
                     目の前の仕事に集中できず、気が散る
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q4" value="1">
                     「やっても意味がない」と感じることが増えた
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q5" value="1">
                     以前は楽しかった作業が、ただの義務になっている
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q6" value="1">
                     気分の浮き沈みが激しい
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q7" value="1">
                     仕事中、焦りやイライラを感じやすい
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q8" value="1">
                     睡眠の質が落ちた（眠れない／途中で目が覚める）
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q9" value="1">
                     小さなことで不安になる
                 </label>
             </div>
+
             <div class="question">
                 <label>
                     <input type="checkbox" name="q10" value="1">
@@ -250,15 +277,16 @@
                 </label>
             </div>
 
-            <button type="submit" class="submit-button" id="submitButton">診断結果を表示</button>
+            <div class="result-box" id="resultBox">
+                <div class="result-title">診断結果</div>
+                <div id="resultContent"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-button" id="submitButton">診断結果を表示</button>
+                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
+            </div>
         </form>
-
-        <div class="result-box" id="resultBox">
-            <h2>診断結果</h2>
-            <div id="resultContent"></div>
-        </div>
-
-        <button class="pdf-button" id="pdfButton" onclick="window.print()">📄 結果をPDFで保存</button>
     </div>
 
     <script>
@@ -266,43 +294,6 @@
             e.preventDefault();
             
             const formData = new FormData(this);
-            let score = 0;
-            
-            // チェックされた項目をカウント
-            for (let i = 1; i <= 10; i++) {
-                if (formData.get(`q${i}`)) {
-                    score++;
-                }
-            }
-            
-            // 結果判定
-            let level, description, color;
-            if (score >= 0 && score <= 5) {
-                level = '脳内物質量【高】';
-                description = 'やる気や集中力が十分に保たれています。この状態を維持できれば、成果も出やすくなります。';
-                color = '#4CAF50';
-            } else {
-                level = '脳内物質量【低】';
-                description = 'ドーパミンやセロトニングが不足傾向。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
-                color = '#f44336';
-            }
-            
-            // 結果表示
-            document.getElementById('resultContent').innerHTML = `
-                <div class="result-item">
-                    <strong>チェック数：${score}個</strong>
-                </div>
-                <div class="result-item" style="border-left-color: ${color}">
-                    <strong style="color: ${color}; font-size: 20px;">${level}</strong><br><br>
-                    ${description}
-                </div>
-            `;
-            
-            document.getElementById('resultBox').classList.add('show');
-            document.getElementById('pdfButton').classList.add('show');
-            document.getElementById('submitButton').classList.add('hide');
-            
-            // データをスプレッドシートに送信
             const data = {
                 test_type: '2_brain-state',
                 date: new Date().toLocaleDateString('ja-JP'),
@@ -310,17 +301,47 @@
                 timestamp: new Date().toLocaleString('ja-JP')
             };
             
-            // 各質問の回答を取得
+            // チェック数をカウント
+            let totalCount = 0;
             for (let i = 1; i <= 10; i++) {
-                data[`q${i}`] = formData.get(`q${i}`) || '0';
+                const checked = formData.get(`q${i}`) ? 1 : 0;
+                data[`q${i}`] = checked;
+                totalCount += checked;
+            }
+            data.total_count = totalCount;
+            
+            // 結果判定
+            let result = '';
+            let explanation = '';
+            
+            if (totalCount >= 0 && totalCount <= 5) {
+                result = '脳内物質量【高】';
+                explanation = 'やる気や集中力が十分に保たれています。この状態を維持できれば、成果も出やすくなります。';
+            } else {
+                result = '脳内物質量【低】';
+                explanation = 'ドーパミンやセロトニングが不足傾向です。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
             }
             
-            data.score = score;
-            data.result = level;
+            data.result = result;
+            data.explanation = explanation;
             
-            // Google Apps Scriptに送信
-            const scriptURL = '1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs';
+            // 結果を表示
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-item">
+                    <strong>チェック数：${totalCount}個</strong>
+                </div>
+                <div class="result-item">
+                    <strong>結果：${result}</strong><br>
+                    ${explanation}
+                </div>
+            `;
             
+            document.getElementById('resultBox').classList.add('show');
+            document.getElementById('pdfButton').classList.add('show');
+            document.getElementById('submitButton').classList.add('hide');
+            
+            // スプレッドシートに送信
+            const scriptURL = 'https://script.google.com/macros/s/1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs/exec';
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -335,6 +356,9 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+            
+            // 結果までスクロール
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
