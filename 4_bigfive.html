@@ -483,10 +483,33 @@
             const agreeableness = parseInt(formData.get('q4')) + (4 - parseInt(formData.get('q9')));
             const conscientiousness = parseInt(formData.get('q5')) + (4 - parseInt(formData.get('q10')));
             
-            // タイプ判定
-            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
-            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
-            const opennessType = openness >= 5 ? '創造型' : '実行型';
+            // デバッグ用ログ
+            console.log('=== ビッグファイブ診断 デバッグ情報 ===');
+            console.log('Q1（外向性）:', formData.get('q1'), '点');
+            console.log('Q6（外向性・逆）:', formData.get('q6'), '点 → 変換後:', (4 - parseInt(formData.get('q6'))), '点');
+            console.log('外向性スコア:', extraversion, '点');
+            console.log('');
+            console.log('Q2（神経症傾向）:', formData.get('q2'), '点');
+            console.log('Q7（神経症傾向・逆）:', formData.get('q7'), '点 → 変換後:', (4 - parseInt(formData.get('q7'))), '点');
+            console.log('神経症傾向スコア:', neuroticism, '点');
+            console.log('');
+            console.log('Q3（開放性）:', formData.get('q3'), '点');
+            console.log('Q8（開放性・逆）:', formData.get('q8'), '点 → 変換後:', (4 - parseInt(formData.get('q8'))), '点');
+            console.log('開放性スコア:', openness, '点');
+            console.log('');
+            console.log('Q4（協調性）:', formData.get('q4'), '点');
+            console.log('Q9（協調性・逆）:', formData.get('q9'), '点 → 変換後:', (4 - parseInt(formData.get('q9'))), '点');
+            console.log('協調性スコア:', agreeableness, '点');
+            console.log('');
+            console.log('Q5（誠実性）:', formData.get('q5'), '点');
+            console.log('Q10（誠実性・逆）:', formData.get('q10'), '点 → 変換後:', (4 - parseInt(formData.get('q10'))), '点');
+            console.log('誠実性スコア:', conscientiousness, '点');
+            console.log('=====================================');
+            
+            // タイプ判定（※スコアが低い=その特性が強い）
+            const extraversionType = extraversion <= 4 ? '外向型' : '内向型';
+            const neuroticismType = neuroticism <= 4 ? '楽観型' : '問題志向型';
+            const opennessType = openness <= 4 ? '実行型' : '創造型';
             
             const typeKey = `${opennessType}-${neuroticismType}-${extraversionType}`;
             const personalityType = personalityTypes[typeKey];
