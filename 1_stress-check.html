@@ -252,6 +252,7 @@
         </div>
 
         <form id="diagnosisForm">
+            <!-- Q1 -->
             <div class="question">
                 <div class="question-text">①仕事をしていても週末のことを考えてしまう</div>
                 <div class="slider-container">
@@ -261,11 +262,25 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q1" min="0" max="2" value="1" step="1" class="slider" data-question="1">
+                        <!-- 表示用：0〜2 -->
+                        <input
+                            type="range"
+                            name="q1_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="1"
+                            oninput="updateScore(this)"
+                        >
+                        <!-- 送信用：2/1/0 -->
+                        <input type="hidden" name="q1" id="q1_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q2 -->
             <div class="question">
                 <div class="question-text">②目覚ましをかけてもすぐに起きれないことが多い</div>
                 <div class="slider-container">
@@ -275,11 +290,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q2" min="0" max="2" value="1" step="1" class="slider" data-question="2">
+                        <input
+                            type="range"
+                            name="q2_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="2"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q2" id="q2_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q3 -->
             <div class="question">
                 <div class="question-text">③小さなことでもイライラしやすい</div>
                 <div class="slider-container">
@@ -289,11 +316,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q3" min="0" max="2" value="1" step="1" class="slider" data-question="3">
+                        <input
+                            type="range"
+                            name="q3_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="3"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q3" id="q3_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q4 -->
             <div class="question">
                 <div class="question-text">④メールを見てもすぐに返せないことがある</div>
                 <div class="slider-container">
@@ -303,11 +342,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q4" min="0" max="2" value="1" step="1" class="slider" data-question="4">
+                        <input
+                            type="range"
+                            name="q4_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="4"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q4" id="q4_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q5 -->
             <div class="question">
                 <div class="question-text">⑤気づいたら寝落ちしているときがある</div>
                 <div class="slider-container">
@@ -317,11 +368,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q5" min="0" max="2" value="1" step="1" class="slider" data-question="5">
+                        <input
+                            type="range"
+                            name="q5_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="5"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q5" id="q5_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q6 -->
             <div class="question">
                 <div class="question-text">⑥1日を長く感じてしまう</div>
                 <div class="slider-container">
@@ -331,11 +394,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q6" min="0" max="2" value="1" step="1" class="slider" data-question="6">
+                        <input
+                            type="range"
+                            name="q6_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="6"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q6" id="q6_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q7 -->
             <div class="question">
                 <div class="question-text">⑦人が自分のことをどう思っているか気になる</div>
                 <div class="slider-container">
@@ -345,11 +420,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q7" min="0" max="2" value="1" step="1" class="slider" data-question="7">
+                        <input
+                            type="range"
+                            name="q7_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="7"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q7" id="q7_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q8 -->
             <div class="question">
                 <div class="question-text">⑧PCのファイルや書類がどこにあるかわからなくなることがある</div>
                 <div class="slider-container">
@@ -359,11 +446,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q8" min="0" max="2" value="1" step="1" class="slider" data-question="8">
+                        <input
+                            type="range"
+                            name="q8_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="8"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q8" id="q8_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q9 -->
             <div class="question">
                 <div class="question-text">⑨個人的に趣味と言えるものがない</div>
                 <div class="slider-container">
@@ -373,11 +472,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q9" min="0" max="2" value="1" step="1" class="slider" data-question="9">
+                        <input
+                            type="range"
+                            name="q9_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="9"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q9" id="q9_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q10 -->
             <div class="question">
                 <div class="question-text">⑩ほぼ毎日会社と自宅の往復になりがちだ</div>
                 <div class="slider-container">
@@ -387,11 +498,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q10" min="0" max="2" value="1" step="1" class="slider" data-question="10">
+                        <input
+                            type="range"
+                            name="q10_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="10"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q10" id="q10_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q11 -->
             <div class="question">
                 <div class="question-text">⑪食欲がない、または過食傾向がある（お酒も含む）</div>
                 <div class="slider-container">
@@ -401,11 +524,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q11" min="0" max="2" value="1" step="1" class="slider" data-question="11">
+                        <input
+                            type="range"
+                            name="q11_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="11"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q11" id="q11_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q12 -->
             <div class="question">
                 <div class="question-text">⑫急に泣いたり怒ったりすることがある</div>
                 <div class="slider-container">
@@ -415,11 +550,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q12" min="0" max="2" value="1" step="1" class="slider" data-question="12">
+                        <input
+                            type="range"
+                            name="q12_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="12"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q12" id="q12_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q13 -->
             <div class="question">
                 <div class="question-text">⑬仕事をしていても他のことを考えてしまう</div>
                 <div class="slider-container">
@@ -429,11 +576,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q13" min="0" max="2" value="1" step="1" class="slider" data-question="13">
+                        <input
+                            type="range"
+                            name="q13_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="13"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q13" id="q13_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q14 -->
             <div class="question">
                 <div class="question-text">⑭簡単な作業でもミスしたり、疲れてやる気が出ない</div>
                 <div class="slider-container">
@@ -443,11 +602,23 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q14" min="0" max="2" value="1" step="1" class="slider" data-question="14">
+                        <input
+                            type="range"
+                            name="q14_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="14"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q14" id="q14_score" value="1">
                     </div>
                 </div>
             </div>
 
+            <!-- Q15 -->
             <div class="question">
                 <div class="question-text">⑮会社に行こうと思うと胃痛や動悸がする</div>
                 <div class="slider-container">
@@ -457,7 +628,18 @@
                         <span>全く違う</span>
                     </div>
                     <div class="slider-wrapper">
-                        <input type="range" name="q15" min="0" max="2" value="1" step="1" class="slider" data-question="15">
+                        <input
+                            type="range"
+                            name="q15_raw"
+                            min="0"
+                            max="2"
+                            value="1"
+                            step="1"
+                            class="slider"
+                            data-question="15"
+                            oninput="updateScore(this)"
+                        >
+                        <input type="hidden" name="q15" id="q15_score" value="1">
                     </div>
                 </div>
             </div>
@@ -475,23 +657,35 @@
     </div>
 
     <script>
-        // 合計点数を計算（内部処理のみ）
+        // スライダーの値（0/1/2）をスコア（2/1/0）に変換して hidden に反映
+        function updateScore(slider) {
+            const q = slider.dataset.question;           // "1"〜"15"
+            const raw = parseInt(slider.value, 10);      // 0,1,2（左→右）
+            const score = 2 - raw;                       // 2,1,0 に変換
+            const hidden = document.getElementById(`q${q}_score`);
+            if (hidden) {
+                hidden.value = score;
+            }
+        }
+
+        // 合計点数を計算（hidden のスコア 2/1/0 を使用）
         function calculateTotal() {
-            const form = document.getElementById('diagnosisForm');
-            const sliders = form.querySelectorAll('.slider');
             let total = 0;
-            
-            sliders.forEach(slider => {
-                total += parseInt(slider.value);
-            });
-            
+            for (let i = 1; i <= 15; i++) {
+                const hidden = document.getElementById(`q${i}_score`);
+                const val = hidden ? parseInt(hidden.value, 10) : 0;
+                total += isNaN(val) ? 0 : val;
+            }
             return total;
         }
 
         // フォーム送信処理
         document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
+            // 念のため、送信前に全スライダーから hidden を更新
+            document.querySelectorAll('.slider').forEach(slider => updateScore(slider));
+
             const total = calculateTotal();
             const formData = new FormData(this);
             const data = {
@@ -500,38 +694,37 @@
                 time: new Date().toLocaleTimeString('ja-JP'),
                 timestamp: new Date().toLocaleString('ja-JP')
             };
-            
-            // 各質問の回答を取得
+
+            // スプレッドシートには 2/1/0 のスコアを送信
             for (let i = 1; i <= 15; i++) {
-                data[`q${i}`] = formData.get(`q${i}`);
+                data[`q${i}`] = formData.get(`q${i}`);   // hidden の値（2/1/0）
             }
             data.total_score = total;
-            
+
             // 結果判定
-            let resultText = '';
             let resultLevel = '';
             let brainState = '';
-            
+
             if (total >= 0 && total <= 6) {
                 resultLevel = '安定モード（発火なし）';
-                brainState = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い。';
+                brainState = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い状態です。';
             } else if (total >= 7 && total <= 12) {
                 resultLevel = '軽度警戒モード（低発火）';
-                brainState = 'ストレス刺激に軽く反応。集中力に波がある。';
+                brainState = 'ストレス刺激に軽く反応している状態です。集中力に波が出やすくなっています。';
             } else if (total >= 13 && total <= 18) {
                 resultLevel = '中度警報モード（発火持続）';
-                brainState = '扁桃体が断続的に発火。イライラ・思考のブレが出始める。';
+                brainState = '扁桃体が断続的に発火し、イライラや思考のブレが出やすい状態です。';
             } else if (total >= 19 && total <= 24) {
                 resultLevel = '高警報モード（常時発火）';
-                brainState = '扁桃体が警報ボタンを押しっぱなし。前頭前野の制御が低下。';
+                brainState = '扁桃体が警報ボタンを押しっぱなしに近い状態で、前頭前野の制御力が下がっています。';
             } else {
                 resultLevel = '危険モード（過発火・暴走状態）';
-                brainState = '感情と理性の回路がショート。心身の異変が出ている可能性あり。';
+                brainState = '感情と理性の回路がショート気味で、心身の不調として表面化している可能性があります。';
             }
-            
+
             data.result_level = resultLevel;
             data.result_text = brainState;
-            
+
             // 結果を表示
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
@@ -542,14 +735,13 @@
                     脳の状態イメージ：${brainState}
                 </div>
             `;
-            
+
             document.getElementById('resultBox').classList.add('show');
             document.getElementById('pdfButton').classList.add('show');
             document.getElementById('submitButton').classList.add('hide');
-            
+
             // スプレッドシートに送信
-            const scriptURL = '1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs';
-            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx3zBbZME1zao87UH3o2vVObFJuKa84tooYsFw1qWtrV8EO4NzMCeCK5vTYZLykfO3j/exec'; // 実際のURLを設定してください
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -564,8 +756,8 @@
             .catch(error => {
                 console.error('Error:', error);
             });
-            
-            // 結果まで自動スクロール
+
+            // 結果までスクロール
             document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
