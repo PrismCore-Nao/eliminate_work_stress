@@ -63,30 +63,7 @@ function doPost(e) {
     
     // データ行を作成
     let row;
-    
-    if (testType === '1_brain-state') {
-      row = [
-        data.date,
-        data.time,
-        data.timestamp,
-        data.q1, data.q2, data.q3, data.q4, data.q5,
-        data.q6, data.q7, data.q8, data.q9, data.q10,
-        data.total_score,
-        data.result_level,
-        data.result_text
-      ];
-    } else if (testType === '2_job-fit') {
-      row = [
-        data.date,
-        data.time,
-        data.timestamp,
-        data.q1, data.q2, data.q3, data.q4, data.q5,
-        data.q6, data.q7, data.q8, data.q9, data.q10,
-        data.total_count,
-        data.result_level,
-        data.result_text
-      ];
-    } else if (testType === '3_stress-check') {
+    if (testType === '1_stress-check') {
       row = [
         data.date,
         data.time,
@@ -98,6 +75,29 @@ function doPost(e) {
         data.result_level,
         data.result_text
       ];
+    } else if (testType === '2_brain-state') {
+      row = [
+        data.date,
+        data.time,
+        data.timestamp,
+        data.q1, data.q2, data.q3, data.q4, data.q5,
+        data.q6, data.q7, data.q8, data.q9, data.q10,
+        data.total_score,
+        data.result_level,
+        data.result_text
+      ];
+    } else if (testType === '3_job-fit') {
+      row = [
+        data.date,
+        data.time,
+        data.timestamp,
+        data.q1, data.q2, data.q3, data.q4, data.q5,
+        data.q6, data.q7, data.q8, data.q9, data.q10,
+        data.total_count,
+        data.result_level,
+        data.result_text
+      ];
+    
     } else if (testType === '4_bigfive') {
       row = [
         data.date,

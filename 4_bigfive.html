@@ -511,6 +511,18 @@
             data.conscientiousness = conscientiousness;
             data.personality_type = `${personalityType.name}（${personalityType.description}）`;
             
+            // タイプ番号を取得（1-8）
+            const typeNumber = {
+                '創造型-楽観型-外向型': '1',
+                '実行型-楽観型-外向型': '2',
+                '創造型-楽観型-内向型': '3',
+                '実行型-楽観型-内向型': '4',
+                '創造型-問題志向型-外向型': '5',
+                '実行型-問題志向型-外向型': '6',
+                '創造型-問題志向型-内向型': '7',
+                '実行型-問題志向型-内向型': '8'
+            }[typeKey];
+            
             // 結果を表示
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
@@ -526,6 +538,16 @@
                     <span style="font-size: 18px; color: #000000;">${personalityType.name}</span><br>
                     ${personalityType.description}
                 </div>
+                <div class="result-item" style="text-align: center; margin-top: 20px;">
+                    <a href="bigfive-result.html?type=${typeNumber}" 
+                       style="display: inline-block; background-color: #ffff00; color: #000000; 
+                              padding: 15px 30px; text-decoration: none; font-weight: bold; 
+                              border: 2px solid #000000; font-size: 16px; transition: all 0.3s;"
+                       onmouseover="this.style.backgroundColor='#000000'; this.style.color='#ffff00';"
+                       onmouseout="this.style.backgroundColor='#ffff00'; this.style.color='#000000';">
+                        📖 詳細結果を見る（向いている職種・ストレス対策など）
+                    </a>
+                </div>
             `;
             
             document.getElementById('resultBox').classList.add('show');
@@ -533,7 +555,7 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs/exec';
+            const scriptURL = '1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs';
             
             fetch(scriptURL, {
                 method: 'POST',
