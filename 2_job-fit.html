@@ -127,17 +127,40 @@
             display: inline-block;
         }
 
+        .submit-button.hide {
+            display: none;
+        }
+
+        .print-title {
+            display: none;
+        }
+
         @media print {
             body * {
                 visibility: hidden;
             }
+            .print-title, .print-title *,
             .result-box, .result-box * {
                 visibility: visible;
+            }
+            .print-title {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background-color: #ffff00;
+                color: #000000;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #000000;
             }
             .result-box {
                 position: absolute;
                 left: 0;
-                top: 0;
+                top: 80px;
                 width: 100%;
             }
             .pdf-button, .submit-button, .question, .instruction, h1 {
@@ -167,6 +190,8 @@
 </head>
 <body>
     <div class="container">
+        <div class="print-title">PART 2　適職度診断</div>
+
         <h1>PART 2　適職度診断</h1>
 
         <div class="instruction">
@@ -250,7 +275,7 @@
             </div>
 
             <div class="button-group">
-                <button type="submit" class="submit-button">診断結果を表示</button>
+                <button type="submit" class="submit-button" id="submitButton">診断結果を表示</button>
                 <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
             </div>
         </form>
@@ -271,7 +296,7 @@
             const totalCount = calculateTotal();
             const formData = new FormData(this);
             const data = {
-                test_type: '適職度診断',
+                test_type: '2_job-fit',
                 date: new Date().toLocaleDateString('ja-JP'),
                 time: new Date().toLocaleTimeString('ja-JP'),
                 timestamp: new Date().toLocaleString('ja-JP')
@@ -311,6 +336,7 @@
             
             document.getElementById('resultBox').classList.add('show');
             document.getElementById('pdfButton').classList.add('show');
+            document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
             const scriptURL = 'https://script.google.com/macros/s/1tUO1DPTCTPJ9-LfXSNDFXGIjk8vg6SI3MtU6j6WxKfs/exec';
