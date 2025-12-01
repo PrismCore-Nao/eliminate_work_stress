@@ -290,6 +290,24 @@
     </div>
 
     <script>
+        // タイプ判定関数（重要：この関数が必要です）
+        function getTypeId(extraversion, neuroticism, openness) {
+            const isExtravert = extraversion >= 5;
+            const isProblemOriented = neuroticism >= 5;
+            const isCreative = openness >= 5;
+            
+            if (isCreative && !isProblemOriented && isExtravert) return '1';
+            if (!isCreative && !isProblemOriented && isExtravert) return '2';
+            if (isCreative && !isProblemOriented && !isExtravert) return '3';
+            if (!isCreative && !isProblemOriented && !isExtravert) return '4';
+            if (isCreative && isProblemOriented && isExtravert) return '5';
+            if (!isCreative && isProblemOriented && isExtravert) return '6';
+            if (isCreative && isProblemOriented && !isExtravert) return '7';
+            if (!isCreative && isProblemOriented && !isExtravert) return '8';
+            
+            return '1';
+        }
+
         // タイプ別の詳細説明データ
         const typeDescriptions = {
             '1': {
@@ -450,30 +468,41 @@
         });
 
         function displayResults() {
-            // localStorageから診断結果を取得
-            const results = JSON.parse(localStorage.getItem('bigFiveResults'));
+            // URLパラメータから診断結果を取得
+            const urlParams = new URLSearchParams(window.location.search);
             
-            if (!results) {
+            const extraversion = parseInt(urlParams.get('e')) || 0;
+            const neuroticism = parseInt(urlParams.get('n')) || 0;
+            const openness = parseInt(urlParams.get('o')) || 0;
+            const agreeableness = parseInt(urlParams.get('a')) || 0;
+            const conscientiousness = parseInt(urlParams.get('c')) || 0;
+
+            if (extraversion === 0) {
                 alert('診断結果が見つかりません。診断ページに戻ります。');
                 window.location.href = '3_bigfive.html';
                 return;
             }
 
-            // スコアの表示
-            document.getElementById('extraversionScore').textContent = results.extraversion + '点';
-            document.getElementById('extraversionType').textContent = results.extraversionType;
-            
-            document.getElementById('neuroticismScore').textContent = results.neuroticism + '点';
-            document.getElementById('neuroticismType').textContent = results.neuroticismType;
-            
-            document.getElementById('opennessScore').textContent = results.openness + '点';
-            document.getElementById('opennessType').textContent = results.opennessType;
-            
-            document.getElementById('agreeablenessScore').textContent = results.agreeableness + '点';
-            document.getElementById('conscientiousnessScore').textContent = results.conscientiousness + '点';
+            // タイプ判定
+            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
+            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
+            const opennessType = openness >= 5 ? '創造型' : '実行型';
 
-            // タイプ名の表示
-            const typeId = results.typeId;
+            // スコアの表示
+            document.getElementById('extraversionScore').textContent = extraversion + '点';
+            document.getElementById('extraversionType').textContent = extraversionType;
+            
+            document.getElementById('neuroticismScore').textContent = neuroticism + '点';
+            document.getElementById('neuroticismType').textContent = neuroticismType;
+            
+            document.getElementById('opennessScore').textContent = openness + '点';
+            document.getElementById('opennessType').textContent = opennessType;
+            
+            document.getElementById('agreeablenessScore').textContent = agreeableness + '点';
+            document.getElementById('conscientiousnessScore').textContent = conscientiousness + '点';
+
+            // タイプIDを取得
+            const typeId = getTypeId(extraversion, neuroticism, openness);
             const typeData = typeDescriptions[typeId];
             
             if (typeData) {
@@ -510,7 +539,7 @@
                 document.getElementById('typeDescription').innerHTML = descriptionHTML;
 
                 // 誠実性と楽観性が低い場合の警告を表示
-                if (results.conscientiousness <= 3 && results.neuroticism <= 4) {
+                if (conscientiousness <= 3 && neuroticism <= 4) {
                     const warningHTML = `
                         <div class="warning-box">
                             <h3>⚠️ 重要な注意事項</h3>
