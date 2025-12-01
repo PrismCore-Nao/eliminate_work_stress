@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断</title>
+    <title>ビッグファイブ診断結果</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
             background-color: #ffffff;
             color: #000000;
             line-height: 1.8;
@@ -20,383 +20,545 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            background: #ffffff;
+            padding-bottom: 80px;
         }
 
         h1 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 30px 20px;
-            text-align: center;
             font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 40px;
-            border: 2px solid #000000;
-        }
-
-        .instruction {
-            background-color: #f9f9f9;
-            border-left: 4px solid #ffff00;
-            padding: 15px 20px;
             margin-bottom: 30px;
-            font-size: 14px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #FFD700;
         }
 
-        .question {
+        .result-summary {
+            background-color: #f5f5f5;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #FFD700;
+        }
+
+        .result-summary h2 {
+            font-size: 24px;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .result-summary .type-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+            background-color: #000000;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .scores {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .score-item {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .score-item strong {
+            display: inline-block;
+            width: 150px;
+            color: #000000;
+        }
+
+        .score-value {
+            font-weight: bold;
+            color: #FFD700;
+            margin-right: 10px;
+        }
+
+        .section {
             margin-bottom: 40px;
             padding: 25px;
-            background-color: #fafafa;
-            border: 1px solid #e0e0e0;
+            background-color: #f9f9f9;
+            border-radius: 8px;
         }
 
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .slider-container {
-            padding: 10px 0;
-        }
-
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
+        .section h3 {
+            font-size: 20px;
             margin-bottom: 15px;
-            font-size: 13px;
-            color: #333;
+            padding-left: 15px;
+            border-left: 4px solid #FFD700;
+            color: #000000;
         }
 
-        .slider-labels span {
-            flex: 1;
-            text-align: center;
-            padding: 0 5px;
+        .section p, .section ul {
+            margin-bottom: 15px;
+            color: #333333;
         }
 
-        .slider-labels span:first-child {
-            text-align: left;
+        .section ul {
+            padding-left: 25px;
         }
 
-        .slider-labels span:last-child {
-            text-align: right;
+        .section li {
+            margin-bottom: 10px;
         }
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            background: #d3d3d3;
-            outline: none;
-            border-radius: 5px;
-            margin: 10px 0;
+        .warning-box {
+            background-color: #fff9e6;
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #ffff00;
-            border: 2px solid #000000;
-            cursor: pointer;
-            border-radius: 50%;
+        .warning-box h3 {
+            color: #000000;
+            margin-bottom: 15px;
+            border-left: none;
+            padding-left: 0;
         }
 
-        input[type="range"]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            background: #ffff00;
-            border: 2px solid #000000;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        .slider-wrapper {
+        .button-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
+            gap: 15px;
+            margin-top: 30px;
             flex-wrap: wrap;
         }
 
-        .submit-button {
-            background-color: #ffff00;
-            color: #000000;
-            border: 2px solid #000000;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .submit-button:hover {
+        .btn-primary {
             background-color: #000000;
-            color: #ffff00;
+            color: #FFD700;
+            border: 2px solid #FFD700;
         }
 
-        @media (max-width: 768px) {
+        .btn-primary:hover {
+            background-color: #FFD700;
+            color: #000000;
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #000000;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .footer-nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: #FFD700;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .button-container,
+            .footer-nav {
+                display: none;
+            }
+            
+            .container {
+                padding-bottom: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
             h1 {
-                font-size: 22px;
-                padding: 20px 15px;
+                font-size: 24px;
             }
 
-            .question {
-                padding: 20px 15px;
+            .result-summary h2 {
+                font-size: 20px;
             }
 
-            .slider-labels {
-                font-size: 11px;
+            .result-summary .type-name {
+                font-size: 18px;
             }
 
-            .slider-labels span {
-                padding: 0 2px;
+            .section {
+                padding: 20px;
             }
 
-            .button-group {
+            .score-item strong {
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 12px 20px;
+            }
+
+            .button-container {
                 flex-direction: column;
             }
 
-            .submit-button {
-                width: 100%;
+            .footer-nav {
+                position: static;
+                margin-top: 30px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ビッグファイブ診断<br>あなたの思考パターン測定</h1>
+        <h1>ビッグファイブ診断結果</h1>
 
-        <div class="instruction">
-            以下の質問について、当てはまる回答を選んでください。
+        <div class="result-summary">
+            <h2>あなたのタイプ</h2>
+            <div class="type-name" id="typeName">結果を読み込み中...</div>
+            
+            <div class="scores">
+                <div class="score-item">
+                    <strong>外向性：</strong>
+                    <span class="score-value" id="extraversionScore">-</span>
+                    <span id="extraversionType">-</span>
+                </div>
+                <div class="score-item">
+                    <strong>神経症傾向：</strong>
+                    <span class="score-value" id="neuroticismScore">-</span>
+                    <span id="neuroticismType">-</span>
+                </div>
+                <div class="score-item">
+                    <strong>開放性：</strong>
+                    <span class="score-value" id="opennessScore">-</span>
+                    <span id="opennessType">-</span>
+                </div>
+                <div class="score-item">
+                    <strong>協調性：</strong>
+                    <span class="score-value" id="agreeablenessScore">-</span>
+                </div>
+                <div class="score-item">
+                    <strong>誠実性：</strong>
+                    <span class="score-value" id="conscientiousnessScore">-</span>
+                </div>
+            </div>
         </div>
 
-        <form id="diagnosisForm">
-            <div class="question">
-                <div class="question-text">1. 私は、話すことが好きで、成功に興味があり、人と会うのを楽しめる人間だ。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q1" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
+        <div id="typeDescription"></div>
 
-            <div class="question">
-                <div class="question-text">2. 私は、いつも起きてもいないことを考えて、不安や気分の浮き沈みが多い人間だ。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q2" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">3. 私は、知的な活動が得意で、創造性が高くて好奇心があり、新しいことが好きだ。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q3" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">4. 私は、人への思いやりがあり、親切な行動をとり、他人を差別しない。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q4" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">5. 私は、しっかり物事をこなし、テキパキ行動し、適切に物事を行おうとする。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q5" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">6. 私は、物静かで、人が多いパーティなどは苦手だ。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q6" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">7. 私は、多くの場合リラックスしていて、落ち着きがあり、めったに問題について悩まない。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q7" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">8. 私は、多くのことを現実的に考え、伝統的な考え方を好み、めったに空想で時間を浪費しない。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q8" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">9. 私は、思ったことをすぐ口にし、冷淡なときがあり、相手に同情を感じることはめったにない。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q9" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="question">
-                <div class="question-text">10. 私は、深く考えずに行動し、あまりきちんと行動せず、ギリギリまで物事に手をつけない。</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>かなり当てはまる</span>
-                        <span>当てはまる</span>
-                        <span>どちらでもない</span>
-                        <span>当てはまらない</span>
-                        <span>かなり当てはまらない</span>
-                    </div>
-                    <div class="slider-wrapper">
-                        <input type="range" dir="rtl" name="q10" min="0" max="4" value="2" step="1" class="slider">
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button type="submit" class="submit-button">診断結果を見る</button>
-            </div>
-        </form>
+        <div class="button-container">
+            <button class="btn btn-primary" onclick="window.print()">結果を印刷</button>
+            <a href="4_bigfive.html" class="btn btn-secondary">診断をやり直す</a>
+        </div>
     </div>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
+    <div class="footer-nav">
+        <a href="index.html">← TOPに戻る</a>
     </div>
 
     <script>
-        // Google Apps ScriptのURL（必要に応じて設定）
-        const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-
-        // フォーム送信処理
-        document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // タイプ判定関数
+        function getTypeId(extraversion, neuroticism, openness) {
+            const isExtravert = extraversion >= 5;
+            const isProblemOriented = neuroticism >= 5;
+            const isCreative = openness >= 5;
             
-            const formData = new FormData(this);
+            if (isCreative && !isProblemOriented && isExtravert) return '1';
+            if (!isCreative && !isProblemOriented && isExtravert) return '2';
+            if (isCreative && !isProblemOriented && !isExtravert) return '3';
+            if (!isCreative && !isProblemOriented && !isExtravert) return '4';
+            if (isCreative && isProblemOriented && isExtravert) return '5';
+            if (!isCreative && isProblemOriented && isExtravert) return '6';
+            if (isCreative && isProblemOriented && !isExtravert) return '7';
+            if (!isCreative && isProblemOriented && !isExtravert) return '8';
             
-            // スコア計算（逆転項目を考慮）
-            const extraversion = parseInt(formData.get('q1')) + (4 - parseInt(formData.get('q6')));
-            const neuroticism = parseInt(formData.get('q2')) + (4 - parseInt(formData.get('q7')));
-            const openness = parseInt(formData.get('q3')) + (4 - parseInt(formData.get('q8')));
-            const agreeableness = parseInt(formData.get('q4')) + (4 - parseInt(formData.get('q9')));
-            const conscientiousness = parseInt(formData.get('q5')) + (4 - parseInt(formData.get('q10')));
+            return '1';
+        }
 
-            // Google Spreadsheetsに保存（バックグラウンド処理 - エラーがあっても続行）
-            if (SCRIPT_URL && SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycby_yc8Zh8tZG7pDa5TgtlPalz9yW2HgV9pigN_zX30rmjojU1eLcqbriHodTuwVCH_Hhg/exec') {
-                const saveData = {
-                    type: 'bigfive',
-                    extraversion: extraversion,
-                    neuroticism: neuroticism,
-                    openness: openness,
-                    agreeableness: agreeableness,
-                    conscientiousness: conscientiousness
-                };
+        // タイプ別の詳細説明データ
+        const typeDescriptions = {
+            '1': {
+                name: '発想で導くビジョナリー',
+                subtitle: '元気を運ぶ人・火をつけて走る人',
+                traits: '外向型 × 楽観型 × 創造型',
+                description: 'あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。',
+                strengths: [
+                    '新しい情報や人との出会いをエネルギーに変えられる',
+                    '場の空気を盛り上げながらゴールを目指せる',
+                    '柔軟な企画ができる、ビジョンや想いを多くの人に発信できる',
+                    '意思決定が自由にでき、多くの人や情報に触れられる環境で力を発揮'
+                ],
+                suitableJobs: '新規事業のプランナー、ベンチャー、プロモーション、ブランディング、営業企画、企画開発、プロデューサー、チームリーダー、広告ディレクター、セールスリーダー、プロジェクトリーダー、起業家など',
+                tips: [
+                    '新しいプロジェクトを動かす自由と裁量を与えると火がつく',
+                    'ノリと勢いだけで突っ走って後工程が破綻することがあるため注意が必要',
+                    '実務管理や数字管理は苦手なので、サポートが必要なことも',
+                    '方向性がずれていないか定期的に確認が必要'
+                ]
+            },
+            '2': {
+                name: '信頼でまとめるコンダクター',
+                subtitle: '安心を届ける人・チームを動かす実行屋',
+                traits: '外向型 × 楽観型 × 実行型',
+                description: 'あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。',
+                strengths: [
+                    'マニュアルがあり、楽しくテンポよくルーティンを回すことができる',
+                    'ルールを守りながら、人を巻き込むことができる',
+                    '人を明るくすることでチームビルディングができる',
+                    '場所が移動できて人と会える環境で力を発揮'
+                ],
+                suitableJobs: '営業職、マネージャー、販売、接客業、ホテル・レストラン、ガイド、案内業、秘書など',
+                tips: [
+                    'ルールを守りながら、人を巻き込める環境に身を置く',
+                    '動きながら学ぶスタイルが合う、チームの空気を作る役割を与える',
+                    '役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する',
+                    '人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切'
+                ]
+            },
+            '3': {
+                name: '新しい種をまくプランナー',
+                subtitle: '発想を届ける人・静かに広げる着想力',
+                traits: '内向型 × 楽観型 × 創造型',
+                description: 'あなたは落ち着いた観察力と独自の着想をもち、新しいアイデアを静かに形にしていく力があります。内向性の高さが深い集中を生み、楽観性が失敗を恐れず試せる姿勢を支え、開放性が柔軟な発想をもたらします。',
+                strengths: [
+                    'ゼロから構想できる、静かに革新を生み出せる',
+                    'インプットを絶やさず未来を描ける、まだ誰も知らない未来に出会える',
+                    '深掘りと新規発見の繰り返しに触れる',
+                    '一人で静かに突き詰められる環境で力を発揮'
+                ],
+                suitableJobs: '一人で創造的な作業ができる仕事、コンテンツ制作、デザイナー、クリエイティブディレクション、作家、雑誌や書籍の制作、戦略を裏方で指示する仕事など',
+                tips: [
+                    '誰かが拾ってくれる安心感が必要、一人で考える時間と、アウトプットの場を明確にする',
+                    'チーム内で理解されずらいこともあるので、定期的な共有の場をつくる',
+                    '妄想で終わってしまいやすいので注意、実行するためのフォローがないと',
+                    '共感されないと心を閉ざす傾向は注意、思いつくけど提案できないことも'
+                ]
+            },
+            '4': {
+                name: '着実な道を築くアーキテクト',
+                subtitle: '現在と未来を守る人・丁寧に、確実に',
+                traits: '内向型 × 楽観型 × 実行型',
+                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。',
+                strengths: [
+                    '規則や手順を守ることで行える、最初にやるべきこと（とっかかり）が明確な作業',
+                    '着実に積み上げられる、一人でコツコツと進める',
+                    '"できた"という達成感を感じやすい、静かで落ち着いた場所で行える',
+                    '継続的にしくみやシステムを改善できる努力'
+                ],
+                suitableJobs: 'ルーティン作業をモクモクと一人でできる仕事、データ入力、仕分け・検品作業、経理、事務、パッケージ、文字起こし、採点、組み立てライン、会計アシスタント、商品管理、製造、オンラインオペレーター、図書館司書、写真や画像のトリミング・加工、チェック業務・校正、管理作業が多い仕事など',
+                tips: [
+                    '◎日課やルーティンが評価される仕組みに乗せると',
+                    '進捗状況が見える化できる努力はうまくいきやすい',
+                    '感謝やフィードバックがないと自信を失いやすい',
+                    '目標が達成できないときに落ち込みやすい傾向、継続すること自体を成功として定義できると、イキイキするタイプ'
+                ]
+            },
+            '5': {
+                name: '見えない課題を照らすファシリテーター',
+                subtitle: '挑戦を導く人・危機をチャンスに変える',
+                traits: '外向型 × 問題志向型 × 創造型',
+                description: 'あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。',
+                strengths: [
+                    'みんなで行動しながら、問題を解決できる',
+                    'リスク回避を目標にできる、新しいことにチャレンジできる',
+                    '複数のアイディアを考えられる、意思決定が自分でできる',
+                    '幅広い情報を調べることができる、場所を移動できる'
+                ],
+                suitableJobs: '予測できないリスクを先取りしてみんなと管理する仕事、番組ディレクター、イベントディレクター、プロジェクトマネージャー、リスク管理リーダー、建設・IT（危機管理）、医療現場のリーダー、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど',
+                tips: [
+                    '問題を分析しながら、仲間と新しい道を切り拓く機会を与える',
+                    '裁量権を部分的だけでも渡す、細かく縛ると嫌になるため'
+                ]
+            },
+            '6': {
+                name: 'チームを守るメディエーター',
+                subtitle: '陰で支える実行力・安定を支える人',
+                traits: '外向型 × 問題志向型 × 実行型',
+                description: 'あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。',
+                strengths: [
+                    'ルーティン化された工程がある、既存のアイディアを組み合わせて工夫できる',
+                    '多くの情報を扱わなくてすむ、問題を先に把握して解決できる',
+                    'いろいろな人と会える、慎重に現場を回しながら、リスクを最小化できる',
+                    '意思決定を自分でするより指示に従う、場所が移動できる'
+                ],
+                suitableJobs: 'みんなと一緒にルーティン作業でリスクをなくしていく仕事、企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、監視員、メンテナンススタッフ、監督、問題対応の現場リーダー、人材育成、ジョブトレーニング（OJT）、医療測定、士業全般（行政書士、税理士、公認会計士など）',
+                tips: [
+                    '現場での問題発見と改善を任せる',
+                    '◎裏方でも成果が見える設計が、努力やプロセスを評価してあげることが大切、地味な役割になりがちなので'
+                ]
+            },
+            '7': {
+                name: '解の地図を描くストラテジスト',
+                subtitle: '分析で導く人・静かな戦略家',
+                traits: '内向型 × 問題志向型 × 創造型',
+                description: 'あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。',
+                strengths: [
+                    '一人で深く探究できる、まだ誰も知らない課題に出会える',
+                    '人の見落とす違和感や矛盾を拾って、創造的に解決できる',
+                    '推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる',
+                    '問題解決を目標にできる、幅広い情報を得てアイディアを生み出せる'
+                ],
+                suitableJobs: '一人で問題をつきつめて創造的に解決できる仕事、プロダクトデザイナー／発明家、システム開発、リサーチャー、データサイエンティスト、エンジニア、探偵業、臨床心理士、特許戦略コンサルタント、問題解決コピーライティング、サステナブル修復家、都市設計、プロダクト開発、法務リスクアナリスト、社会派ジャーナリスト、法務医学者、投資家、戦略立案業',
+                tips: [
+                    '静かな環境で深く考える時間と、アウトプットの場を明確にする',
+                    '未来や現在の課題を冷静に分析して新しい方法を考えさせる',
+                    '表に出るのは嫌い、孤立や過剰思考、空気を読むのが負担になる、チーム内の雑談が苦手、プレゼンや即答が苦手な傾向',
+                    '行動が遅く見えることもある、考えすぎて動けなくなる、完璧を求めて公開できない'
+                ]
+            },
+            '8': {
+                name: '精度を磨くガーディアン',
+                subtitle: '緻密さで支える人・完成度の職人',
+                traits: '内向型 × 問題志向型 × 実行型',
+                description: 'あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。',
+                strengths: [
+                    '規則や手順を守ることで行える、正確性が求められる',
+                    '早期に問題点を発見して、ルールをもとに解決できる',
+                    'ミスやリスクを検知する作業、ダブルチェックできる',
+                    '一人で静かに突き詰めることができる、最恵決定が自分でするより指示に従う'
+                ],
+                suitableJobs: '人と会わずに日々の作業を繰り返してリスクから守る仕事、経理、法務、監査、品質保証、システム保守、リスク管理などの「正確性×慎重さ」が求められる業務、ミス防止、チェック業務、校正、トラブル防止に進化を発揮、縁の下の力持ちの職種とも言える、堅実な業務改善の担い手',
+                tips: [
+                    '明確な手順と安定したルーティンがあると力を発揮',
+                    '変化に対応できないとストレスを抱えやすいので注意、融通が利かず',
+                    '丁寧に伝えることが大切、変化が急すぎると不安になる',
+                    '徐々に巻き込む工夫をする、変化を押しつけず',
+                    'プロセスや努力をほめてあげる、常にフィードバックし、安心感が大切なので',
+                    '行動がゆっくりの傾向もあるため、落ち込みやすい傾向、目標が達成できないときに'
+                ]
+            }
+        };
 
-                fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(saveData)
-                }).catch(err => console.log('保存エラー（結果表示には影響しません）:', err));
+        // ページ読み込み時に結果を表示
+        window.addEventListener('DOMContentLoaded', function() {
+            displayResults();
+        });
+
+        function displayResults() {
+            // URLパラメータから診断結果を取得
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const extraversion = parseInt(urlParams.get('e')) || 0;
+            const neuroticism = parseInt(urlParams.get('n')) || 0;
+            const openness = parseInt(urlParams.get('o')) || 0;
+            const agreeableness = parseInt(urlParams.get('a')) || 0;
+            const conscientiousness = parseInt(urlParams.get('c')) || 0;
+
+            if (extraversion === 0 && neuroticism === 0 && openness === 0) {
+                alert('診断結果が見つかりません。診断ページに戻ります。');
+                window.location.href = '4_bigfive.html';
+                return;
             }
 
-            // 結果ページに遷移（URLパラメータで結果を渡す）
-            const resultURL = `4_bigfive-result.html?e=${extraversion}&n=${neuroticism}&o=${openness}&a=${agreeableness}&c=${conscientiousness}`;
-            window.location.href = resultURL;
-        });
+            // タイプ判定
+            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
+            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
+            const opennessType = openness >= 5 ? '創造型' : '実行型';
+
+            // スコアの表示
+            document.getElementById('extraversionScore').textContent = extraversion + '点';
+            document.getElementById('extraversionType').textContent = extraversionType;
+            
+            document.getElementById('neuroticismScore').textContent = neuroticism + '点';
+            document.getElementById('neuroticismType').textContent = neuroticismType;
+            
+            document.getElementById('opennessScore').textContent = openness + '点';
+            document.getElementById('opennessType').textContent = opennessType;
+            
+            document.getElementById('agreeablenessScore').textContent = agreeableness + '点';
+            document.getElementById('conscientiousnessScore').textContent = conscientiousness + '点';
+
+            // タイプIDを取得
+            const typeId = getTypeId(extraversion, neuroticism, openness);
+            const typeData = typeDescriptions[typeId];
+            
+            if (typeData) {
+                document.getElementById('typeName').textContent = typeData.name;
+                
+                // 詳細説明の表示
+                const descriptionHTML = `
+                    <div class="section">
+                        <h3>タイプの特徴</h3>
+                        <p><strong>${typeData.traits}</strong></p>
+                        <p>${typeData.description}</p>
+                    </div>
+
+                    <div class="section">
+                        <h3>強み・向いている環境</h3>
+                        <ul>
+                            ${typeData.strengths.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h3>適している職種</h3>
+                        <p>${typeData.suitableJobs}</p>
+                    </div>
+
+                    <div class="section">
+                        <h3>能力を最大化する方法</h3>
+                        <ul>
+                            ${typeData.tips.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                document.getElementById('typeDescription').innerHTML = descriptionHTML;
+
+                // 誠実性と楽観性が低い場合の警告を表示
+                if (conscientiousness <= 3 && neuroticism <= 4) {
+                    const warningHTML = `
+                        <div class="warning-box">
+                            <h3>⚠️ 重要な注意事項</h3>
+                            <p>あなたの診断結果では、<strong>誠実性が低く、楽観性が高い</strong>組み合わせとなっています。</p>
+                            <p>このタイプは、リスクを過小評価して重要な不具合や課題に気づかず、後工程で大きな損失を招くことがあります。同じ失敗を繰り返しやすく、たとえ適職に就いていても改善が進まず、気づいたときには手遅れになってしまうことがあります。</p>
+                            <p><strong>改善のヒント：</strong></p>
+                            <ul>
+                                <li>毎日小さな約束を守る習慣をつける（ベッドメイキング、食器をすぐ洗うなど）</li>
+                                <li>失敗ノートをつけて、反省するパターンを身につける</li>
+                                <li>1日3つのToDoを必ず実行する</li>
+                                <li>約束の5分前に行動する習慣をつける</li>
+                            </ul>
+                            <p>これらの小さな習慣を毎日繰り返すことで、誠実性を高めることができます。</p>
+                        </div>
+                    `;
+                    document.getElementById('typeDescription').innerHTML += warningHTML;
+                }
+            }
+        }
     </script>
 </body>
 </html>
