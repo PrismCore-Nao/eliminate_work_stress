@@ -127,8 +127,35 @@
             }
         }
     </style>
+
+    <style>
+        @media print {
+            button {
+                display: none !important;
+            }
+            a[href*="index.html"] {
+                display: none !important;
+            }
+            .print-title {
+                display: block !important;
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+                margin: 20px 0;
+                color: #333;
+            }
+        }
+        .print-title {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+        <div class="print-title">ビッグファイブ診断結果</div>
+            <button onclick="window.print()" style="margin: 20px auto; display: block; padding: 12px 30px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s;">
+                📄 結果をPDF保存
+            </button>
+
     <div class="container">
         <h1>ビッグファイブ診断<br>8つのタイプ別 詳細結果</h1>
 
@@ -489,5 +516,12 @@
             document.getElementById('results-container').innerHTML = allHtml;
         }
     </script>
+
+        <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+            <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+               onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                ← TOPに戻る
+            </a>
+        </div>
 </body>
 </html>
