@@ -343,7 +343,7 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxR0WRYw0uN5u7Rj-ZSZHNTch-w3EfxEWha4TlTbf2DZwNR4DtH5LqVDRm2NgcGS__W/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxjZXKgVSSFEjAtX9Ng5Nwrl0iPttODAtcQZ6z-ks2UQbdFEa6Qhl74ctvSgSo_ZpOJgg/exec';
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -370,13 +370,23 @@
         </a>
     </div>
 
-    <div style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
+        <p>© Takeyuki Nishi</p>
     </div>
 
     <style>
         @media print {
             div[style*="position: fixed"] { display: none !important; }
+            .footer-print {
+                position: fixed;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+            }
         }
     </style>
 </body>

@@ -532,8 +532,6 @@
             data.openness = openness;
             data.agreeableness = agreeableness;
             data.conscientiousness = conscientiousness;
-            data.type_number = typeNumber;  // ← タイプ番号を追加
-            data.personality_type = `${personalityType.name}（${personalityType.description}）`;
             
             // タイプ番号を取得（1-8）
             const typeNumber = {
@@ -547,11 +545,14 @@
                 '実行型-問題志向型-内向型': '8'
             }[typeKey];
             
+            data.type_number = typeNumber;  // タイプ番号を追加
+            data.personality_type = `${personalityType.name}（${personalityType.description}）`;
+            
             // URLパラメータとしてスコアを渡す
             const resultURL = `4_bigfive-result.html?type=${typeNumber}&extraversion=${extraversion}&neuroticism=${neuroticism}&openness=${openness}&agreeableness=${agreeableness}&conscientiousness=${conscientiousness}&extraversionType=${encodeURIComponent(extraversionType)}&neuroticismType=${encodeURIComponent(neuroticismType)}&opennessType=${encodeURIComponent(opennessType)}`;
             
             // スプレッドシートに送信（バックグラウンドで）
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxR0WRYw0uN5u7Rj-ZSZHNTch-w3EfxEWha4TlTbf2DZwNR4DtH5LqVDRm2NgcGS__W/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxjZXKgVSSFEjAtX9Ng5Nwrl0iPttODAtcQZ6z-ks2UQbdFEa6Qhl74ctvSgSo_ZpOJgg/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
@@ -581,7 +582,7 @@
     </div>
 
     <div style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
+        <p>© Takeyuki Nishi</p>
     </div>
 
     <style>

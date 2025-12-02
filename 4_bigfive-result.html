@@ -499,8 +499,24 @@
         }
     </script>
 
-    <div style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
+        <p>© Takeyuki Nishi</p>
     </div>
+
+    <style>
+        @media print {
+            .footer-print {
+                position: fixed;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000;
+            }
+        }
+    </style>
 </body>
 </html>
