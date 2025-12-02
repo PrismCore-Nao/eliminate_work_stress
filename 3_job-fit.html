@@ -339,21 +339,21 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwDlsdPiNkIs9Bj6szLGZakT8kN3cjcuCSSvW_R9AULbDHvJkDp5Ysa01-l7LOJujvWHQ/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwZBcYKwrnOsDwHBIWzd6GZOi6K4ipq2lIJ4optvVgvr9i3YCpxZVOaTfg21j0CBHg6xA/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                mode: 'no-cors'  // CORSエラー回避
             })
-            .then(response => response.json())
-            .then(result => {
-                console.log('データ送信成功:', result);
+            .then(() => {
+                console.log('データ送信完了');
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('送信エラー:', error);
             });
             
             // 結果まで自動スクロール
