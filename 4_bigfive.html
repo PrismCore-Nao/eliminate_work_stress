@@ -546,57 +546,30 @@
                 '実行型-問題志向型-内向型': '8'
             }[typeKey];
             
-            // 結果を表示
-            document.getElementById('resultContent').innerHTML = `
-                <div class="result-item">
-                    <strong>各特性のスコア</strong><br>
-                    外向性：${extraversion}点（${extraversionType}）<br>
-                    神経症傾向：${neuroticism}点（${neuroticismType}）<br>
-                    開放性：${openness}点（${opennessType}）<br>
-                    協調性：${agreeableness}点<br>
-                    誠実性：${conscientiousness}点
-                </div>
-                <div class="result-item">
-                    <strong>あなたのパーソナリティタイプ</strong><br>
-                    <span style="font-size: 18px; color: #000000;">${personalityType.name}</span><br>
-                    ${personalityType.description}
-                </div>
-                <div class="result-item" style="text-align: center; margin-top: 20px;">
-                    <a href="4_bigfive-result.html?type=${typeNumber}" 
-                       style="display: inline-block; background-color: #ffff00; color: #000000; 
-                              padding: 15px 30px; text-decoration: none; font-weight: bold; 
-                              border: 2px solid #000000; font-size: 16px; transition: all 0.3s;"
-                       onmouseover="this.style.backgroundColor='#000000'; this.style.color='#ffff00';"
-                       onmouseout="this.style.backgroundColor='#ffff00'; this.style.color='#000000';">
-                        📖 詳細結果を見る（向いている職種・ストレス対策など）
-                    </a>
-                </div>
-            `;
+            // URLパラメータとしてスコアを渡す
+            const resultURL = `4_bigfive-result.html?type=${typeNumber}&extraversion=${extraversion}&neuroticism=${neuroticism}&openness=${openness}&agreeableness=${agreeableness}&conscientiousness=${conscientiousness}&extraversionType=${encodeURIComponent(extraversionType)}&neuroticismType=${encodeURIComponent(neuroticismType)}&opennessType=${encodeURIComponent(opennessType)}`;
             
-            document.getElementById('resultBox').classList.add('show');
-            document.getElementById('pdfButton').classList.add('show');
-            document.getElementById('submitButton').classList.add('hide');
-            
-            // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyYsE_CzpPuvsqSfr7pYt2ZtvLYQYMvkmPtF0VFlNC2QC1DJxC7C0Cf3k4BWoT3lN7R6Q/exec';
+            // スプレッドシートに送信（バックグラウンドで）
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwDlsdPiNkIs9Bj6szLGZakT8kN3cjcuCSSvW_R9AULbDHvJkDp5Ysa01-l7LOJujvWHQ/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                mode: 'no-cors'  // CORSエラーを回避
             })
-            .then(response => response.json())
-            .then(result => {
-                console.log('データ送信成功:', result);
+            .then(() => {
+                console.log('データ送信完了（またはスキップ）');
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('送信エラー（無視して続行）:', error);
+            })
+            .finally(() => {
+                // 送信完了後、詳細結果ページへ移動
+                window.location.href = resultURL;
             });
-            
-            // 結果まで自動スクロール
-            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
     <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">

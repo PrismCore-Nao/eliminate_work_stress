@@ -186,9 +186,17 @@
     </div>
 
     <script>
-        // URLパラメータからタイプを取得
+        // URLパラメータからタイプとスコアを取得
         const urlParams = new URLSearchParams(window.location.search);
         const type = urlParams.get('type');
+        const extraversion = urlParams.get('extraversion');
+        const neuroticism = urlParams.get('neuroticism');
+        const openness = urlParams.get('openness');
+        const agreeableness = urlParams.get('agreeableness');
+        const conscientiousness = urlParams.get('conscientiousness');
+        const extraversionType = urlParams.get('extraversionType');
+        const neuroticismType = urlParams.get('neuroticismType');
+        const opennessType = urlParams.get('opennessType');
 
         // 8つのタイプの詳細データ
         const typeData = {
@@ -426,12 +434,31 @@
             const data = typeData[type];
             const container = document.getElementById('results-container');
             
+            // スコア情報があれば表示
+            let scoresHTML = '';
+            if (extraversion && neuroticism && openness && agreeableness && conscientiousness) {
+                scoresHTML = `
+                    <div class="section" style="background-color: #fffef0; border-left: 5px solid #000000;">
+                        <h2>📊 各特性のスコア</h2>
+                        <div style="font-size: 18px; line-height: 2;">
+                            <strong>外向性：</strong>${extraversion}点（${extraversionType || ''}）<br>
+                            <strong>神経症傾向：</strong>${neuroticism}点（${neuroticismType || ''}）<br>
+                            <strong>開放性：</strong>${openness}点（${opennessType || ''}）<br>
+                            <strong>協調性：</strong>${agreeableness}点<br>
+                            <strong>誠実性：</strong>${conscientiousness}点
+                        </div>
+                    </div>
+                `;
+            }
+            
             container.innerHTML = `
                 <div class="type-header">
                     <div class="type-title">${data.title}</div>
                     <div class="type-subtitle">${data.subtitle}</div>
                     <div class="type-combination">${data.combination}</div>
                 </div>
+
+                ${scoresHTML}
 
                 <div class="section">
                     <h2>📋 特性の説明</h2>
