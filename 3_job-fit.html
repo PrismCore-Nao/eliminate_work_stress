@@ -190,9 +190,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">PART 2　適職度診断</div>
+        <div class="print-title">適職度診断</div>
 
-        <h1>PART 2　適職度診断</h1>
+        <h1>適職度診断</h1>
 
         <div class="instruction">
             ※こちらも最近1か月を振り返り、当てはまる項目にチェックしてください。
@@ -304,9 +304,10 @@
             
             // 各質問の回答を取得
             for (let i = 1; i <= 10; i++) {
-                data[`q${i}`] = formData.get(`q${i}`) ? '1' : '0';
+                const isChecked = formData.get(`q${i}`) ? true : false;
+                data[`q${i}`] = isChecked;  // ← true/falseで送信
             }
-            data.total_count = totalCount;
+            data.checked_count = totalCount;  // ← チェック数
             
             // 結果判定
             let resultText = '';
@@ -320,6 +321,7 @@
                 resultText = '脳の特性と仕事内容が合っていない可能性大。業務内容の調整や環境変更を検討しましょう。';
             }
             
+            data.level = resultLevel;      // ← 判定
             data.result_level = resultLevel;
             data.result_text = resultText;
             
@@ -339,7 +341,7 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwZBcYKwrnOsDwHBIWzd6GZOi6K4ipq2lIJ4optvVgvr9i3YCpxZVOaTfg21j0CBHg6xA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxR0WRYw0uN5u7Rj-ZSZHNTch-w3EfxEWha4TlTbf2DZwNR4DtH5LqVDRm2NgcGS__W/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
@@ -365,6 +367,10 @@
            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
             ← TOPに戻る
         </a>
+    </div>
+
+    <div style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
+        <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
     </div>
 
     <style>

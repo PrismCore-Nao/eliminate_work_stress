@@ -532,6 +532,7 @@
             data.openness = openness;
             data.agreeableness = agreeableness;
             data.conscientiousness = conscientiousness;
+            data.type_number = typeNumber;  // ← タイプ番号を追加
             data.personality_type = `${personalityType.name}（${personalityType.description}）`;
             
             // タイプ番号を取得（1-8）
@@ -550,7 +551,7 @@
             const resultURL = `4_bigfive-result.html?type=${typeNumber}&extraversion=${extraversion}&neuroticism=${neuroticism}&openness=${openness}&agreeableness=${agreeableness}&conscientiousness=${conscientiousness}&extraversionType=${encodeURIComponent(extraversionType)}&neuroticismType=${encodeURIComponent(neuroticismType)}&opennessType=${encodeURIComponent(opennessType)}`;
             
             // スプレッドシートに送信（バックグラウンドで）
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwZBcYKwrnOsDwHBIWzd6GZOi6K4ipq2lIJ4optvVgvr9i3YCpxZVOaTfg21j0CBHg6xA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxR0WRYw0uN5u7Rj-ZSZHNTch-w3EfxEWha4TlTbf2DZwNR4DtH5LqVDRm2NgcGS__W/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
@@ -577,6 +578,10 @@
            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
             ← TOPに戻る
         </a>
+    </div>
+
+    <div style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
+        <p>© 西剛志「脳科学でわかった仕事のストレスをなくす本」Project</p>
     </div>
 
     <style>
