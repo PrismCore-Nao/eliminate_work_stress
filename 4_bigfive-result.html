@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断結果</title>
+    <title>ビッグファイブ診断 - 詳細結果</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
             background-color: #ffffff;
             color: #000000;
             line-height: 1.8;
@@ -22,542 +22,456 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding-bottom: 80px;
         }
 
         h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
             font-size: 28px;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #FFD700;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 3px solid #000000;
         }
 
-        .result-summary {
-            background-color: #f5f5f5;
-            padding: 25px;
-            border-radius: 8px;
+        .print-title {
+            display: none;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
             margin-bottom: 30px;
-            border-left: 5px solid #FFD700;
+            padding: 20px;
+            border-bottom: 3px solid #000000;
         }
 
-        .result-summary h2 {
-            font-size: 24px;
+        @media print {
+            .print-title {
+                display: block !important;
+            }
+            h1 {
+                display: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        .type-header {
+            background-color: #ffff00;
             color: #000000;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 3px solid #000000;
+        }
+
+        .type-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .type-subtitle {
+            font-size: 18px;
             margin-bottom: 15px;
+            color: #333;
         }
 
-        .result-summary .type-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #FFD700;
+        .type-combination {
+            display: inline-block;
             background-color: #000000;
+            color: #ffff00;
             padding: 10px 20px;
-            display: inline-block;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .scores {
-            display: grid;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .score-item {
-            background-color: #ffffff;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .score-item strong {
-            display: inline-block;
-            width: 150px;
-            color: #000000;
-        }
-
-        .score-value {
+            font-size: 16px;
             font-weight: bold;
-            color: #FFD700;
-            margin-right: 10px;
+            border-radius: 3px;
         }
 
         .section {
-            margin-bottom: 40px;
-            padding: 25px;
             background-color: #f9f9f9;
-            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ffff00;
         }
 
-        .section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            padding-left: 15px;
-            border-left: 4px solid #FFD700;
+        .section h2 {
             color: #000000;
+            font-size: 22px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
         }
 
         .section p, .section ul {
-            margin-bottom: 15px;
-            color: #333333;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
         }
 
         .section ul {
-            padding-left: 25px;
+            list-style-position: inside;
+            padding-left: 0;
         }
 
         .section li {
             margin-bottom: 10px;
+            padding-left: 20px;
+            text-indent: -20px;
         }
 
-        .warning-box {
-            background-color: #fff9e6;
-            border: 2px solid #FFD700;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-        }
-
-        .warning-box h3 {
+        .pdf-button {
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
+            background-color: #ffff00;
             color: #000000;
-            margin-bottom: 15px;
-            border-left: none;
-            padding-left: 0;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
+            border: 2px solid #000000;
             border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            width: fit-content;
         }
 
-        .btn-primary {
+        .pdf-button:hover {
             background-color: #000000;
-            color: #FFD700;
-            border: 2px solid #FFD700;
+            color: #ffff00;
         }
 
-        .btn-primary:hover {
-            background-color: #FFD700;
-            color: #000000;
-        }
-
-        .btn-secondary {
-            background-color: #f5f5f5;
-            color: #000000;
-            border: 2px solid #ddd;
-        }
-
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-        }
-
-        .footer-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-        }
-
-        .footer-nav a {
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-nav a:hover {
-            color: #FFD700;
-        }
-
-        @media print {
-            body {
-                background-color: white;
-            }
-            
-            .button-container,
-            .footer-nav {
-                display: none;
-            }
-            
-            .container {
-                padding-bottom: 0;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-
-            h1 {
+        @media (max-width: 768px) {
+            .type-title {
                 font-size: 24px;
             }
 
-            .result-summary h2 {
-                font-size: 20px;
-            }
-
-            .result-summary .type-name {
-                font-size: 18px;
+            .type-subtitle {
+                font-size: 16px;
             }
 
             .section {
                 padding: 20px;
             }
 
-            .score-item strong {
-                display: block;
-                width: 100%;
-                margin-bottom: 5px;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 12px 20px;
-            }
-
-            .button-container {
-                flex-direction: column;
-            }
-
-            .footer-nav {
-                position: static;
-                margin-top: 30px;
-                text-align: center;
+            .section h2 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ビッグファイブ診断結果</h1>
+        <div class="print-title">ビッグファイブ診断結果</div>
 
-        <div class="result-summary">
-            <h2>あなたのタイプ</h2>
-            <div class="type-name" id="typeName">結果を読み込み中...</div>
-            
-            <div class="scores">
-                <div class="score-item">
-                    <strong>外向性：</strong>
-                    <span class="score-value" id="extraversionScore">-</span>
-                    <span id="extraversionType">-</span>
-                </div>
-                <div class="score-item">
-                    <strong>神経症傾向：</strong>
-                    <span class="score-value" id="neuroticismScore">-</span>
-                    <span id="neuroticismType">-</span>
-                </div>
-                <div class="score-item">
-                    <strong>開放性：</strong>
-                    <span class="score-value" id="opennessScore">-</span>
-                    <span id="opennessType">-</span>
-                </div>
-                <div class="score-item">
-                    <strong>協調性：</strong>
-                    <span class="score-value" id="agreeablenessScore">-</span>
-                </div>
-                <div class="score-item">
-                    <strong>誠実性：</strong>
-                    <span class="score-value" id="conscientiousnessScore">-</span>
-                </div>
-            </div>
+        <h1>ビッグファイブ診断<br>8つのタイプ別 詳細結果</h1>
+
+        <div id="results-container">
+            <!-- JavaScriptで動的に挿入 -->
         </div>
 
-        <div id="typeDescription"></div>
-
-        <div class="button-container">
-            <button class="btn btn-primary" onclick="window.print()">結果を印刷</button>
-            <a href="3_bigfive.html" class="btn btn-secondary">診断をやり直す</a>
+        <!-- PDF保存ボタン（一番下、黄色系） -->
+        <div class="no-print" style="text-align: center; margin-top: 50px;">
+            <button onclick="window.print()" class="pdf-button">
+                📄 結果をPDF保存
+            </button>
         </div>
     </div>
 
-    <div class="footer-nav">
-        <a href="index.html">← TOPに戻る</a>
+    <!-- ← TOPに戻る -->
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;" class="no-print">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
     </div>
 
     <script>
-        // タイプ判定関数（重要：この関数が必要です）
-        function getTypeId(extraversion, neuroticism, openness) {
-            const isExtravert = extraversion >= 5;
-            const isProblemOriented = neuroticism >= 5;
-            const isCreative = openness >= 5;
-            
-            if (isCreative && !isProblemOriented && isExtravert) return '1';
-            if (!isCreative && !isProblemOriented && isExtravert) return '2';
-            if (isCreative && !isProblemOriented && !isExtravert) return '3';
-            if (!isCreative && !isProblemOriented && !isExtravert) return '4';
-            if (isCreative && isProblemOriented && isExtravert) return '5';
-            if (!isCreative && isProblemOriented && isExtravert) return '6';
-            if (isCreative && isProblemOriented && !isExtravert) return '7';
-            if (!isCreative && isProblemOriented && !isExtravert) return '8';
-            
-            return '1';
-        }
+        // URLパラメータからタイプを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
 
-        // タイプ別の詳細説明データ
-        const typeDescriptions = {
+        // 8つのタイプの詳細データ
+        const typeData = {
             '1': {
-                name: '発想で導くビジョナリー',
+                title: '①発想で導くビジョナリー',
                 subtitle: '元気を運ぶ人・火をつけて走る人',
-                traits: '外向型 × 楽観型 × 創造型',
-                description: 'あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。',
-                strengths: [
-                    '新しい情報や人との出会いをエネルギーに変えられる',
-                    '場の空気を盛り上げながらゴールを目指せる',
-                    '柔軟な企画ができる、ビジョンや想いを多くの人に発信できる',
-                    '意思決定が自由にでき、多くの人や情報に触れられる環境で力を発揮'
+                combination: '外向型 × 楽観型 × 創造型',
+                description: 'あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。新しい情報や人との出会いをエネルギーに変え、場の空気を盛り上げながらゴールを目指すことができます。起業家に多いタイプです。',
+                suitable: [
+                    '新規事業のプランナー、ベンチャー、営業企画',
+                    '企画開発、プロデューサー、プロモーション',
+                    'ブランディング、チームリーダー、セールスリーダー',
+                    '広告ディレクター、起業家、プロジェクトリーダー'
                 ],
-                suitableJobs: '新規事業のプランナー、ベンチャー、プロモーション、ブランディング、営業企画、企画開発、プロデューサー、チームリーダー、広告ディレクター、セールスリーダー、プロジェクトリーダー、起業家など',
+                unsuitable: [
+                    'ルーティン作業が多い環境、数字管理が多い仕事',
+                    '孤独な環境、新しい情報や刺激が少ない環境',
+                    '移動の少ない環境、人とのつながりが乏しいリモートワーク'
+                ],
                 tips: [
                     '新しいプロジェクトを動かす自由と裁量を与えると火がつく',
                     'ノリと勢いだけで突っ走って後工程が破綻することがあるため注意が必要',
                     '実務管理や数字管理は苦手なので、サポートが必要なことも',
-                    '方向性がずれていないか定期的に確認が必要'
+                    'リスクをあまり考えない傾向があるため、方向性がずれていないか定期的に確認が必要'
+                ],
+                stress: [
+                    '新しい情報に大量に触れる',
+                    '1日1回でも増やす、人と話す頻度を',
+                    '1日の終わりに今日あったいいことを5つ書き出す'
                 ]
             },
             '2': {
-                name: '信頼でまとめるコンダクター',
+                title: '②信頼でまとめるコンダクター',
                 subtitle: '安心を届ける人・チームを動かす実行屋',
-                traits: '外向型 × 楽観型 × 実行型',
-                description: 'あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。',
-                strengths: [
-                    'マニュアルがあり、楽しくテンポよくルーティンを回すことができる',
-                    'ルールを守りながら、人を巻き込むことができる',
-                    '人を明るくすることでチームビルディングができる',
-                    '場所が移動できて人と会える環境で力を発揮'
+                combination: '外向型 × 楽観型 × 実行型',
+                description: 'あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。テンポよく行動できると、大きな成果を出せます。コンダクターとは指揮者を意味します。',
+                suitable: [
+                    '営業職、マネージャー、販売、接客業',
+                    'レストラン、ホテル、ガイド、案内業',
+                    '秘書など'
                 ],
-                suitableJobs: '営業職、マネージャー、販売、接客業、ホテル・レストラン、ガイド、案内業、秘書など',
+                unsuitable: [
+                    '自分の役割が不明確、指示があいまいな中で進む',
+                    '新しい情報を常に学ぶ必要がある、ゼロから何かを生み出す',
+                    '人とのつながりが乏しいリモートワーク、孤独な環境'
+                ],
                 tips: [
                     'ルールを守りながら、人を巻き込める環境に身を置く',
-                    '動きながら学ぶスタイルが合う、チームの空気を作る役割を与える',
+                    '動きながら学ぶスタイルが合う。チームの空気を作る役割を与える',
                     '役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する',
-                    '人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切'
+                    '目に見える結果だけでなく、人の雰囲気を変える力が高いため、周りへの影響も評価してあげることが大切'
+                ],
+                stress: [
+                    '定期的なルーティンワークの時間を確保する',
+                    '外出や人と話す機会を意図的に増やす',
+                    'チーム内での役割を確認・明確化する'
                 ]
             },
             '3': {
-                name: '新しい種をまくプランナー',
+                title: '③新しい種をまくプランナー',
                 subtitle: '発想を届ける人・静かに広げる着想力',
-                traits: '内向型 × 楽観型 × 創造型',
-                description: 'あなたは落ち着いた観察力と独自の着想をもち、新しいアイデアを静かに形にしていく力があります。内向性の高さが深い集中を生み、楽観性が失敗を恐れず試せる姿勢を支え、開放性が柔軟な発想をもたらします。',
-                strengths: [
-                    'ゼロから構想できる、静かに革新を生み出せる',
-                    'インプットを絶やさず未来を描ける、まだ誰も知らない未来に出会える',
-                    '深掘りと新規発見の繰り返しに触れる',
-                    '一人で静かに突き詰められる環境で力を発揮'
+                combination: '内向型 × 楽観型 × 創造型',
+                description: 'あなたは落ち着いた観察力と独自の着想をもち、新しいアイデアを静かに形にしていく力があります。内向性の高さが深い集中を生み、楽観性が失敗を恐れず試せる姿勢を支え、開放性が柔軟な発想をもたらします。未来を静かにデザインする、粘り強くアイディアを練るタイプです。',
+                suitable: [
+                    '作家、デザイナー、クリエイティブディレクション、コンテンツ制作',
+                    '雑誌や書籍の制作、戦略を裏方で指示する仕事',
+                    'CMプランナーなど（顧客の意向に制限されるため向いていない）'
                 ],
-                suitableJobs: '一人で創造的な作業ができる仕事、コンテンツ制作、デザイナー、クリエイティブディレクション、作家、雑誌や書籍の制作、戦略を裏方で指示する仕事など',
+                unsuitable: [
+                    'あまり深く考えなくてもできる作業や行動、意思決定が早く求められる',
+                    'みんなと行う作業の頻度が多い、細かいルールで縛られる',
+                    'アイディアが採用されにくい環境でがんばる'
+                ],
                 tips: [
-                    '誰かが拾ってくれる安心感が必要、一人で考える時間と、アウトプットの場を明確にする',
+                    '一人で考える時間と、誰かが拾ってくれる安心感が必要',
                     'チーム内で理解されずらいこともあるので、定期的な共有の場をつくる',
                     '妄想で終わってしまいやすいので注意、実行するためのフォローがないと',
-                    '共感されないと心を閉ざす傾向は注意、思いつくけど提案できないことも'
+                    'チームとの連携を助けることが大切',
+                    '共感されないと心を閉ざす傾向は注意。思いつくけど提案できないことも'
+                ],
+                stress: [
+                    '自然のあるカフェや静かな図書館で作業する',
+                    '好きな分野の本や資料をまとめて読む時間を作る',
+                    '小さな達成感を毎週確認できるチェックリストを作る'
                 ]
             },
             '4': {
-                name: '着実な道を築くアーキテクト',
+                title: '④着実な道を築くアーキテクト',
                 subtitle: '現在と未来を守る人・丁寧に、確実に',
-                traits: '内向型 × 楽観型 × 実行型',
-                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。',
-                strengths: [
-                    '規則や手順を守ることで行える、最初にやるべきこと（とっかかり）が明確な作業',
-                    '着実に積み上げられる、一人でコツコツと進める',
-                    '"できた"という達成感を感じやすい、静かで落ち着いた場所で行える',
-                    '継続的にしくみやシステムを改善できる努力'
+                combination: '内向型 × 楽観型 × 実行型',
+                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。',
+                suitable: [
+                    'データ入力、仕分け、検品作業、経理、事務',
+                    'パッケージ、文字起こし、採点、組み立てライン、会計アシスタント',
+                    '商品管理、製造、チェック業務・校正、加工など',
+                    '管理作業が多い仕事など'
                 ],
-                suitableJobs: 'ルーティン作業をモクモクと一人でできる仕事、データ入力、仕分け・検品作業、経理、事務、パッケージ、文字起こし、採点、組み立てライン、会計アシスタント、商品管理、製造、オンラインオペレーター、図書館司書、写真や画像のトリミング・加工、チェック業務・校正、管理作業が多い仕事など',
+                unsuitable: [
+                    '飛躍的な変化が必要な努力、本番一発勝負が求められる',
+                    '人と会う機会が多い作業の努力、問題解決ばかりを求められる努力',
+                    '自分のペースで作業ができない、ルールがない環境でシステムをつくる努力'
+                ],
                 tips: [
-                    '◎日課やルーティンが評価される仕組みに乗せると',
+                    '日課やルーティンが評価される仕組みに乗せると',
                     '進捗状況が見える化できる努力はうまくいきやすい',
                     '感謝やフィードバックがないと自信を失いやすい',
-                    '目標が達成できないときに落ち込みやすい傾向、継続すること自体を成功として定義できると、イキイキするタイプ'
+                    '目標が達成できないときに、落ち込みやすい傾向',
+                    '継続すること自体を成功として定義できると、イキイキするタイプ'
+                ],
+                stress: [
+                    'デスクに観葉植物や花を飾る（集中力を高める、安心感を与え）',
+                    'ハッピーエンドの映画・ドラマや小説に触れる（楽観性を強化する）',
+                    '毎日の小さな成功を記録する習慣をつける（継続力を自己評価につなげる）'
                 ]
             },
             '5': {
-                name: '見えない課題を照らすファシリテーター',
+                title: '⑤見えない課題を照らすファシリテーター',
                 subtitle: '挑戦を導く人・危機をチャンスに変える',
-                traits: '外向型 × 問題志向型 × 創造型',
-                description: 'あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。',
-                strengths: [
-                    'みんなで行動しながら、問題を解決できる',
-                    'リスク回避を目標にできる、新しいことにチャレンジできる',
-                    '複数のアイディアを考えられる、意思決定が自分でできる',
-                    '幅広い情報を調べることができる、場所を移動できる'
+                combination: '外向型 × 問題志向型 × 創造型',
+                description: 'あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を達成するのための計画立案を支援する人のことです。',
+                suitable: [
+                    '番組ディレクター、イベントディレクター、プロジェクトマネージャー、リスク管理リーダー',
+                    '建設（危機管理）、医療現場のリーダー、空港オペレーション管理、輸送物流オペレーション',
+                    'セキュリティアナリスト、コンプライアンスリーダーなど'
                 ],
-                suitableJobs: '予測できないリスクを先取りしてみんなと管理する仕事、番組ディレクター、イベントディレクター、プロジェクトマネージャー、リスク管理リーダー、建設・IT（危機管理）、医療現場のリーダー、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど',
+                unsuitable: [
+                    'あまりに専門性が高い知識のみが必要とされる作業や行動',
+                    '一人で行う作業が多い、同じ場所で作業をすること',
+                    '問題解決が評価されない、結果ばかりを求められて',
+                    '行動するまでに事前の準備が多い、細かいルールで縛られる',
+                    'アイディアが採用されにくい環境でがんばる'
+                ],
                 tips: [
                     '問題を分析しながら、仲間と新しい道を切り拓く機会を与える',
-                    '裁量権を部分的だけでも渡す、細かく縛ると嫌になるため'
+                    '裁量権を部分的だけでも渡す、自由にやらせたり、細かく縛ると嫌になるため'
+                ],
+                stress: [
+                    '新しい場所や人に会いに行く',
+                    '役立ちそうなアイデアをSNSやノートに記録する',
+                    '小さな成功体験を意識的に積む'
                 ]
             },
             '6': {
-                name: 'チームを守るメディエーター',
+                title: '⑥チームを守るメディエーター',
                 subtitle: '陰で支える実行力・安定を支える人',
-                traits: '外向型 × 問題志向型 × 実行型',
-                description: 'あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。',
-                strengths: [
-                    'ルーティン化された工程がある、既存のアイディアを組み合わせて工夫できる',
-                    '多くの情報を扱わなくてすむ、問題を先に把握して解決できる',
-                    'いろいろな人と会える、慎重に現場を回しながら、リスクを最小化できる',
-                    '意思決定を自分でするより指示に従う、場所が移動できる'
+                combination: '外向型 × 問題志向型 × 実行型',
+                description: 'あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。メディエーターとは調停者を意味しており、問題を決まった方法でさばいて人を助ける人のことです。',
+                suitable: [
+                    '企業マネージャー、現場マネージャー、副社長的な存在、サービス指導',
+                    '衛生管理、定期点検、製造ラインの品質管理、在庫管理、検査員',
+                    '監視オペレーター、メンテナンススタッフ、監視員、清掃チーム',
+                    '人材育成、問題対応の現場リーダー、ジョブトレーング（OJT）、医療測定',
+                    '士業全般（行政書士、税理士、公認会計士など）'
                 ],
-                suitableJobs: 'みんなと一緒にルーティン作業でリスクをなくしていく仕事、企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、監視員、メンテナンススタッフ、監督、問題対応の現場リーダー、人材育成、ジョブトレーニング（OJT）、医療測定、士業全般（行政書士、税理士、公認会計士など）',
+                unsuitable: [
+                    '想定外の急な変化が起きる環境、新しいことをゼロから生み出す',
+                    '多くの新しい情報を扱わなければいけない',
+                    '人とのつながりが乏しいリモートワーク、移動の少ない環境',
+                    '問題解決が評価されない、結果ばかりを求められて',
+                    '空気を読みすぎて自分の改善案を出せなくなる、行動するまでに事前準備が多い'
+                ],
                 tips: [
-                    '現場での問題発見と改善を任せる',
-                    '◎裏方でも成果が見える設計が、努力やプロセスを評価してあげることが大切、地味な役割になりがちなので'
+                    '現場での問題発見と改善を任せる、裏方でも成果が見える設計が',
+                    '地味な役割になりがちなので、努力やプロセスを評価してあげることが大切'
+                ],
+                stress: [
+                    '信頼できる同僚と短時間雑談をする',
+                    '達成できたサポート事例をメモする',
+                    'チェックリストや進行表を整理して安心感を得る'
                 ]
             },
             '7': {
-                name: '解の地図を描くストラテジスト',
+                title: '⑦解の地図を描くストラテジスト',
                 subtitle: '分析で導く人・静かな戦略家',
-                traits: '内向型 × 問題志向型 × 創造型',
-                description: 'あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。',
-                strengths: [
-                    '一人で深く探究できる、まだ誰も知らない課題に出会える',
-                    '人の見落とす違和感や矛盾を拾って、創造的に解決できる',
-                    '推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる',
-                    '問題解決を目標にできる、幅広い情報を得てアイディアを生み出せる'
+                combination: '内向型 × 問題志向型 × 創造型',
+                description: 'あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。ストラテジストとは、情勢などを分析し、戦略（ストラテジー）や方針を立案する立案者を意味します。',
+                suitable: [
+                    'プロダクトデザイナー／発明家、リサーチャー、データサイエンティスト、システム開発、エンジニア',
+                    '臨床心理士、探偵業、特許戦略コンサルタント、問題解決コピーライティング',
+                    'サステナブルプロダクト開発、都市設計、修復家、法務リスクアナリスト',
+                    '社会派ジャーナリスト、投資家、戦略立案業、法務医学者'
                 ],
-                suitableJobs: '一人で問題をつきつめて創造的に解決できる仕事、プロダクトデザイナー／発明家、システム開発、リサーチャー、データサイエンティスト、エンジニア、探偵業、臨床心理士、特許戦略コンサルタント、問題解決コピーライティング、サステナブル修復家、都市設計、プロダクト開発、法務リスクアナリスト、社会派ジャーナリスト、法務医学者、投資家、戦略立案業',
+                unsuitable: [
+                    'あまり深く考えなくてもできる作業や行動、意思決定が早く求められる',
+                    '人と会う頻度が多い、結果ばかりで問題解決が評価されない',
+                    'アイディアが採用されにくい環境でがんばる、細かいルールで縛られる'
+                ],
                 tips: [
                     '静かな環境で深く考える時間と、アウトプットの場を明確にする',
                     '未来や現在の課題を冷静に分析して新しい方法を考えさせる',
-                    '表に出るのは嫌い、孤立や過剰思考、空気を読むのが負担になる、チーム内の雑談が苦手、プレゼンや即答が苦手な傾向',
-                    '行動が遅く見えることもある、考えすぎて動けなくなる、完璧を求めて公開できない'
+                    '表に出るのは嫌い、「ちゃんと見ている」「理解している」ことを伝えることが大切',
+                    'チーム内の雑談が苦手、プレゼンや即答が苦手な傾向、空気を読むのが負担になる',
+                    '孤立や過剰思考、人との接点が少なすぎると、行動が遅く見えることもある',
+                    '完璧を求めて公開できない。考えすぎて動けなくなる。傾向になる可能性'
+                ],
+                stress: [
+                    '静かな場所で思考整理をする',
+                    '情報をマインドマップにまとめる',
+                    '信頼できる人と戦略について語る時間を持つ'
                 ]
             },
             '8': {
-                name: '精度を磨くガーディアン',
+                title: '⑧精度を磨くガーディアン',
                 subtitle: '緻密さで支える人・完成度の職人',
-                traits: '内向型 × 問題志向型 × 実行型',
-                description: 'あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。',
-                strengths: [
-                    '規則や手順を守ることで行える、正確性が求められる',
-                    '早期に問題点を発見して、ルールをもとに解決できる',
-                    'ミスやリスクを検知する作業、ダブルチェックできる',
-                    '一人で静かに突き詰めることができる、最恵決定が自分でするより指示に従う'
+                combination: '内向型 × 問題志向型 × 実行型',
+                description: 'あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。ガーディアンとは守護者を意味します。妥協せず高品質を追求する姿勢が信頼を生みます。',
+                suitable: [
+                    '経理、法務、監査、品質保証、システム保守、リスク管理などの「慎重さ×正確性」が求められる業務',
+                    'ミス防止、トラブル防止に進化を発揮、チェック業務・校正、ミス防止',
+                    '堅実な業務改善の担い手'
                 ],
-                suitableJobs: '人と会わずに日々の作業を繰り返してリスクから守る仕事、経理、法務、監査、品質保証、システム保守、リスク管理などの「正確性×慎重さ」が求められる業務、ミス防止、チェック業務、校正、トラブル防止に進化を発揮、縁の下の力持ちの職種とも言える、堅実な業務改善の担い手',
+                unsuitable: [
+                    '意思決定が早く求められる、創造性の高い作業',
+                    '指示があいまいな中で進む、自分の役割が不明確',
+                    'みんなと行う作業の頻度が多い、結果ばかりで問題解決が評価されない'
+                ],
                 tips: [
                     '明確な手順と安定したルーティンがあると力を発揮',
-                    '変化に対応できないとストレスを抱えやすいので注意、融通が利かず',
+                    '融通が利かず、変化に対応できないとストレスを抱えやすいので注意',
                     '丁寧に伝えることが大切、変化が急すぎると不安になる',
-                    '徐々に巻き込む工夫をする、変化を押しつけず',
+                    '変化を押しつけず、徐々に巻き込む工夫をする',
                     'プロセスや努力をほめてあげる、常にフィードバックし、安心感が大切なので',
-                    '行動がゆっくりの傾向もあるため、落ち込みやすい傾向、目標が達成できないときに'
+                    '行動がゆっくりの傾向もあるため、「ちゃんと見ている」「理解している」ことを伝えることが大切'
+                ],
+                stress: [
+                    '作業スペースを整理整頓する',
+                    '完成度の高い作品や成果物を鑑賞する',
+                    '自分の作業記録や改善履歴を振り返る'
                 ]
             }
         };
 
-        // ページ読み込み時に結果を表示
-        window.addEventListener('DOMContentLoaded', function() {
-            displayResults();
-        });
-
-        function displayResults() {
-            // URLパラメータから診断結果を取得
-            const urlParams = new URLSearchParams(window.location.search);
+        // 結果を表示
+        if (type && typeData[type]) {
+            const data = typeData[type];
+            const container = document.getElementById('results-container');
             
-            const extraversion = parseInt(urlParams.get('e')) || 0;
-            const neuroticism = parseInt(urlParams.get('n')) || 0;
-            const openness = parseInt(urlParams.get('o')) || 0;
-            const agreeableness = parseInt(urlParams.get('a')) || 0;
-            const conscientiousness = parseInt(urlParams.get('c')) || 0;
+            container.innerHTML = `
+                <div class="type-header">
+                    <div class="type-title">${data.title}</div>
+                    <div class="type-subtitle">${data.subtitle}</div>
+                    <div class="type-combination">${data.combination}</div>
+                </div>
 
-            if (extraversion === 0) {
-                alert('診断結果が見つかりません。診断ページに戻ります。');
-                window.location.href = '3_bigfive.html';
-                return;
-            }
+                <div class="section">
+                    <h2>📋 特性の説明</h2>
+                    <p>${data.description}</p>
+                </div>
 
-            // タイプ判定
-            const extraversionType = extraversion >= 5 ? '外向型' : '内向型';
-            const neuroticismType = neuroticism >= 5 ? '問題志向型' : '楽観型';
-            const opennessType = openness >= 5 ? '創造型' : '実行型';
+                <div class="section">
+                    <h2>✅ 向いている職種・環境</h2>
+                    <ul>
+                        ${data.suitable.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
 
-            // スコアの表示
-            document.getElementById('extraversionScore').textContent = extraversion + '点';
-            document.getElementById('extraversionType').textContent = extraversionType;
-            
-            document.getElementById('neuroticismScore').textContent = neuroticism + '点';
-            document.getElementById('neuroticismType').textContent = neuroticismType;
-            
-            document.getElementById('opennessScore').textContent = openness + '点';
-            document.getElementById('opennessType').textContent = opennessType;
-            
-            document.getElementById('agreeablenessScore').textContent = agreeableness + '点';
-            document.getElementById('conscientiousnessScore').textContent = conscientiousness + '点';
+                <div class="section">
+                    <h2>⚠️ 苦手な職種・環境</h2>
+                    <ul>
+                        ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
 
-            // タイプIDを取得
-            const typeId = getTypeId(extraversion, neuroticism, openness);
-            const typeData = typeDescriptions[typeId];
-            
-            if (typeData) {
-                document.getElementById('typeName').textContent = typeData.name;
-                
-                // 詳細説明の表示
-                const descriptionHTML = `
-                    <div class="section">
-                        <h3>タイプの特徴</h3>
-                        <p><strong>${typeData.traits}</strong></p>
-                        <p>${typeData.description}</p>
-                    </div>
+                <div class="section">
+                    <h2>💡 能力を最大化する方法</h2>
+                    <ul>
+                        ${data.tips.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
 
-                    <div class="section">
-                        <h3>強み・向いている環境</h3>
-                        <ul>
-                            ${typeData.strengths.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-
-                    <div class="section">
-                        <h3>適している職種</h3>
-                        <p>${typeData.suitableJobs}</p>
-                    </div>
-
-                    <div class="section">
-                        <h3>能力を最大化する方法</h3>
-                        <ul>
-                            ${typeData.tips.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-                
-                document.getElementById('typeDescription').innerHTML = descriptionHTML;
-
-                // 誠実性と楽観性が低い場合の警告を表示
-                if (conscientiousness <= 3 && neuroticism <= 4) {
-                    const warningHTML = `
-                        <div class="warning-box">
-                            <h3>⚠️ 重要な注意事項</h3>
-                            <p>あなたの診断結果では、<strong>誠実性が低く、楽観性が高い</strong>組み合わせとなっています。</p>
-                            <p>このタイプは、リスクを過小評価して重要な不具合や課題に気づかず、後工程で大きな損失を招くことがあります。同じ失敗を繰り返しやすく、たとえ適職に就いていても改善が進まず、気づいたときには手遅れになってしまうことがあります。</p>
-                            <p><strong>改善のヒント：</strong></p>
-                            <ul>
-                                <li>毎日小さな約束を守る習慣をつける（ベッドメイキング、食器をすぐ洗うなど）</li>
-                                <li>失敗ノートをつけて、反省するパターンを身につける</li>
-                                <li>1日3つのToDoを必ず実行する</li>
-                                <li>約束の5分前に行動する習慣をつける</li>
-                            </ul>
-                            <p>これらの小さな習慣を毎日繰り返すことで、誠実性を高めることができます。</p>
-                        </div>
-                    `;
-                    document.getElementById('typeDescription').innerHTML += warningHTML;
-                }
-            }
+                <div class="section">
+                    <h2>🌟 即効性のあるストレス軽減法</h2>
+                    <ul>
+                        ${data.stress.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        } else {
+            document.getElementById('results-container').innerHTML = `
+                <div class="section">
+                    <p>診断結果が見つかりません。診断ページからやり直してください。</p>
+                </div>
+            `;
         }
     </script>
 </body>
