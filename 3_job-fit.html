@@ -140,8 +140,7 @@
                 visibility: hidden;
             }
             .print-title, .print-title *,
-            .result-box, .result-box *,
-            .footer-print, .footer-print * {
+            .result-box, .result-box * {
                 visibility: visible;
             }
             .print-title {
@@ -379,8 +378,9 @@
             div[style*="position: fixed"] { display: none !important; }
             .footer-print {
                 display: block !important;
-                position: relative;
-                margin-top: 40px;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
                 width: 100%;
                 text-align: center;
                 border-top: 1px solid #000;

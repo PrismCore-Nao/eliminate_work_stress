@@ -156,13 +156,20 @@
                 font-size: 20px;
             }
         }
-    </style>
+    
+        @media print {
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+        }
+</style>
 </head>
 <body>
     <div class="container">
         <div class="print-title">ビッグファイブ診断 詳細結果</div>
 
-        <h1>ビッグファイブ診断 詳細結果</h1>
+        
 
         <div id="results-container">
             <!-- JavaScriptで動的に挿入 -->
@@ -559,7 +566,7 @@
                                     <strong>外向性：${extraversion}点／8点（${extraversionType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -569,7 +576,7 @@
                                     <strong>神経症傾向：${neuroticism}点／8点（${neuroticismType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #FF9800, #FFC107); height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -579,17 +586,7 @@
                                     <strong>開放性：${openness}点／8点（${opennessType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #2196F3, #03A9F4); height: 100%; width: ${(openness/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- 協調性 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>協調性：${agreeableness}点／8点</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #9C27B0, #BA68C8); height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -599,7 +596,7 @@
                                     <strong>誠実性：${conscientiousness}点／8点</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #F44336, #E91E63); height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: linear-gradient(90deg, #F44336, #E91E63); height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                         </div>
@@ -664,7 +661,7 @@
                     ${data.suitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.suitableReason}</p>` : ''}
                 </div>
 
-                <div class="section">
+                <div class="section page-break">
                     <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
                     ${data.unsuitableEnvironment ? `
                         <div style="margin-bottom: 20px;">
@@ -690,7 +687,7 @@
                     </ul>
                 </div>
 
-                <div class="section">
+                <div class="section page-break">
                     <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
                     ${goodTypesHTML}
                     ${badTypesHTML}
