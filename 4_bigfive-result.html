@@ -93,11 +93,13 @@
         }
 
         .section h2 {
-            color: #000000;
             font-size: 22px;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffff00;
+            border-bottom: none;
+            border-radius: 4px;
         }
 
         .section p, .section ul {
@@ -158,9 +160,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">8つのタイプ診断結果</div>
+        <div class="print-title">ビッグファイブ診断 詳細結果</div>
 
-        <h1>8つのタイプ診断結果</h1>
+        <h1>ビッグファイブ診断 詳細結果</h1>
 
         <div id="results-container">
             <!-- JavaScriptで動的に挿入 -->
@@ -548,8 +550,8 @@
             let scoresHTML = '';
             if (extraversion && neuroticism && openness && agreeableness && conscientiousness) {
                 scoresHTML = `
-                    <div class="section" style="background-color: #fffef0; border-left: 5px solid #000000;">
-                        <h2>📊 各特性のスコア</h2>
+                    <div class="section" style="background-color: #fffef0; border-left: 5px solid #ffff00;">
+                        <h2>各特性のスコア</h2>
                         <div style="margin-top: 20px;">
                             <!-- 外向性 -->
                             <div style="margin-bottom: 20px;">
@@ -557,7 +559,7 @@
                                     <strong>外向性：${extraversion}点／8点（${extraversionType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -567,7 +569,7 @@
                                     <strong>神経症傾向：${neuroticism}点／8点（${neuroticismType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #FF9800, #FFC107); height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #FF9800, #FFC107); height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -577,7 +579,7 @@
                                     <strong>開放性：${openness}点／8点（${opennessType || ''}）</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #2196F3, #03A9F4); height: 100%; width: ${(openness/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #2196F3, #03A9F4); height: 100%; width: ${(openness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -587,7 +589,7 @@
                                     <strong>協調性：${agreeableness}点／8点</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #9C27B0, #BA68C8); height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #9C27B0, #BA68C8); height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
@@ -597,7 +599,7 @@
                                     <strong>誠実性：${conscientiousness}点／8点</strong>
                                 </div>
                                 <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: linear-gradient(90deg, #F44336, #E91E63); height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
+                                    <div style="background: #ffff00; /* unified */ /* linear-gradient(90deg, #F44336, #E91E63); height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                         </div>
@@ -639,12 +641,12 @@
                 ${scoresHTML}
 
                 <div class="section">
-                    <h2>📋 ①特性の説明</h2>
+                    <h2>①特性の説明</h2>
                     <p>${data.description}</p>
                 </div>
 
                 <div class="section">
-                    <h2>✅ ②向いている職種・環境（脳内物質が出やすい条件）</h2>
+                    <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
                     ${data.environmentConditions ? `
                         <div style="margin-bottom: 20px;">
                             <strong>環境条件</strong>
@@ -663,7 +665,7 @@
                 </div>
 
                 <div class="section">
-                    <h2>⚠️ ③苦手な職種・環境（脳内物質が出にくい条件）</h2>
+                    <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
                     ${data.unsuitableEnvironment ? `
                         <div style="margin-bottom: 20px;">
                             <strong>環境条件</strong>
@@ -682,20 +684,20 @@
                 </div>
 
                 <div class="section">
-                    <h2>💡 ④能力を最大化する方法</h2>
+                    <h2>④能力を最大化する方法</h2>
                     <ul>
                         ${data.tips.map(item => `<li>${item}</li>`).join('')}
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>🤝 ⑤相性の良いタイプ／悪いタイプとの接し方</h2>
+                    <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
                     ${goodTypesHTML}
                     ${badTypesHTML}
                 </div>
 
                 <div class="section">
-                    <h2>🌟 ⑥即効性のあるストレス軽減法</h2>
+                    <h2>⑥即効性のあるストレス軽減法</h2>
                     <ul>
                         ${data.stress.map(item => `<li>${item}</li>`).join('')}
                     </ul>

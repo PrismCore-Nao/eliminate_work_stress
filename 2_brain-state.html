@@ -309,8 +309,6 @@
                 if (isChecked) totalCount++;
             }
             data.checked_count = totalCount;  // ← チェック数
-            data.total_score = totalCount;     // ← 合計スコア
-            
             // 結果判定
             let result = '';
             let explanation = '';
@@ -343,7 +341,7 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwIgrZeFwdthGgHS5e0cHBVvZHu73ZR1rTBd-MZYwmi4n2bmPRxZlG5bg3iTxCV4dkLAg/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyNClDAe58ppr18DAqoyLW8tBd7DEIfAosy_BOf5JvMf9OPUIOFDE6_np6MxNqZtunx4Q/exec';
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -379,8 +377,9 @@
             div[style*="position: fixed"] { display: none !important; }
             .footer-print {
                 display: block !important;
-                position: relative;
-                margin-top: 40px;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
                 width: 100%;
                 text-align: center;
                 border-top: 1px solid #000;

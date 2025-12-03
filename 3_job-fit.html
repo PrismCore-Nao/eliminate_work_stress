@@ -140,7 +140,8 @@
                 visibility: hidden;
             }
             .print-title, .print-title *,
-            .result-box, .result-box * {
+            .result-box, .result-box *,
+            .footer-print, .footer-print * {
                 visibility: visible;
             }
             .print-title {
@@ -341,7 +342,7 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwIgrZeFwdthGgHS5e0cHBVvZHu73ZR1rTBd-MZYwmi4n2bmPRxZlG5bg3iTxCV4dkLAg/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyNClDAe58ppr18DAqoyLW8tBd7DEIfAosy_BOf5JvMf9OPUIOFDE6_np6MxNqZtunx4Q/exec';
             
             fetch(scriptURL, {
                 method: 'POST',
