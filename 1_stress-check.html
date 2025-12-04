@@ -644,16 +644,17 @@
             // 状態説明をデータに追加
             data.state_descriptions = stateDescriptions;
             
-            // 結果を表示
-            let stateDescriptionsHtml = '';
-            if (stateDescriptions.length > 0) {
-                stateDescriptionsHtml = '<div class="result-item"><strong>あなたの状態:</strong>';
-                stateDescriptions.forEach(state => {
-                    stateDescriptionsHtml += `<div style="margin-top: 10px;"><strong>${state.questions}にチェックを入れた結果:</strong><br>${state.description}</div>`;
-                });
-                stateDescriptionsHtml += '</div>';
-            }
+// 結果を表示
+let stateDescriptionsHtml = '';
+if (stateDescriptions.length > 0) {
+    stateDescriptionsHtml = '<div class="result-item"><strong>あなたの状態:</strong>';
+    stateDescriptions.forEach(state => {
+        stateDescriptionsHtml += `<div style="margin-top: 15px;"><strong>${state.questions}にチェックを入れた結果:</strong>${state.description}</div>`;
+    });
+    stateDescriptionsHtml += '</div>';
+}
             
+
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
                     <strong>合計点数: ${totalScore}点</strong>
