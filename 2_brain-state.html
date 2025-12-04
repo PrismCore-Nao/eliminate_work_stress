@@ -301,19 +301,14 @@
                 timestamp: new Date().toLocaleString('ja-JP')
             };
             
-            // チェックされた質問を配列で保存
-            let checkedQuestions = [];
+            // チェック数をカウント
             let totalCount = 0;
             for (let i = 1; i <= 10; i++) {
                 const isChecked = formData.get(`q${i}`) ? true : false;
                 data[`q${i}`] = isChecked;
-                if (isChecked) {
-                    checkedQuestions.push(i);
-                    totalCount++;
-                }
+                if (isChecked) totalCount++;
             }
-            data.checked_count = totalCount;
-            
+            data.checked_count = totalCount;  // ← チェック数
             // 結果判定
             let result = '';
             let explanation = '';
@@ -326,64 +321,11 @@
                 explanation = 'ドーパミンやセロトニングが不足傾向です。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
             }
             
-            data.level = result;
+            data.level = result;        // ← 判定
             data.result = result;
             data.explanation = explanation;
             
-            // 詳細診断メッセージを生成
-            let detailedMessages = [];
-            
-            // Q1, Q6, Q13のチェック（Q13は存在しないため、Q1とQ6のみ）
-            const dosGroup = checkedQuestions.filter(q => [1, 6, 13].includes(q));
-            if (dosGroup.length > 0) {
-                detailedMessages.push('今の仕事が合っておらず、脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）も出ていない状態です。');
-            }
-            
-            // Q3, Q4, Q12のチェック（Q12は存在しないため、Q3とQ4のみ）
-            const prefrontalGroup = checkedQuestions.filter(q => [3, 4, 12].includes(q));
-            if (prefrontalGroup.length > 0) {
-                detailedMessages.push('前頭前野が疲弊し、感情コントロールがダウンしている可能性があります。');
-            }
-            
-            // Q7のチェック
-            if (checkedQuestions.includes(7)) {
-                detailedMessages.push('人間関係のストレスを強く感じているようです（協調性がストレスを増やしています）。');
-            }
-            
-            // Q8のチェック
-            if (checkedQuestions.includes(8)) {
-                detailedMessages.push('海馬が萎縮し、記憶力が落ちている可能性があります。');
-            }
-            
-            // Q14のチェック（質問は10問しかないため、該当なし）
-            // 代わりにQ4を使用
-            if (checkedQuestions.includes(4)) {
-                detailedMessages.push('長期ストレスで脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）が出ておらず、集中力が切れている状態です。');
-            }
-            
-            // Q9, Q10のチェック
-            const barrierGroup = checkedQuestions.filter(q => [9, 10].includes(q));
-            if (barrierGroup.length > 0) {
-                detailedMessages.push('脳にバリアを張れていません（刺激が少ないことがストレスを増やしています）。');
-            }
-            
-            // Q2, Q5, Q11, Q15のチェック（Q11, Q15は存在しないため、Q2とQ5のみ）
-            const physiologicalGroup = checkedQuestions.filter(q => [2, 5, 11, 15].includes(q));
-            if (physiologicalGroup.length > 0) {
-                detailedMessages.push('長期ストレスが身体や生理反応（睡眠）にまで影響している状態です。');
-            }
-            
             // 結果を表示
-            let detailedHtml = '';
-            if (detailedMessages.length > 0) {
-                detailedHtml = `
-                    <div class="result-item">
-                        <strong>詳細診断：</strong><br>
-                        ${detailedMessages.map(msg => `• ${msg}`).join('<br><br>')}
-                    </div>
-                `;
-            }
-            
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
                     <strong>チェック数：${totalCount}個</strong>
@@ -392,7 +334,6 @@
                     <strong>結果：${result}</strong><br>
                     ${explanation}
                 </div>
-                ${detailedHtml}
             `;
             
             document.getElementById('resultBox').classList.add('show');
@@ -407,7 +348,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                mode: 'no-cors'
+                mode: 'no-cors'  // CORSエラー回避
             })
             .then(() => {
                 console.log('データ送信完了');

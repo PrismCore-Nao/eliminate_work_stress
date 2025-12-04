@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仕事のストレスと脳疲労度診断</title>
+    <title>ストレス診断</title>
     <style>
         * {
             margin: 0;
@@ -23,6 +23,10 @@
             max-width: 900px;
             margin: 0 auto;
             background: #ffffff;
+        }
+
+        .print-title {
+            display: none;
         }
 
         h1 {
@@ -45,87 +49,46 @@
         }
 
         .question {
-            margin-bottom: 40px;
-            padding: 25px;
+            margin-bottom: 25px;
+            padding: 20px;
             background-color: #fafafa;
             border: 1px solid #e0e0e0;
         }
 
         .question-text {
-            font-weight: bold;
-            margin-bottom: 20px;
             font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .slider-container {
-            padding: 10px 0;
-        }
-
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
             margin-bottom: 15px;
-            font-size: 14px;
-            color: #333;
+            font-weight: 500;
         }
 
-        .slider-labels span {
-            flex: 1;
-            text-align: center;
-        }
-
-        .slider-labels span:first-child {
-            text-align: left;
-        }
-
-        .slider-labels span:last-child {
-            text-align: right;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            background: #d3d3d3;
-            outline: none;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #ffff00;
-            border: 2px solid #000000;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            background: #ffff00;
-            border: 2px solid #000000;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        .slider-wrapper {
+        .rating-options {
             display: flex;
-            flex-direction: column;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            display: flex;
             align-items: center;
+            gap: 8px;
+        }
+
+        .rating-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .rating-option label {
+            cursor: pointer;
+            font-size: 14px;
         }
 
         .result-box {
             background-color: #fffef0;
-            border: 2px solid #ffff00;
-            padding: 20px;
-            margin-top: 30px;
-            font-size: 15px;
+            border: 3px solid #ffff00;
+            padding: 30px;
+            margin: 30px 0;
             display: none;
         }
 
@@ -133,12 +96,14 @@
             display: block;
         }
 
-        .result-box h3 {
-            background-color: #ffff00;
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
             color: #000000;
-            padding: 10px;
-            margin: -20px -20px 15px -20px;
-            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffff00;
         }
 
         .result-item {
@@ -146,13 +111,28 @@
             padding: 15px;
             background-color: #ffffff;
             border-left: 4px solid #ffff00;
+            line-height: 1.8;
+        }
+
+        .result-item strong {
+            font-size: 18px;
+            color: #000000;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .level-description {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
         }
 
         .button-group {
             display: flex;
             gap: 20px;
             justify-content: center;
-            margin-top: 40px;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
 
@@ -172,6 +152,10 @@
             color: #ffff00;
         }
 
+        .submit-button.hide {
+            display: none;
+        }
+
         .pdf-button {
             display: none;
         }
@@ -180,22 +164,14 @@
             display: inline-block;
         }
 
-        .submit-button.hide {
-            display: none;
-        }
-
-        .print-title {
-            display: none;
-        }
-
         @media print {
-            body * {
-                visibility: hidden;
+            body {
+                padding: 0;
+                margin: 0;
             }
-            .print-title, .print-title *,
-            .result-box, .result-box *,
-            .footer-print, .footer-print * {
-                visibility: visible;
+            .container {
+                position: relative;
+                padding-top: 100px;
             }
             .print-title {
                 display: block;
@@ -229,7 +205,7 @@
             }
 
             .question {
-                padding: 20px 15px;
+                padding: 15px;
             }
 
             .button-group {
@@ -239,414 +215,298 @@
             .submit-button, .pdf-button {
                 width: 100%;
             }
+
+            .rating-options {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="print-title">仕事のストレスと脳疲労度診断</div>
+        <div class="print-title">ストレス診断</div>
 
-        <h1>仕事のストレスと脳疲労度を診断！<br>あなたの扁桃体の警報レベルをチェック</h1>
+        <h1>ストレス診断</h1>
 
         <div class="instruction">
-            下記の項目に当てはまる回答を選んでください。
+            ※下記の項目に当てはまる点数をつけてください<br>
+            （2点→その通りだ　1点→どちらでもない　0点→全く違う）
         </div>
 
         <form id="diagnosisForm">
-            <!-- Q1 -->
             <div class="question">
                 <div class="question-text">①仕事をしていても週末のことを考えてしまう</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q1" value="2" id="q1_2">
+                        <label for="q1_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <!-- 表示用：0〜2 -->
-                        <input
-                            type="range"
-                            name="q1_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="1"
-                            oninput="updateScore(this)"
-                        >
-                        <!-- 送信用：2/1/0 -->
-                        <input type="hidden" name="q1" id="q1_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q1" value="1" id="q1_1">
+                        <label for="q1_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q1" value="0" id="q1_0">
+                        <label for="q1_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q2 -->
             <div class="question">
                 <div class="question-text">②目覚ましをかけてもすぐに起きれないことが多い</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q2" value="2" id="q2_2">
+                        <label for="q2_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q2_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="2"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q2" id="q2_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q2" value="1" id="q2_1">
+                        <label for="q2_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q2" value="0" id="q2_0">
+                        <label for="q2_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q3 -->
             <div class="question">
                 <div class="question-text">③小さなことでもイライラしやすい</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q3" value="2" id="q3_2">
+                        <label for="q3_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q3_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="3"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q3" id="q3_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q3" value="1" id="q3_1">
+                        <label for="q3_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q3" value="0" id="q3_0">
+                        <label for="q3_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q4 -->
             <div class="question">
                 <div class="question-text">④メールを見てもすぐに返せないことがある</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q4" value="2" id="q4_2">
+                        <label for="q4_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q4_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="4"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q4" id="q4_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q4" value="1" id="q4_1">
+                        <label for="q4_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q4" value="0" id="q4_0">
+                        <label for="q4_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q5 -->
             <div class="question">
                 <div class="question-text">⑤気づいたら寝落ちしているときがある</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q5" value="2" id="q5_2">
+                        <label for="q5_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q5_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="5"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q5" id="q5_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q5" value="1" id="q5_1">
+                        <label for="q5_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q5" value="0" id="q5_0">
+                        <label for="q5_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q6 -->
             <div class="question">
                 <div class="question-text">⑥1日を長く感じてしまう</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q6" value="2" id="q6_2">
+                        <label for="q6_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q6_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="6"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q6" id="q6_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q6" value="1" id="q6_1">
+                        <label for="q6_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q6" value="0" id="q6_0">
+                        <label for="q6_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q7 -->
             <div class="question">
                 <div class="question-text">⑦人が自分のことをどう思っているか気になる</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q7" value="2" id="q7_2">
+                        <label for="q7_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q7_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="7"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q7" id="q7_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q7" value="1" id="q7_1">
+                        <label for="q7_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q7" value="0" id="q7_0">
+                        <label for="q7_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q8 -->
             <div class="question">
                 <div class="question-text">⑧PCのファイルや書類がどこにあるかわからなくなることがある</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q8" value="2" id="q8_2">
+                        <label for="q8_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q8_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="8"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q8" id="q8_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q8" value="1" id="q8_1">
+                        <label for="q8_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q8" value="0" id="q8_0">
+                        <label for="q8_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q9 -->
             <div class="question">
                 <div class="question-text">⑨個人的に趣味と言えるものがない</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q9" value="2" id="q9_2">
+                        <label for="q9_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q9_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="9"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q9" id="q9_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q9" value="1" id="q9_1">
+                        <label for="q9_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q9" value="0" id="q9_0">
+                        <label for="q9_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q10 -->
             <div class="question">
                 <div class="question-text">⑩ほぼ毎日会社と自宅の往復になりがちだ</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q10" value="2" id="q10_2">
+                        <label for="q10_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q10_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="10"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q10" id="q10_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q10" value="1" id="q10_1">
+                        <label for="q10_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q10" value="0" id="q10_0">
+                        <label for="q10_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q11 -->
             <div class="question">
                 <div class="question-text">⑪食欲がない、または過食傾向がある（お酒も含む）</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q11" value="2" id="q11_2">
+                        <label for="q11_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q11_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="11"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q11" id="q11_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q11" value="1" id="q11_1">
+                        <label for="q11_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q11" value="0" id="q11_0">
+                        <label for="q11_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q12 -->
             <div class="question">
                 <div class="question-text">⑫急に泣いたり怒ったりすることがある</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q12" value="2" id="q12_2">
+                        <label for="q12_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q12_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="12"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q12" id="q12_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q12" value="1" id="q12_1">
+                        <label for="q12_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q12" value="0" id="q12_0">
+                        <label for="q12_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q13 -->
             <div class="question">
                 <div class="question-text">⑬仕事をしていても他のことを考えてしまう</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q13" value="2" id="q13_2">
+                        <label for="q13_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q13_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="13"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q13" id="q13_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q13" value="1" id="q13_1">
+                        <label for="q13_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q13" value="0" id="q13_0">
+                        <label for="q13_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q14 -->
             <div class="question">
                 <div class="question-text">⑭簡単な作業でもミスしたり、疲れてやる気が出ない</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q14" value="2" id="q14_2">
+                        <label for="q14_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q14_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="14"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q14" id="q14_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q14" value="1" id="q14_1">
+                        <label for="q14_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q14" value="0" id="q14_0">
+                        <label for="q14_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Q15 -->
             <div class="question">
                 <div class="question-text">⑮会社に行こうと思うと胃痛や動悸がする</div>
-                <div class="slider-container">
-                    <div class="slider-labels">
-                        <span>その通りだ</span>
-                        <span>どちらでもない</span>
-                        <span>全く違う</span>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <input type="radio" name="q15" value="2" id="q15_2">
+                        <label for="q15_2">2点（その通りだ）</label>
                     </div>
-                    <div class="slider-wrapper">
-                        <input
-                            type="range"
-                            name="q15_raw"
-                            min="0"
-                            max="2"
-                            value="1"
-                            step="1"
-                            class="slider"
-                            data-question="15"
-                            oninput="updateScore(this)"
-                        >
-                        <input type="hidden" name="q15" id="q15_score" value="1">
+                    <div class="rating-option">
+                        <input type="radio" name="q15" value="1" id="q15_1">
+                        <label for="q15_1">1点（どちらでもない）</label>
+                    </div>
+                    <div class="rating-option">
+                        <input type="radio" name="q15" value="0" id="q15_0">
+                        <label for="q15_0">0点（全く違う）</label>
                     </div>
                 </div>
             </div>
 
             <div class="result-box" id="resultBox">
-                <h3>診断結果</h3>
+                <div class="result-title">診断結果</div>
                 <div id="resultContent"></div>
             </div>
 
@@ -658,36 +518,9 @@
     </div>
 
     <script>
-        // スライダーの値（0/1/2）をスコア（2/1/0）に変換して hidden に反映
-        function updateScore(slider) {
-            const q = slider.dataset.question;           // "1"〜"15"
-            const raw = parseInt(slider.value, 10);      // 0,1,2（左→右）
-            const score = 2 - raw;                       // 2,1,0 に変換
-            const hidden = document.getElementById(`q${q}_score`);
-            if (hidden) {
-                hidden.value = score;
-            }
-        }
-
-        // 合計点数を計算（hidden のスコア 2/1/0 を使用）
-        function calculateTotal() {
-            let total = 0;
-            for (let i = 1; i <= 15; i++) {
-                const hidden = document.getElementById(`q${i}_score`);
-                const val = hidden ? parseInt(hidden.value, 10) : 0;
-                total += isNaN(val) ? 0 : val;
-            }
-            return total;
-        }
-
-        // フォーム送信処理
         document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // 念のため、送信前に全スライダーから hidden を更新
-            document.querySelectorAll('.slider').forEach(slider => updateScore(slider));
-
-            const total = calculateTotal();
+            
             const formData = new FormData(this);
             const data = {
                 test_type: '1_stress-check',
@@ -695,62 +528,157 @@
                 time: new Date().toLocaleTimeString('ja-JP'),
                 timestamp: new Date().toLocaleString('ja-JP')
             };
-
-            // スプレッドシートには 2/1/0 のスコアを送信
+            
+            // 合計点数を計算
+            let totalScore = 0;
+            const checkedQuestions = []; // チェックされた質問を追跡
+            
             for (let i = 1; i <= 15; i++) {
-                data[`q${i}`] = formData.get(`q${i}`);   // hidden の値（2/1/0）
+                const value = formData.get(`q${i}`);
+                const score = value ? parseInt(value) : 0;
+                data[`q${i}`] = score;
+                totalScore += score;
+                
+                // 2点または1点がついた質問を記録
+                if (score > 0) {
+                    checkedQuestions.push(i);
+                }
             }
-            data.total_score = total;
-
-            // 結果判定
-            let resultLevel = '';
-            let brainState = '';
-
-            if (total >= 0 && total <= 6) {
-                resultLevel = '安定モード（発火なし）';
-                brainState = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い状態です。';
-            } else if (total >= 7 && total <= 12) {
-                resultLevel = '軽度警戒モード（低発火）';
-                brainState = 'ストレス刺激に軽く反応している状態です。集中力に波が出やすくなっています。';
-            } else if (total >= 13 && total <= 18) {
-                resultLevel = '中度警報モード（発火持続）';
-                brainState = '扁桃体が断続的に発火し、イライラや思考のブレが出やすい状態です。';
-            } else if (total >= 19 && total <= 24) {
-                resultLevel = '高警報モード（常時発火）';
-                brainState = '扁桃体が警報ボタンを押しっぱなしに近い状態で、前頭前野の制御力が下がっています。';
+            data.total_score = totalScore;
+            
+            // 警報レベルの判定
+            let levelName = '';
+            let levelDescription = '';
+            
+            if (totalScore >= 0 && totalScore <= 6) {
+                levelName = '安定モード（発火なし）';
+                levelDescription = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い。';
+            } else if (totalScore >= 7 && totalScore <= 12) {
+                levelName = '軽度警戒モード（低発火）';
+                levelDescription = 'ストレス刺激に軽く反応。集中力に波がある。';
+            } else if (totalScore >= 13 && totalScore <= 18) {
+                levelName = '中度警報モード（発火持続）';
+                levelDescription = '扁桃体が断続的に発火。イライラ・思考のブレが出始める。';
+            } else if (totalScore >= 19 && totalScore <= 24) {
+                levelName = '高警報モード（常時発火）';
+                levelDescription = '扁桃体が警報ボタンを押しっぱなし。前頭前野の制御が低下。';
             } else {
-                resultLevel = '危険モード（過発火・暴走状態）';
-                brainState = '感情と理性の回路がショート気味で、心身の不調として表面化している可能性があります。';
+                levelName = '危険モード（過発火・暴走状態）';
+                levelDescription = '感情と理性の回路がショート。心身の異変が出ている可能性あり。';
             }
-
-            data.level = resultLevel;           // ← 警報レベル（モード）
-            data.result_level = resultLevel;
-            data.result_text = brainState;
-
+            
+            data.level = levelName;
+            data.level_description = levelDescription;
+            
+            // 該当する状態説明を生成
+            const stateDescriptions = [];
+            
+            // Q1, Q6, Q13のチェック
+            if (checkedQuestions.includes(1) || checkedQuestions.includes(6) || checkedQuestions.includes(13)) {
+                const matchedQs = [1, 6, 13].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '今の仕事が合っておらず、脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）も出ていない状態です。'
+                    });
+                }
+            }
+            
+            // Q3, Q4, Q12のチェック
+            if (checkedQuestions.includes(3) || checkedQuestions.includes(4) || checkedQuestions.includes(12)) {
+                const matchedQs = [3, 4, 12].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '前頭前野が疲弊し、感情コントロールがダウンしている可能性があります。'
+                    });
+                }
+            }
+            
+            // Q7のチェック
+            if (checkedQuestions.includes(7)) {
+                stateDescriptions.push({
+                    questions: 'Q7',
+                    description: '人間関係のストレスを強く感じているようです（協調性がストレスを増やしています）。'
+                });
+            }
+            
+            // Q8のチェック
+            if (checkedQuestions.includes(8)) {
+                stateDescriptions.push({
+                    questions: 'Q8',
+                    description: '海馬が萎縮し、記憶力が落ちている可能性があります。'
+                });
+            }
+            
+            // Q14のチェック
+            if (checkedQuestions.includes(14)) {
+                stateDescriptions.push({
+                    questions: 'Q14',
+                    description: '長期ストレスで脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）が出ておらず、集中力が切れている状態です。'
+                });
+            }
+            
+            // Q9, Q10のチェック
+            if (checkedQuestions.includes(9) || checkedQuestions.includes(10)) {
+                const matchedQs = [9, 10].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '脳にバリアを張れていません（刺激が少ないことがストレスを増やしています）。'
+                    });
+                }
+            }
+            
+            // Q2, Q5, Q11, Q15のチェック
+            if (checkedQuestions.includes(2) || checkedQuestions.includes(5) || checkedQuestions.includes(11) || checkedQuestions.includes(15)) {
+                const matchedQs = [2, 5, 11, 15].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '長期ストレスが身体や生理反応（睡眠）にまで影響している状態です。'
+                    });
+                }
+            }
+            
+            // 状態説明をデータに追加
+            data.state_descriptions = stateDescriptions;
+            
             // 結果を表示
+            let stateDescriptionsHtml = '';
+            if (stateDescriptions.length > 0) {
+                stateDescriptionsHtml = '<div class="result-item"><strong>あなたの状態:</strong>';
+                stateDescriptions.forEach(state => {
+                    stateDescriptionsHtml += `<div style="margin-top: 10px;"><strong>${state.questions}にチェックを入れた結果:</strong><br>${state.description}</div>`;
+                });
+                stateDescriptionsHtml += '</div>';
+            }
+            
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
-                    <strong>合計点数：${total}点</strong>
+                    <strong>合計点数: ${totalScore}点</strong>
                 </div>
                 <div class="result-item">
-                    <strong>警報レベル：${resultLevel}</strong><br>
-                    脳の状態イメージ：${brainState}
+                    <strong>警報レベル: ${levelName}</strong>
+                    <div class="level-description">${levelDescription}</div>
                 </div>
+                ${stateDescriptionsHtml}
             `;
-
+            
             document.getElementById('resultBox').classList.add('show');
             document.getElementById('pdfButton').classList.add('show');
             document.getElementById('submitButton').classList.add('hide');
-
+            
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxxcn1ErmEeJlrAhXudKsQN0y5ZGtzLm_klYWGb5kCa0dO0QAY_sq2PPorezE1r9MjPQw/exec'; // 実際のURLを設定してください
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxxcn1ErmEeJlrAhXudKsQN0y5ZGtzLm_klYWGb5kCa0dO0QAY_sq2PPorezE1r9MjPQw/exec';
+            
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                mode: 'no-cors'  // CORSエラー回避
+                mode: 'no-cors'
             })
             .then(() => {
                 console.log('データ送信完了');
@@ -758,11 +686,12 @@
             .catch(error => {
                 console.error('送信エラー:', error);
             });
-
+            
             // 結果までスクロール
             document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
+
     <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
         <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
@@ -778,6 +707,7 @@
         @media print {
             div[style*="position: fixed"] { display: none !important; }
             .footer-print {
+                display: block !important;
                 position: absolute;
                 bottom: 20px;
                 left: 0;
@@ -785,6 +715,8 @@
                 text-align: center;
                 border-top: 1px solid #000;
                 padding-top: 10px;
+                background: white;
+                color: #000 !important;
             }
         }
     </style>
