@@ -95,7 +95,7 @@
         }
 
         .section p, .section ul {
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.8;
             color: #000;
         }
@@ -112,6 +112,20 @@
 
         .section strong {
             font-weight: bold;
+        }
+
+        /* 小見出しのスタイル */
+        .subsection-title {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 6px 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         /* グラフスタイル */
@@ -140,6 +154,39 @@
             transition: width 0.5s;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+        }
+
+        /* 中間値の注意書き */
+        .ambivert-notice {
+            background-color: #fffef0;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-bottom: 40px;
+            font-size: 15px;
+            line-height: 1.8;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .ambivert-notice h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ambivert-notice p {
+            margin-bottom: 12px;
+            color: #000000;
+        }
+
+        .ambivert-notice a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .ambivert-notice a:hover {
+            color: #004499;
         }
 
         .pdf-button {
@@ -199,6 +246,7 @@
             .page-break-before {
                 page-break-before: always;
                 break-before: page;
+                padding-top: 20px;
             }
             body {
                 -webkit-print-color-adjust: exact;
@@ -545,7 +593,7 @@
                 tips: [
                     '静かな環境で深く考える時間と、アウトプットの場を明確にする',
                     '未来や現在の課題を冷静に分析して新しい方法を考えさせる',
-                    '※表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切。',
+                    '※表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切',
                     'プレゼンや即答が苦手な傾向、チーム内の雑談が苦手、空気を読むのが負担になる傾向、行動が遅く見えることもある。人との接点が少なすぎると、孤立や過剰思考になる可能性。考えすぎて動けなくなる。完璧を求めて公開できない'
                 ],
                 goodTypes: ['ガーディアン型、ファシリテーター型（問題を一緒に考えることができる）'],
@@ -603,6 +651,57 @@
             }
         };
 
+        // 中間値チェック関数
+        function hasMiddleValues(ext, neu, opn) {
+            return (ext == 4 || ext == 5) || (neu == 4 || neu == 5) || (opn == 4 || opn == 5);
+        }
+
+        // 中間値の診断タイプを取得
+        function getMiddleValueTypes(ext, neu, opn, currentType) {
+            const types = [];
+            
+            // 外向性が中間値の場合
+            if (ext == 4 || ext == 5) {
+                if (currentType == '1' || currentType == '2' || currentType == '5' || currentType == '6') {
+                    // 外向型の人 → 対応する内向型を提案
+                    const mapping = {'1': '3', '2': '4', '5': '7', '6': '8'};
+                    types.push(mapping[currentType]);
+                } else {
+                    // 内向型の人 → 対応する外向型を提案
+                    const mapping = {'3': '1', '4': '2', '7': '5', '8': '6'};
+                    types.push(mapping[currentType]);
+                }
+            }
+            
+            // 神経症傾向が中間値の場合
+            if (neu == 4 || neu == 5) {
+                if (currentType == '1' || currentType == '2' || currentType == '3' || currentType == '4') {
+                    // 楽観型の人 → 対応する問題志向型を提案
+                    const mapping = {'1': '5', '2': '6', '3': '7', '4': '8'};
+                    types.push(mapping[currentType]);
+                } else {
+                    // 問題志向型の人 → 対応する楽観型を提案
+                    const mapping = {'5': '1', '6': '2', '7': '3', '8': '4'};
+                    types.push(mapping[currentType]);
+                }
+            }
+            
+            // 開放性が中間値の場合
+            if (opn == 4 || opn == 5) {
+                if (currentType == '1' || currentType == '3' || currentType == '5' || currentType == '7') {
+                    // 創造型の人 → 対応する実行型を提案
+                    const mapping = {'1': '2', '3': '4', '5': '6', '7': '8'};
+                    types.push(mapping[currentType]);
+                } else {
+                    // 実行型の人 → 対応する創造型を提案
+                    const mapping = {'2': '1', '4': '3', '6': '5', '8': '7'};
+                    types.push(mapping[currentType]);
+                }
+            }
+            
+            return [...new Set(types)]; // 重複を除去
+        }
+
         // 結果を表示
         if (type && typeData[type]) {
             const data = typeData[type];
@@ -653,14 +752,33 @@
                     </div>
                 `;
             }
+
+            // 中間値の注意書き
+            let middleValueNoticeHTML = '';
+            if (extraversion && neuroticism && openness && hasMiddleValues(extraversion, neuroticism, openness)) {
+                const otherTypes = getMiddleValueTypes(extraversion, neuroticism, openness, type);
+                const typeLinks = otherTypes.map(t => {
+                    const typeTitle = typeData[t].title;
+                    return `<a href="4_bigfive-result-sub-type${t}.html?extraversion=${extraversion}&neuroticism=${neuroticism}&openness=${openness}&agreeableness=${agreeableness}&conscientiousness=${conscientiousness}&extraversionType=${extraversionType}&neuroticismType=${neuroticismType}&opennessType=${opennessType}" target="_blank">${typeTitle} ↗</a>`;
+                }).join('、');
+                
+                middleValueNoticeHTML = `
+                    <div class="ambivert-notice page-break-after">
+                        <h3>📊 あなたのスコアについて</h3>
+                        <p>診断結果、外向性・神経症傾向・開放性のいずれかが<strong>中間値（4～5点）</strong>でした。中間値の方は状況によって両方の特性を使い分けている可能性があります。</p>
+                        <p>このページでは「<strong>${data.title}</strong>」タイプを表示していますが、以下のタイプも読んでみて、よりしっくりくる方を参考にしてください。</p>
+                        <p><strong>他に該当する可能性があるタイプ：</strong><br>${typeLinks}</p>
+                    </div>
+                `;
+            }
             
             // 相性の良いタイプの表示
             let goodTypesHTML = '';
             if (data.goodTypes && data.goodTypes.length > 0) {
                 goodTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <strong>・相性が良いタイプ：</strong><br>
-                        ${data.goodTypes.map(item => `${item}`).join('<br>')}
+                        <div class="subsection-title">相性が良いタイプ</div>
+                        ${data.goodTypes.map(item => `<p>${item}</p>`).join('')}
                     </div>
                 `;
             }
@@ -670,10 +788,10 @@
             if (data.badTypes && data.badTypes.length > 0) {
                 badTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <strong>・相性が悪いタイプ：</strong><br>
-                        ${data.badTypes.map(item => `${item}`).join('<br>')}
-                        ${data.badTypeReason ? `<br>→理由：${data.badTypeReason}` : ''}
-                        ${data.badTypeAdvice ? `<br>→対応のコツ：${data.badTypeAdvice}` : ''}
+                        <div class="subsection-title">相性が悪いタイプ</div>
+                        ${data.badTypes.map(item => `<p>${item}</p>`).join('')}
+                        ${data.badTypeReason ? `<p>→理由：${data.badTypeReason}</p>` : ''}
+                        ${data.badTypeAdvice ? `<p>→対応のコツ：${data.badTypeAdvice}</p>` : ''}
                     </div>
                 `;
             }
@@ -686,6 +804,8 @@
                 </div>
 
                 ${scoresHTML}
+                
+                ${middleValueNoticeHTML}
 
                 <div class="section">
                     <h2>①特性の説明</h2>
@@ -699,19 +819,19 @@
                     <div class="section-content">
                         ${data.environmentConditions ? `
                             <div style="margin-bottom: 20px;">
-                                <strong>環境条件</strong>
+                                <div class="subsection-title">環境条件</div>
                                 <ul>
                                     ${data.environmentConditions.map(item => `<li>${item}</li>`).join('')}
                                 </ul>
                             </div>
                         ` : ''}
                         <div style="margin-bottom: 15px;">
-                            <strong>職種例</strong>
+                            <div class="subsection-title">職種例</div>
                             <ul>
                                 ${data.suitable.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
-                        ${data.suitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.suitableReason}</p>` : ''}
+                        ${data.suitableReason ? `<p style="margin-top: 15px;">→理由：${data.suitableReason}</p>` : ''}
                     </div>
                 </div>
 
@@ -720,19 +840,19 @@
                     <div class="section-content">
                         ${data.unsuitableEnvironment ? `
                             <div style="margin-bottom: 20px;">
-                                <strong>環境条件</strong>
+                                <div class="subsection-title">環境条件</div>
                                 <ul>
                                     ${data.unsuitableEnvironment.map(item => `<li>${item}</li>`).join('')}
                                 </ul>
                             </div>
                         ` : ''}
                         <div style="margin-bottom: 15px;">
-                            <strong>職種例</strong>
+                            <div class="subsection-title">職種例</div>
                             <ul>
                                 ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
-                        ${data.unsuitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.unsuitableReason}</p>` : ''}
+                        ${data.unsuitableReason ? `<p style="margin-top: 15px;">→理由：${data.unsuitableReason}</p>` : ''}
                     </div>
                 </div>
 
