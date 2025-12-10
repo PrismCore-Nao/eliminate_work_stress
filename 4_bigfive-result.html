@@ -158,26 +158,34 @@
 
         /* 中間値の注意書き */
         .ambivert-notice {
-            background-color: #fffef0;
-            border: 2px solid #ffff00;
-            padding: 20px;
-            margin-bottom: 40px;
-            font-size: 15px;
-            line-height: 1.8;
+            background-color: #ffffff;
+            padding: 0;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffff00;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
 
         .ambivert-notice h3 {
             font-size: 18px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
+            padding: 12px 20px;
+            background-color: #ffff00;
             color: #000000;
             font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .ambivert-notice-content {
+            padding: 20px;
         }
 
         .ambivert-notice p {
             margin-bottom: 12px;
             color: #000000;
+            font-size: 15px;
+            line-height: 1.8;
         }
 
         .ambivert-notice a {
@@ -246,7 +254,13 @@
             .page-break-before {
                 page-break-before: always;
                 break-before: page;
-                padding-top: 20px;
+                margin-top: 0;
+                padding-top: 40px;
+            }
+            .section {
+                border-left: 5px solid #ffff00;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             body {
                 -webkit-print-color-adjust: exact;
@@ -656,6 +670,15 @@
             return (ext == 4 || ext == 5) || (neu == 4 || neu == 5) || (opn == 4 || opn == 5);
         }
 
+        // 中間値の特性名を取得
+        function getMiddleValueNames(ext, neu, opn) {
+            const names = [];
+            if (ext == 4 || ext == 5) names.push('外向性');
+            if (neu == 4 || neu == 5) names.push('神経症傾向');
+            if (opn == 4 || opn == 5) names.push('開放性');
+            return names;
+        }
+
         // 中間値の診断タイプを取得
         function getMiddleValueTypes(ext, neu, opn, currentType) {
             const types = [];
@@ -663,11 +686,9 @@
             // 外向性が中間値の場合
             if (ext == 4 || ext == 5) {
                 if (currentType == '1' || currentType == '2' || currentType == '5' || currentType == '6') {
-                    // 外向型の人 → 対応する内向型を提案
                     const mapping = {'1': '3', '2': '4', '5': '7', '6': '8'};
                     types.push(mapping[currentType]);
                 } else {
-                    // 内向型の人 → 対応する外向型を提案
                     const mapping = {'3': '1', '4': '2', '7': '5', '8': '6'};
                     types.push(mapping[currentType]);
                 }
@@ -676,11 +697,9 @@
             // 神経症傾向が中間値の場合
             if (neu == 4 || neu == 5) {
                 if (currentType == '1' || currentType == '2' || currentType == '3' || currentType == '4') {
-                    // 楽観型の人 → 対応する問題志向型を提案
                     const mapping = {'1': '5', '2': '6', '3': '7', '4': '8'};
                     types.push(mapping[currentType]);
                 } else {
-                    // 問題志向型の人 → 対応する楽観型を提案
                     const mapping = {'5': '1', '6': '2', '7': '3', '8': '4'};
                     types.push(mapping[currentType]);
                 }
@@ -689,17 +708,15 @@
             // 開放性が中間値の場合
             if (opn == 4 || opn == 5) {
                 if (currentType == '1' || currentType == '3' || currentType == '5' || currentType == '7') {
-                    // 創造型の人 → 対応する実行型を提案
                     const mapping = {'1': '2', '3': '4', '5': '6', '7': '8'};
                     types.push(mapping[currentType]);
                 } else {
-                    // 実行型の人 → 対応する創造型を提案
                     const mapping = {'2': '1', '4': '3', '6': '5', '8': '7'};
                     types.push(mapping[currentType]);
                 }
             }
             
-            return [...new Set(types)]; // 重複を除去
+            return [...new Set(types)];
         }
 
         // 結果を表示
@@ -711,7 +728,7 @@
             let scoresHTML = '';
             if (extraversion && neuroticism && openness && agreeableness && conscientiousness) {
                 scoresHTML = `
-                    <div class="section page-break-after">
+                    <div class="section">
                         <h2>各特性のスコア</h2>
                         <div class="section-content">
                             <div class="score-item">
@@ -753,9 +770,21 @@
                 `;
             }
 
-            // 中間値の注意書き
+            // ①特性の説明（PDF1枚目）
+            const descriptionHTML = `
+                <div class="section page-break-after">
+                    <h2>①特性の説明</h2>
+                    <div class="section-content">
+                        <p>${data.description}</p>
+                    </div>
+                </div>
+            `;
+
+            // 中間値の注意書き（PDF2枚目の最初）
             let middleValueNoticeHTML = '';
             if (extraversion && neuroticism && openness && hasMiddleValues(extraversion, neuroticism, openness)) {
+                const middleNames = getMiddleValueNames(extraversion, neuroticism, openness);
+                const middleNamesText = middleNames.join('・');
                 const otherTypes = getMiddleValueTypes(extraversion, neuroticism, openness, type);
                 const typeLinks = otherTypes.map(t => {
                     const typeTitle = typeData[t].title;
@@ -764,10 +793,12 @@
                 
                 middleValueNoticeHTML = `
                     <div class="ambivert-notice page-break-after">
-                        <h3>📊 あなたのスコアについて</h3>
-                        <p>診断結果、外向性・神経症傾向・開放性のいずれかが<strong>中間値（4～5点）</strong>でした。中間値の方は状況によって両方の特性を使い分けている可能性があります。</p>
-                        <p>このページでは「<strong>${data.title}</strong>」タイプを表示していますが、以下のタイプも読んでみて、よりしっくりくる方を参考にしてください。</p>
-                        <p><strong>他に該当する可能性があるタイプ：</strong><br>${typeLinks}</p>
+                        <h3>あなたのスコアについて</h3>
+                        <div class="ambivert-notice-content">
+                            <p>診断結果、<strong>${middleNamesText}が中間値（4～5点）</strong>でした。中間値の方は状況によって両方の特性を使い分けている可能性があります。</p>
+                            <p>このページでは「<strong>${data.title}</strong>」タイプを表示していますが、以下のタイプも読んでみて、よりしっくりくる方を参考にしてください。</p>
+                            <p><strong>他に該当する可能性があるタイプ：</strong><br>${typeLinks}</p>
+                        </div>
                     </div>
                 `;
             }
@@ -805,14 +836,9 @@
 
                 ${scoresHTML}
                 
+                ${descriptionHTML}
+                
                 ${middleValueNoticeHTML}
-
-                <div class="section">
-                    <h2>①特性の説明</h2>
-                    <div class="section-content">
-                        <p>${data.description}</p>
-                    </div>
-                </div>
 
                 <div class="section">
                     <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
