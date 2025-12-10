@@ -242,7 +242,7 @@
 
         @media print {
             body {
-                padding: 0;
+                padding: 20px;
             }
             
             .print-title {
@@ -260,20 +260,18 @@
             }
             
             /* ページ2: あなたのスコア（あれば）+ ② */
-            /* ページ3: ③④ */
+            /* ページ3: ③④ - 改ページ前に余白20pt */
             .page-break-before-3 {
                 page-break-before: always;
                 break-before: page;
-                margin-top: 0 !important;
-                padding-top: 0 !important;
+                padding-top: 20pt !important;
             }
             
-            /* ページ4: ⑤⑥ */
+            /* ページ4: ⑤⑥ - 改ページ前に余白20pt */
             .page-break-before-4 {
                 page-break-before: always;
                 break-before: page;
-                margin-top: 0 !important;
-                padding-top: 0 !important;
+                padding-top: 20pt !important;
             }
             
             .section {
@@ -288,6 +286,11 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
                 margin-bottom: 25px;
+            }
+            
+            /* 全体の余白を確保 */
+            .container {
+                padding: 20pt;
             }
         }
 
