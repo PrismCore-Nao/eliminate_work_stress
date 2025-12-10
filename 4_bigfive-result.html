@@ -241,30 +241,53 @@
         }
 
         @media print {
+            body {
+                padding: 0;
+            }
+            
             .print-title {
                 display: block !important;
             }
+            
             .no-print {
                 display: none !important;
             }
+            
+            /* ページ1: タイトル、グラフ、①（page-break-after） */
             .page-break-after {
                 page-break-after: always;
                 break-after: page;
             }
-            .page-break-before {
+            
+            /* ページ2: あなたのスコア（あれば）+ ② */
+            /* ページ3: ③④ */
+            .page-break-before-3 {
                 page-break-before: always;
                 break-before: page;
-                margin-top: 0;
-                padding-top: 40px;
+                margin-top: 0 !important;
+                padding-top: 0 !important;
             }
+            
+            /* ページ4: ⑤⑥ */
+            .page-break-before-4 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+            
             .section {
-                border-left: 5px solid #ffff00;
+                border-left: 5px solid #ffff00 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                margin-bottom: 25px;
             }
-            body {
+            
+            .ambivert-notice {
+                border-left: 5px solid #ffff00 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                margin-bottom: 25px;
             }
         }
 
@@ -780,7 +803,7 @@
                 </div>
             `;
 
-            // 中間値の注意書き（PDF2枚目の最初）
+            // 中間値の注意書き（PDF2枚目の最初、あれば）
             let middleValueNoticeHTML = '';
             if (extraversion && neuroticism && openness && hasMiddleValues(extraversion, neuroticism, openness)) {
                 const middleNames = getMiddleValueNames(extraversion, neuroticism, openness);
@@ -792,7 +815,7 @@
                 }).join('、');
                 
                 middleValueNoticeHTML = `
-                    <div class="ambivert-notice page-break-after">
+                    <div class="ambivert-notice">
                         <h3>あなたのスコアについて</h3>
                         <div class="ambivert-notice-content">
                             <p>診断結果、<strong>${middleNamesText}が中間値（4～5点）</strong>でした。中間値の方は状況によって両方の特性を使い分けている可能性があります。</p>
@@ -827,6 +850,9 @@
                 `;
             }
 
+            // PDF2枚目：中間値の注意（あれば）+ ②
+            // PDF3枚目：③④
+            // PDF4枚目：⑤⑥
             container.innerHTML = `
                 <div class="type-header">
                     <div class="type-title">${data.title}</div>
@@ -861,7 +887,7 @@
                     </div>
                 </div>
 
-                <div class="section page-break-before">
+                <div class="section page-break-before-3">
                     <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
                     <div class="section-content">
                         ${data.unsuitableEnvironment ? `
@@ -891,7 +917,7 @@
                     </div>
                 </div>
 
-                <div class="section page-break-before">
+                <div class="section page-break-before-4">
                     <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
                     <div class="section-content">
                         ${goodTypesHTML}
