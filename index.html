@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>脳科学診断ツール</title>
-    <meta name="description" content="働き方を科学する。脳の状態を知る。4つの診断ツールであなたに最適な働き方を見つけましょう。">
+    <title>脳科学に基づく4つの診断ツール</title>
     <style>
         * {
             margin: 0;
@@ -17,12 +16,12 @@
             background-color: #ffffff;
             color: #000000;
             line-height: 1.8;
-            padding: 20px;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
 
         h1 {
@@ -32,120 +31,115 @@
             text-align: center;
             font-size: 32px;
             font-weight: bold;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             border: 3px solid #000000;
         }
 
-        h1 small {
-            display: block;
-            font-size: 18px;
-            font-weight: normal;
-            margin-top: 10px;
-            color: #333;
+        h2 {
+            font-size: 24px;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000000;
         }
 
         .intro {
-            background-color: #f9f9f9;
-            border-left: 4px solid #ffff00;
-            padding: 20px 25px;
+            background-color: #fffef0;
+            padding: 30px;
             margin-bottom: 40px;
-            font-size: 16px;
+            border-left: 4px solid #ffff00;
             line-height: 1.8;
         }
 
-        .intro strong {
-            font-size: 18px;
-            color: #000000;
-        }
-
-        .test-grid {
+        .diagnosis-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
         }
 
-        .test-card {
-            background-color: #fafafa;
+        .diagnosis-card {
+            background-color: #ffffff;
             border: 2px solid #e0e0e0;
             padding: 30px;
-            text-align: center;
             transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
+            text-decoration: none;
+            color: #000000;
+            display: block;
         }
 
-        .test-card:hover {
+        .diagnosis-card:hover {
             border-color: #ffff00;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
         }
 
-        .test-number {
-            display: inline-block;
+        .diagnosis-number {
             background-color: #ffff00;
             color: #000000;
-            font-size: 14px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             font-weight: bold;
-            padding: 5px 15px;
             margin-bottom: 15px;
-            border: 1px solid #000000;
         }
 
-        .test-card h2 {
+        .diagnosis-title {
             font-size: 20px;
-            margin-bottom: 15px;
-            color: #000000;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .test-card p {
+        .diagnosis-description {
             font-size: 14px;
-            color: #555;
-            margin-bottom: 20px;
+            color: #666;
+            margin-bottom: 15px;
             line-height: 1.6;
         }
 
-        .test-button {
-            display: inline-block;
+        .diagnosis-button {
             background-color: #ffff00;
             color: #000000;
             border: 2px solid #000000;
-            padding: 12px 30px;
+            padding: 12px 24px;
             font-size: 16px;
             font-weight: bold;
-            text-decoration: none;
+            cursor: pointer;
             transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
         }
 
-        .test-button:hover {
+        .diagnosis-button:hover {
             background-color: #000000;
             color: #ffff00;
         }
 
         .features {
-            background-color: #fffef0;
-            border: 2px solid #ffff00;
+            background-color: #f5f5f5;
             padding: 30px;
-            margin-bottom: 40px;
+            margin: 40px 0;
+            border-radius: 8px;
         }
 
-        .features h3 {
-            font-size: 20px;
+        .features h2 {
+            border-bottom: none;
             margin-bottom: 20px;
-            color: #000000;
-            text-align: center;
         }
 
         .features ul {
             list-style: none;
-            padding: 0;
+            padding-left: 0;
         }
 
         .features li {
             padding: 10px 0;
             padding-left: 30px;
             position: relative;
-            font-size: 15px;
         }
 
         .features li:before {
@@ -154,26 +148,86 @@
             left: 0;
             color: #ffff00;
             background-color: #000000;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-weight: bold;
         }
 
-        .footer {
-            text-align: center;
-            padding: 30px 20px;
+        .reference-section {
+            background-color: #f9f9f9;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .reference-section h2 {
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .reference-card {
+            background-color: #ffffff;
+            border: 2px solid #e0e0e0;
+            padding: 25px;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .reference-card:hover {
+            border-color: #ffff00;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .reference-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .reference-description {
+            font-size: 14px;
             color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-            margin-top: 50px;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
 
-        .footer p {
-            margin: 5px 0;
+        .reference-meta {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .external-link-button {
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .external-link-button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 60px;
         }
 
         @media (max-width: 768px) {
@@ -182,93 +236,92 @@
                 padding: 30px 15px;
             }
 
-            h1 small {
-                font-size: 14px;
-            }
-
-            .test-grid {
+            .diagnosis-grid {
                 grid-template-columns: 1fr;
             }
 
-            .test-card {
-                padding: 25px;
-            }
-
-            .intro {
-                padding: 15px 20px;
-                font-size: 14px;
-            }
-
-            .features {
-                padding: 20px;
+            .container {
+                padding: 20px 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>
-            脳科学診断ツール
-        </h1>
+        <h1>脳科学に基づく4つの診断ツール</h1>
 
         <div class="intro">
-            <p>
-                <strong>働き方を科学する。脳の状態を知る。</strong><br>
-                あなたに最適な働き方を見つけるための4つの診断ツールです。<br>
-                各診断は5〜10分程で完了します。結果はPDFで保存できます。
-            </p>
-        </div>
-
-        <div class="test-grid">
-            
-            <div class="test-card" onclick="location.href='1_stress-check.html'">
-                <div class="test-number">PART 1
-                </div>
-                <h2>仕事のストレスと脳疲労度診断</h2>
-                <p>扁桃体の警報レベルをチェック。仕事のストレスと脳疲労度を測定します。</p>
-                <p><strong>質問数：15問</strong></p>
-                <a href="1_stress-check.html" class="test-button">診断を始める →</a>
-            </div>
-
-            <div class="test-card" onclick="location.href='2_brain-state.html'">
-                <div class="test-number">PART 2
-                </div>
-                <h2>脳の状態診断</h2>
-                <p>脳内物質の状態をチェック。やる気や集中力が十分に保たれているか診断します。</p>
-                <p><strong>質問数：10問</strong></p>
-                <a href="2_brain-state.html" class="test-button">診断を始める →</a>
-            </div>
-
-            <div class="test-card" onclick="location.href='3_job-fit.html'">
-                <div class="test-number">PART 3</div>
-                <h2>適職度診断</h2>
-                <p>今の仕事があなたの特性に合っているかを診断。適職度を測定します。</p>
-                <p><strong>質問数：10問</strong></p>
-                <a href="3_job-fit.html" class="test-button">診断を始める →</a>
-            </div>
-
-            <div class="test-card" onclick="location.href='4_bigfive.html'">
-                <div class="test-number">PART 4</div>
-                <h2>ビッグファイブ診断</h2>
-                <p>あなたの思考パターンを測定。最適な働き方がわかる性格診断です。</p>
-                <p><strong>質問数：10問</strong></p>
-                <a href="4_bigfive.html" class="test-button">診断を始める →</a>
-            </div>
+            <p>このページでは、脳科学と心理学の研究に基づいた4つの診断ツールを提供しています。各診断は、あなたの現在の状態や特性を客観的に把握し、より良い働き方や生活習慣を見つけるためのヒントとなります。</p>
         </div>
 
         <div class="features">
-            <h3>📊 診断ツールの特徴</h3>
+            <h2>📊 診断ツールの特徴</h2>
             <ul>
                 <li>科学的根拠に基づいた診断（ビッグファイブ理論など）</li>
-                <li>所要時間：各5〜10分で気軽にチェック</li>
+                <li>所要時間：各2〜6分で気軽にチェック</li>
                 <li>結果のPDF保存機能付き</li>
-                <li>スマートフォンでも快適に利用可能</li>
-                <li>完全無料・登録不要</li>
             </ul>
         </div>
-        <div class="footer">
-            <p>© Takeyuki Nishi</p>
+
+        <div class="diagnosis-grid">
+            <a href="1_stress-check.html" class="diagnosis-card">
+                <div class="diagnosis-number">1</div>
+                <div class="diagnosis-title">仕事のストレスと脳疲労度診断</div>
+                <div class="diagnosis-description">
+                    15の質問から、あなたの扁桃体の警報レベルと脳の疲労度をチェックします。ストレス状態を5段階で判定し、具体的な状態分析を提供します。
+                </div>
+                <span class="diagnosis-button">診断を始める →</span>
+            </a>
+
+            <a href="2_brain-state.html" class="diagnosis-card">
+                <div class="diagnosis-number">2</div>
+                <div class="diagnosis-title">脳の状態診断</div>
+                <div class="diagnosis-description">
+                    10の質問から、あなたの脳内物質（ドーパミン、セロトニンなど）のバランス状態を診断します。仕事モードへの切り替え力や集中力の状態がわかります。
+                </div>
+                <span class="diagnosis-button">診断を始める →</span>
+            </a>
+
+            <a href="3_job-fit.html" class="diagnosis-card">
+                <div class="diagnosis-number">3</div>
+                <div class="diagnosis-title">適職度診断</div>
+                <div class="diagnosis-description">
+                    10の質問から、現在の仕事があなたの脳の特性に合っているかを診断します。適職度が高いほど、ストレスが少なく成果を出しやすい状態です。
+                </div>
+                <span class="diagnosis-button">診断を始める →</span>
+            </a>
+
+            <a href="4_bigfive.html" class="diagnosis-card">
+                <div class="diagnosis-number">4</div>
+                <div class="diagnosis-title">ビッグファイブ診断</div>
+                <div class="diagnosis-description">
+                    10の質問から、あなたの性格特性（外向性、神経症傾向、開放性、協調性、誠実性）を測定し、8つのタイプから最適な働き方を提案します。
+                </div>
+                <span class="diagnosis-button">診断を始める →</span>
+            </a>
+        </div>
+
+        <div class="reference-section">
+            <h2>参考</h2>
+            
+            <div class="reference-card">
+                <div class="reference-title">内向・外向・両向診断</div>
+                <div class="reference-description">
+                    ペンシルバニア大学の診断をベースにした診断です。あなたの性格タイプをより詳しく分析します。
+                </div>
+                <div class="reference-meta">質問数：20問</div>
+                <a href="https://qa.judge-hub.com/qa/gsrav/1f369245-2daa-48d9-8281-ee774299405c/esh" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="external-link-button">
+                    診断を始める（別ウィンドウ） ↗
+                </a>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <p>© Takeyuki Nishi</p>
+    </footer>
 </body>
 </html>
