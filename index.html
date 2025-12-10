@@ -66,6 +66,8 @@
             padding: 25px;
             text-align: center;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .diagnosis-card:hover {
@@ -95,6 +97,7 @@
             color: #666;
             margin-bottom: 15px;
             line-height: 1.6;
+            flex-grow: 1;
         }
 
         .question-count {
@@ -127,6 +130,8 @@
             padding: 25px;
             text-align: center;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .reference-card:hover {
@@ -193,15 +198,16 @@
         <div class="intro">
             <h2>働き方を科学する。脳の状態を知る。</h2>
             <p>あなたに最適な働き方を見つけるための4つの診断ツールです。<br>
-            各診断は5～10分程で完了します。結果はPDFで保存できます。</p>
+            各診断は2～6分程で完了します。結果はPDFで保存できます。</p>
         </div>
 
         <div class="diagnosis-grid">
             <div class="diagnosis-card">
                 <div class="part-label">PART 1</div>
-                <div class="diagnosis-title">仕事のストレスと脳疲労度診断</div>
+                <div class="diagnosis-title">ストレス脳疲労診断</div>
                 <div class="diagnosis-description">
-                    扁桃体の警報レベルをチェック。仕事のストレスと脳疲労度を診断します。
+                    扁桃体の警報レベルをチェック。<br>
+                    仕事のストレスと脳疲労度を診断します。
                 </div>
                 <div class="question-count">質問数：15問</div>
                 <a href="1_stress-check.html" class="diagnosis-button">診断を始める →</a>
@@ -211,7 +217,8 @@
                 <div class="part-label">PART 2</div>
                 <div class="diagnosis-title">脳の状態診断</div>
                 <div class="diagnosis-description">
-                    脳内物質の状態をチェック。やる気や集中力を十分に発揮できているか診断します。
+                    脳内物質の状態をチェック。<br>
+                    やる気や集中力を十分に発揮できているか診断します。
                 </div>
                 <div class="question-count">質問数：10問</div>
                 <a href="2_brain-state.html" class="diagnosis-button">診断を始める →</a>
@@ -221,7 +228,8 @@
                 <div class="part-label">PART 3</div>
                 <div class="diagnosis-title">適職度診断</div>
                 <div class="diagnosis-description">
-                    今の仕事があなたの特性に合っているかを診断。適職度を測定します。
+                    あなたの適職度をチェック。<br>
+                    今の仕事があなたの特性に合っているか、適職度を診断します。
                 </div>
                 <div class="question-count">質問数：10問</div>
                 <a href="3_job-fit.html" class="diagnosis-button">診断を始める →</a>
