@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビッグファイブ診断 サブ結果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .print-title {
+            display: none;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .result-header .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .type-label {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-left: 4px solid #ffff00;
+        }
+
+        .section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .section-content {
+            line-height: 1.8;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .pdf-button, .back-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pdf-button:hover, .back-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .container {
+                position: relative;
+            }
+            
+            .print-title {
+                display: block;
+                background-color: #ffff00 !important;
+                color: #000000 !important;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #000000;
+                margin-bottom: 20px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            h1 {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                background-color: #fafafa !important;
+                border-left: 4px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section:nth-of-type(2),
+            .section:nth-of-type(3),
+            .section:nth-of-type(4) {
+                padding-top: 30px;
+            }
+            
+            .button-group, .back-button {
+                display: none !important;
+            }
+            
+            .pdf-button {
+                display: none !important;
+            }
+            
+            div[style*="position: fixed"] {
+                display: none !important;
+            }
+            
+            .footer-print {
+                display: block !important;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .pdf-button, .back-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-title">ビッグファイブ診断 サブ結果</div>
+
+        <h1>ビッグファイブ診断 サブ結果</h1>
+
+        <div class="result-header">
+            <h2>8. 精度を磨くガーディアン</h2>
+            <div class="subtitle">緻密さで支える人・完成度の職人</div>
+            <div>
+                <span class="type-label">内向型</span>
+                <span class="type-label">問題志向型</span>
+                <span class="type-label">実行型</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>①特性の説明</h3>
+            <div class="section-content">
+                あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。ガーディアンとは守護者を意味します。妥協せず高品質を追求する姿勢が信頼を生みます。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>規則や手順を守ることで行える、正確性が求められる</li>
+                    <li>早期に問題点を発見して、ルールをもとに解決できる</li>
+                    <li>ミスやリスクを検知する作業、ダブルチェックできる</li>
+                    <li>一人で静かに突き詰めることができる、意思決定を自分でするより指示に従う</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>人と会わずに日々の作業を繰り返してリスクから守る仕事（経理、法務、監査、品質保証、システム保守、リスク管理などの「正確性×慎重さ」が求められる業務、ミス防止、チェック業務、校正、トラブル防止に進化を発揮、縁の下の力持ちの職種とも言える、堅実な業務改善の担い手）</li>
+                </ul>
+                <p>→理由：基準やルールのある中で、正確さを磨ける環境で力を発揮しやすいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>意思決定が早く求められる、創造性の高い作業</li>
+                    <li>指示があいまいな中で進む、自分の役割が不明確</li>
+                    <li>結果ばかりで問題解決が評価されない、みんなと行う作業の頻度が多い</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>営業職全般（特に飛び込み型）</li>
+                    <li>スタートアップの立ち上げ業務</li>
+                    <li>イベント運営の現場担当</li>
+                </ul>
+                <p>→理由：秩序がなく、正確さを保てない環境ではストレスが溜まりやすいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>④能力を最大化する方法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>明確な手順と安定したルーティンがあると力を発揮</li>
+                    <li>※融通が利かず、変化に対応できないとストレスを抱えやすいので注意</li>
+                    <li>※変化を押しつけず、徐々に巻き込む工夫をする</li>
+                    <li>変化が急すぎると不安になる。※丁寧に伝えることが大切</li>
+                    <li>プロセスや努力をほめてあげる、常にフィードバックし、安心感が大切なので</li>
+                    <li>※「ちゃんと見ている」「理解している」ことを伝えることが大切</li>
+                    <li>※行動がゆっくりの傾向もあるため、「ちゃんと見ている」「理解している」ことを伝えることが大切</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <div class="section-content">
+                <p><strong>・相性が良いタイプ：</strong><br>
+                メディエーター型、アーキテクト型（安定志向で価値観が合う）</p>
+                
+                <p><strong>・相性が悪いタイプ：</strong><br>
+                ビジョナリー型（勢い重視で精度を軽視することがある）</p>
+                
+                <p>→対応のコツ：相性が悪い相手とは「品質を守る理由」を具体的に説明する</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑥即効性のあるストレス軽減法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>作業スペースを整理整頓する</li>
+                    <li>完成度の高い作品や成果物を鑑賞する</li>
+                    <li>自分の作業記録や改善履歴を振り返る</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
+            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+        <p>© Takeyuki Nishi</p>
+    </div>
+</body>
+</html>

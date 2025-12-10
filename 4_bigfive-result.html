@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断</title>
+    <title>ビッグファイブ診断 詳細結果</title>
     <style>
         * {
             margin: 0;
@@ -20,718 +20,252 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .print-title {
+            display: none;
         }
 
         h1 {
+            background-color: #ffff00;
             color: #000000;
             padding: 30px 20px;
             text-align: center;
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
         }
 
-        .print-title {
-            display: none;
-            font-size: 28px;
-            font-weight: bold;
+        .result-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding: 20px 20px 0 20px;
+            margin-bottom: 40px;
         }
 
-        @media print {
-            .print-title {
-                display: block !important;
-            }
-            h1 {
-                display: none;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-
-        .type-header {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 30px;
-            margin-bottom: 30px;
-            text-align: center;
-            border: 3px solid #000000;
-        }
-
-        .type-title {
-            font-size: 32px;
-            font-weight: bold;
+        .result-header h2 {
+            font-size: 24px;
             margin-bottom: 10px;
         }
 
-        .type-subtitle {
+        .result-header .subtitle {
             font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
+            color: #666;
+            margin-bottom: 20px;
         }
 
-        .type-combination {
+        .type-label {
             display: inline-block;
-            background-color: #000000;
-            color: #ffff00;
-            padding: 10px 20px;
+            background-color: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 4px;
             font-size: 16px;
-            font-weight: bold;
-            border-radius: 3px;
+            margin: 5px;
         }
 
         .section {
-            background-color: #f9f9f9;
-            padding: 30px;
-            margin-bottom: 25px;
-            border-left: 5px solid #ffff00;
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-left: 4px solid #ffff00;
         }
 
-        .section h2 {
-            font-size: 22px;
+        .section h3 {
+            font-size: 20px;
             margin-bottom: 15px;
-            padding: 8px 15px;
-            background-color: #000000;
-            color: #ffff00;
-            border-bottom: none;
-            border-radius: 4px;
+            color: #000000;
         }
 
-        .section p, .section ul {
-            font-size: 16px;
+        .section-content {
             line-height: 1.8;
-            color: #333;
         }
 
         .section ul {
-            list-style-position: inside;
-            padding-left: 0;
+            margin-left: 20px;
+            margin-top: 10px;
         }
 
         .section li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            text-indent: -20px;
+            margin-bottom: 8px;
         }
 
-        .pdf-button {
-            display: block;
-            margin: 40px auto;
-            padding: 15px 40px;
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-item {
+            margin-bottom: 20px;
+        }
+
+        .chart-label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart-bar-container {
+            width: 100%;
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar {
+            height: 100%;
+            background-color: #ffff00;
+            border-right: 2px solid #000000;
+            transition: width 0.5s ease;
+        }
+
+        .alternative-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff8dc;
+            border-left: 4px solid #ffa500;
+            line-height: 1.8;
+        }
+
+        .alternative-link a {
+            color: #0066cc;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .alternative-link a:hover {
+            color: #004499;
+        }
+
+        .external-icon {
+            font-size: 0.8em;
+            margin-left: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .pdf-button, .back-button {
             background-color: #ffff00;
             color: #000000;
             border: 2px solid #000000;
-            border-radius: 5px;
+            padding: 15px 40px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            width: fit-content;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .pdf-button:hover {
+        .pdf-button:hover, .back-button:hover {
             background-color: #000000;
             color: #ffff00;
         }
 
-        @media (max-width: 768px) {
-            .type-title {
-                font-size: 24px;
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
             }
-
-            .type-subtitle {
-                font-size: 16px;
+            
+            .container {
+                position: relative;
             }
-
-            .section {
+            
+            .print-title {
+                display: block;
+                background-color: #ffff00 !important;
+                color: #000000 !important;
                 padding: 20px;
-            }
-
-            .section h2 {
-                font-size: 20px;
-            }
-        }
-    
-        @media print {
-            .page-break-before {
-                page-break-before: always;
-                break-before: page;
-            }
-            .page-break-after {
-                page-break-after: always;
-                break-after: page;
-            }
-        }
-</style>
-</head>
-<body>
-    <div class="container">
-        <div class="print-title">ビッグファイブ診断 詳細結果</div>
-
-        
-        <div id="results-container">
-            <!-- JavaScriptで動的に挿入 -->
-        </div>
-
-        <!-- PDF保存ボタン（一番下、黄色系） -->
-        <div class="no-print" style="text-align: center; margin-top: 50px;">
-            <button onclick="window.print()" class="pdf-button">
-                📄 結果をPDF保存
-            </button>
-        </div>
-    </div>
-
-    <!-- ← TOPに戻る -->
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;" class="no-print">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
-    </div>
-
-    <script>
-        // URLパラメータからタイプとスコアを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get('type');
-        const extraversion = urlParams.get('extraversion');
-        const neuroticism = urlParams.get('neuroticism');
-        const openness = urlParams.get('openness');
-        const agreeableness = urlParams.get('agreeableness');
-        const conscientiousness = urlParams.get('conscientiousness');
-        const extraversionType = urlParams.get('extraversionType');
-        const neuroticismType = urlParams.get('neuroticismType');
-        const opennessType = urlParams.get('opennessType');
-
-        // 8つのタイプの詳細データ
-        const typeData = {
-            '1': {
-                title: '1. 発想で導くビジョナリー',
-                subtitle: '元気を運ぶ人・火をつけて走る人',
-                combination: '外向型 × 楽観型 × 創造型',
-                description: 'あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。新しい情報や人との出会いをエネルギーに変え、場の空気を盛り上げながらゴールを目指すことができます。起業家に多いタイプです。ただし勢いあまって計画が粗くなることもあるため、定期的な方向確認が成果の継続に欠かせません。',
-                environmentConditions: [
-                    'みんなと一緒に攻めをベースにゴール実現を目指せる',
-                    '楽観的に未来をイメージしながら作業できる',
-                    'ビジョンや想いを多くの人に発信できる、柔軟な企画ができる',
-                    '多くの人や情報に触れて、場所が移動できる、意思決定が自由にできる'
-                ],
-                suitable: [
-                    '人と一緒に新しいものを作り出していく仕事（新規事業のプランナー、ベンチャー、ブランディング、プロモーション、プロデューサー、企画開発、営業企画、チームリーダー、セールスリーダー、広告ディレクター、起業家、プロジェクトリーダーなど）'
-                ],
-                suitableReason: '新しい刺激や多様な人脈がモチベーションの源泉となり、創造力を最大限に発揮できるため',
-                unsuitableEnvironment: [
-                    '数字管理が多い仕事、ルーティン作業が多い環境',
-                    '孤独な環境、新しい情報や刺激が少ない環境',
-                    '人とのつながりが乏しいリモートワーク、移動の少ない環境・問題解決ばかりの作業、行動するまでに事前の準備が多い'
-                ],
-                unsuitable: [
-                    'スーパーのレジ係、工場ライン作業員、倉庫内ピッキングスタッフ経理・財務担当、一般事務、図書館の資料整理スタッフ（受信専門）、データ入力専任スタッフ、チケット発券窓口、郵便物仕分け業務など'
-                ],
-                unsuitableReason: '刺激や人との交流が少ないと、エネルギーが低下しやすく、行動の勢いが鈍ってしまうため',
-                tips: [
-                    '新しいプロジェクトを動かす自由と裁量を与えると火がつく',
-                    'ノリと勢いだけで突っ走って後工程が破綻することがあるため注意が必要',
-                    '実務管理や数字管理は苦手なので、サポートが必要なことも',
-                    'リスクをあまり考えない傾向があるため、方向性がずれていないか定期的に確認が必要（情熱と方向性の確認）'
-                ],
-                goodTypes: ['プランナー型（創造的刺激を与えてくれる）', 'コンダクター型（チーム運営を支えてくれる）'],
-                badTypes: ['ガーディアン型（変化やスピードに慎重すぎてペースが合わないことがある）'],
-                badTypeReason: '刺激や人との交流が少ないと、エネルギーが低下しやすく、行動の勢いが鈍ってしまうため',
-                stress: [
-                    '新しい情報に大量に触れる',
-                    '人と話す頻度を1日1回でも増やす',
-                    '1日の終わりに今日あったいいことを5つ書き出す'
-                ]
-            },
-            '2': {
-                title: '2. 信頼でまとめるコンダクター',
-                subtitle: '安心を届ける人・チームを動かす実行屋',
-                combination: '外向型 × 楽観型 × 実行型',
-                description: 'あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。ルールや指示が明確な環境で、テンポよく行動できると、大きな成果を出せます。コンダクターとは指揮者を意味します。「ゼロからの創造が苦手」ですが、人を動かす安定性が大きな魅力です。',
-                environmentConditions: [
-                    'マニュアルがある、楽しくテンポよくルーティンを回すことができる',
-                    'ルールを守りながら、人を巻き込むことができる',
-                    '人を明るくすることでチームビルディングができる',
-                    'イベント的な作業を盛り上げることができる、人と関わるスキルがアップできる',
-                    '場所が移動できて人と会える、意思決定を自分でするより指示に従う'
-                ],
-                suitable: [
-                    '人に決まったものを提示することで安心感を与える仕事（営業職、マネージャー、接客業、販売、案内業、ガイド、ホテル、レストラン、秘書など）',
-                    '周りとの信頼関係の構築が強み、定期的な自己評価で行動を見直すとなおよい'
-                ],
-                suitableReason: '人に触れること、ルールに従うことがやる気を生み出し、何事もプラスにとらえる能力が場の雰囲気を生み出すため',
-                unsuitableEnvironment: [
-                    '指示があいまいな中で進む、自分の役割が不明確',
-                    'ゼロから何かを生み出す、新しい情報を常に学ぶ必要がある',
-                    '孤独な環境、人とのつながりが乏しいリモートワーク',
-                    '移動の少ない環境、問題解決ばかりの作業',
-                    '行動するまでに事前準備が多い'
-                ],
-                unsuitable: [
-                    '研究職（長期の一人作業中心）',
-                    'フルリモートのデスクワーク',
-                    'ITエンジニア（要件不明確な開発案件）',
-                    '新規事業の企画立ち上げなど不確実性が高い業務'
-                ],
-                unsuitableReason: '孤立や不明確さが続くとモチベーションが下がりやすいため',
-                tips: [
-                    'ルールを守りながら、人を巻き込める環境に身を置く',
-                    '動きながら学ぶスタイルが合う。チームの空気を作る役割を与える',
-                    '※役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する',
-                    '※人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切'
-                ],
-                goodTypes: ['アーキテクト型、メディエーター型（安定感と調整力で行動をサポートしてくれる）'],
-                badTypes: ['ストラテジスト型（提案が斬新すぎてついていけないことがある）'],
-                badTypeAdvice: '相性が悪い相手とは、事前にスケジュールや役割を明確にしておく',
-                stress: [
-                    '定期的なルーティンワークの時間を確保する',
-                    '外出や人と話す機会を意図的に増やす',
-                    'チーム内での役割を確認・明確化する'
-                ]
-            },
-            '3': {
-                title: '3. 新しい種をまくプランナー',
-                subtitle: '発想を届ける人・静かに広げる着想力',
-                combination: '内向型 × 楽観型 × 創造型',
-                description: 'あなたは落ち着いた観察力と独自の着想をもち、新しいアイデアを静かに形にしていく力があります。内向性の高さが深い集中を生み、楽観性が失敗を恐れず試せる姿勢を支え、開放性が柔軟な発想をもたらします。未来を静かにデザインする、粘り強くアイディアを練るタイプです。表に出るよりも、水面下で計画を練り、じわじわと成果を広げるのが得意です。',
-                environmentConditions: [
-                    'ゼロから構想できる、静かに革新を生み出せる',
-                    'インプットを絶やさず未来を描ける、まだ誰も知らない未来に出会える',
-                    '一人で静かに突き詰められる、深掘りと新規発見の繰り返しに触れる'
-                ],
-                suitable: [
-                    '一人で創造的な作業ができる仕事（コンテンツ制作、デザイナー、クリエイティブディレクション、作家など）',
-                    '戦略を裏方で指示する仕事、雑誌や書籍の制作（CMプランナーだと顧客の意向に制限されるため向いていない）',
-                    '静かに革新を生む、ロジカルで先見性のある構想家'
-                ],
-                suitableReason: '情報やアイデアを集め、整理し、形にする過程で脳が活性化するため',
-                unsuitableEnvironment: [
-                    '意思決定が早く求められる、あまり深く考えなくてもできる作業や行動',
-                    'みんなと行う作業の頻度が多い、問題解決ばかりを求められる、細かいルールで縛られる、アイディアが採用されにくい環境でがんばる'
-                ],
-                unsuitable: [
-                    'イベント司会、接客販売、営業職（特に新規開拓）',
-                    '役者・タレントなどの人前業務',
-                    '緊急対応が多い現場作業（救急、現場施工など）'
-                ],
-                unsuitableReason: '常時対人刺激の多い業務では集中力と創造力が削がれやすいため',
-                tips: [
-                    '一人で考える時間と、誰かが拾ってくれる安心感が必要',
-                    '※チーム内で理解されずらいこともあるので、定期的な共有の場をつくる',
-                    '実行するためのフォローがないと、妄想で終わってしまいやすいので注意',
-                    'チームとの連携を助けることが大切',
-                    '※思いつくけど提案できないことも。共感されないと心を閉ざす傾向は注意'
-                ],
-                goodTypes: ['ビジョナリー型、ファシリテーター型（発想を刺激してくれる）'],
-                badTypes: ['メディエーター型（細かい管理を求められて窮屈に感じる）'],
-                badTypeAdvice: '相性が悪い相手とは、完成品や実績で説得する',
-                stress: [
-                    '自然のあるカフェや静かな図書館で作業する',
-                    '好きな分野の本や資料をまとめて読む時間を作る',
-                    '小さな達成感を毎週確認できるチェックリストを作る'
-                ]
-            },
-            '4': {
-                title: '4. 着実な道を築くアーキテクト',
-                subtitle: '現在と未来を守る人・丁寧に、確実に',
-                combination: '内向型 × 楽観型 × 実行型',
-                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。',
-                environmentConditions: [
-                    '最初にやるべきこと（とっかかり）が明確な作業',
-                    '一人でコツコツと進める、着実に積み上げられる',
-                    '失敗よりも"できた！"という達成感を感じやすい',
-                    '静かで落ち着いた場所で行える、一人で静かに突き詰められる',
-                    '継続的にしくみやシステムを改善できる努力'
-                ],
-                suitable: [
-                    'ルーティン作業をモクモクと一人でできる仕事（データ入力、検品作業、仕分け、文字起こし、パッケージ、事務、経理・会計アシスタント、組み立てライン、採点、写真や画像のトリミング、図書館司書、製造オンラインオペレーター、商品管理、校正・チェック業務、加工など）',
-                    '管理作業が多い仕事など'
-                ],
-                suitableReason: '手順が明確で、自分のペースで精度を高められる業務が多く、達成感を得やすいため',
-                unsuitableEnvironment: [
-                    '本番一発勝負が求められる、飛躍的な変化が必要な努力',
-                    '人と会う機会が多い作業の努力、問題解決ばかりを求められる努力',
-                    'ルールがない環境でシステムをつくる努力、自分のペースで作業ができない'
-                ],
-                unsuitable: [
-                    '営業職全般（飛び込み営業、テレアポ、訪問販売など）',
-                    'イベント運営・司会・接客メインの販売業務',
-                    'スタートアップ立ち上げや、ルールのない組織での業務構築',
-                    '突発的なトラブル対応を繰り返すカスタマーサポート・クレーム処理',
-                    '常に変化のあるプロジェクトマネジメント（期限変更や仕様変更が多い）'
-                ],
-                unsuitableReason: '突発対応や対人負荷、環境変化の多い業務はエネルギーを消耗しやすく、アーキテクト型の持ち味である「安定的・継続的な成果」を発揮しにくいため',
-                tips: [
-                    '日課やルーティンが評価される仕組みに乗せると◎',
-                    '進捗状況が見える化できる努力はうまくいきやすい',
-                    '※感謝やフィードバックがないと自信を失いやすい',
-                    '目標が達成できないときに、落ち込みやすい傾向',
-                    '継続すること自体を成功として定義できると、イキイキするタイプ'
-                ],
-                goodTypes: ['メディエーター型・ガーディアン型（段取りや調整力が高く、安心感をくれる）'],
-                badTypes: ['ファシリテーター型（細かい方向転換を押しつけられると疲弊しやすい）'],
-                badTypeAdvice: '相性が悪い相手とは、事前に手順や期日を明確にし、突発的な依頼は範囲を限定して受ける',
-                stress: [
-                    'デスクに観葉植物や花を飾る（安心感を与え、集中力を高める）',
-                    'ハッピーエンドの映画・ドラマや小説に触れる（楽観性を強化する）',
-                    '毎日の小さな成功を記録する習慣をつける（継続力を自己評価につなげる）'
-                ]
-            },
-            '5': {
-                title: '5. 見えない課題を照らすファシリテーター',
-                subtitle: '挑戦を導く人・危機をチャンスに変える',
-                combination: '外向型 × 問題志向型 × 創造型',
-                description: 'あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を理解し、目的を達成するのための計画立案を支援する人のことです。状況が変化しても臨機応変に動ける柔軟さがあります。',
-                environmentConditions: [
-                    'みんなで行動しながら、問題を解決できる',
-                    'リスク回避を目標にできる、新しいことにチャレンジできる',
-                    '意思決定が自分でできる、複数のアイディアを考えられる',
-                    '場所を移動できる、幅広い情報を調べることができる'
-                ],
-                suitable: [
-                    '予測できないリスクを先取りしてみんなと管理する仕事（番組ディレクター、イベントディレクター、リスク管理リーダー、プロジェクトマネージャー（IT、建設など）、危機管理、医療現場のリーダー、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど）'
-                ],
-                suitableReason: '未知の課題や変化にワクワクできる環境で能力が引き出されるため',
-                unsuitableEnvironment: [
-                    'あまりに専門性が高い知識のみが必要とされる作業や行動',
-                    '一人で行う作業が多い、同じ場所で作業をすること',
-                    '結果ばかりを求められて、問題解決が評価されない',
-                    '細かいルールで縛られる、行動するまでに事前の準備が多い',
-                    'アイディアが採用されにくい環境でがんばる'
-                ],
-                unsuitable: [
-                    '定型事務、工場のライン作業',
-                    '公的機関の定例業務',
-                    '規定が厳しい大企業の一部門'
-                ],
-                unsuitableReason: '自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため',
-                tips: [
-                    '問題を分析しながら、仲間と新しい道を切り拓く機会を与える',
-                    '※細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す'
-                ],
-                goodTypes: ['プランナー型、ストラテジスト型（発想と行動が噛み合う）'],
-                badTypes: ['アーキテクト型（安定重視で変化を嫌がることがある）'],
-                badTypeAdvice: 'アーキテクト型には段階的な変化を提案する',
-                stress: [
-                    '新しい場所や人に会いに行く',
-                    '役立ちそうなアイデアをＳＮＳやノートに記録する',
-                    '小さな成功体験を意識的に積む'
-                ]
-            },
-            '6': {
-                title: '6. チームを守るメディエーター',
-                subtitle: '安定を支える人・陰で支える実行力',
-                combination: '外向型 × 問題志向型 × 実行型',
-                description: 'あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。メディエーターとは調停者を意味しており、問題を決まった方法でさばいて人を助ける人のことです。前線に立って成果を奪うよりも、後方から支えてチームを成功に導くことにやりがいを感じます。',
-                environmentConditions: [
-                    'ルーティン化された工程がある、既存のアイディアを組み合わせて工夫できる',
-                    '問題を先に把握して解決できる、多くの情報を扱わなくてすむ、場所が移動できる',
-                    'いろいろな人と会える、慎重に現場を回しながら、リスクを最小化できる',
-                    '意思決定を自分でするより、指示に従う'
-                ],
-                suitable: [
-                    'みんなと一緒にルーティン作業でリスクをなくしていく仕事（企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、在庫管理、清掃チーム、メンテナンススタッフ、監視員、問題対応の現場リーダー、人材育成、ジョブトレーング（OJT）、医療測定）、士業全般（行政書士、税理士、公認会計士など）'
-                ],
-                suitableReason: '人とのやり取りを通じ、秩序や安定を守る場面で力を発揮しやすいため',
-                unsuitableEnvironment: [
-                    '想定外の急な変化が起きる環境、新しいことをゼロから生み出す',
-                    '多くの新しい情報を扱わなければいけない',
-                    '人とのつながりが乏しいリモートワーク、移動の少ない環境',
-                    '結果ばかりを求められて、問題解決が評価されない',
-                    '行動するまでに事前の準備が多い、空気を読みすぎて自分の改善案を出せなくなる'
-                ],
-                unsuitable: [
-                    '完全歩合制の営業職',
-                    'スタートアップの立ち上げ（制度・仕組みなし）',
-                    '研究職（単独での長期研究）'
-                ],
-                unsuitableReason: '秩序がなく、サポートや安定化の役割を果たせない場面ではエネルギーが下がりやすいため',
-                tips: [
-                    '現場での問題発見と改善を任せる。裏方でも成果が見える設計が◎',
-                    '※地味な役割になりがちなので、努力やプロセスを評価してあげることが大切'
-                ],
-                goodTypes: ['アーキテクト型、ガーディアン型（秩序を大事にする）'],
-                badTypes: ['プランナー型（急な変化が多い）'],
-                badTypeAdvice: '変化を求める相手には「安全策を添えて提案」する',
-                stress: [
-                    '信頼できる同僚と短時間雑談をする',
-                    '達成できたサポート事例をメモする',
-                    'チェックリストや進行表を整理して安心感を得る'
-                ]
-            },
-            '7': {
-                title: '7. 解の地図を描くストラテジスト',
-                subtitle: '分析で導く人・静かな戦略家',
-                combination: '内向型 × 問題志向型 × 創造型',
-                description: 'あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。ストラテジストとは、情勢などを分析し、ストラテジー(戦略)や方針を立案する立案者を意味します。即行動よりも、情報収集と計画立案を経て着実に進めるスタイルです。',
-                environmentConditions: [
-                    '一人で深く探究できる、まだ誰も知らない課題に出会える',
-                    '人の見落とす違和感や矛盾を拾って、創造的に解決できる',
-                    '推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる',
-                    '幅広い情報を得てアイディアを生み出せる、問題解決を目標にできる'
-                ],
-                suitable: [
-                    '一人で問題をつきつめて創造的に解決できる仕事（発明家／プロダクトデザイナー、システム開発、データサイエンティスト、リサーチャー、エンジニア、探偵業、臨床心理士、問題解決コピーライティング、特許戦略コンサルタント、サステナブルプロダクト開発、都市設計、修復家、社会派ジャーナリスト、法務リスクアナリスト、戦略立案業、投資家、法務医学者'
-                ],
-                suitableReason: '情報の整理と先読み力が活かせる環境で成果を出しやすいため',
-                unsuitableEnvironment: [
-                    '意思決定が早く求められる、あまり深く考えなくてもできる作業や行動',
-                    '人と会う頻度が多い、結果ばかりで問題解決が評価されない',
-                    '細かいルールで縛られる、アイディアが採用されにくい環境でがんばる'
-                ],
-                unsuitable: [
-                    '飛び込み営業、接客業',
-                    '突発対応が多いイベントスタッフ',
-                    'スタートアップの現場責任者'
-                ],
-                unsuitableReason: '熟考と計画ができない場面では本領を発揮できないため',
-                tips: [
-                    '静かな環境で深く考える時間と、アウトプットの場を明確にする',
-                    '未来や現在の課題を冷静に分析して新しい方法を考えさせる',
-                    '※表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切。',
-                    'プレゼンや即答が苦手な傾向、チーム内の雑談が苦手、空気を読むのが負担になる傾向、行動が遅く見えることもある。人との接点が少なすぎると、孤立や過剰思考になる可能性。考えすぎて動けなくなる。完璧を求めて公開できない'
-                ],
-                goodTypes: ['ガーディアン型、ファシリテーター型（問題を一緒に考えることができる）'],
-                badTypes: ['コンダクター型（勢い重視で計画を押しつけてくる）'],
-                badTypeReason: '熟考と計画ができない場面では本領を発揮できない',
-                stress: [
-                    '静かな場所で思考整理をする',
-                    '情報をマインドマップにまとめる',
-                    '信頼できる人と戦略について語る時間を持つ'
-                ]
-            },
-            '8': {
-                title: '8. 精度を磨くガーディアン',
-                subtitle: '緻密さで支える人・完成度の職人',
-                combination: '内向型 × 問題志向型 × 実行型',
-                description: 'あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。ガーディアンとは守護者を意味します。妥協せず高品質を追求する姿勢が信頼を生みます。',
-                environmentConditions: [
-                    '規則や手順を守ることで行える、正確性が求められる',
-                    '早期に問題点を発見して、ルールをもとに解決できる',
-                    'ミスやリスクを検知する作業、ダブルチェックできる',
-                    '一人で静かに突き詰めることができる、意思決定を自分でするより指示に従う'
-                ],
-                suitable: [
-                    '人と会わずに日々の作業を繰り返してリスクから守る仕事（経理、法務、監査、品質保証、システム保守）、リスク管理などの「正確性×慎重さ」が求められる業務、チェック業務、ミス防止、トラブル防止に進化を発揮、縁の下の力持ちの職種とも言える',
-                    '堅実な業務改善の担い手'
-                ],
-                suitableReason: '基準やルールのある中で、正確さを磨ける環境で力を発揮しやすいため',
-                unsuitableEnvironment: [
-                    '意思決定が早く求められる、創造性の高い作業',
-                    '指示があいまいな中で進む、自分の役割が不明確',
-                    'みんなと行う作業の頻度が多い、結果ばかりで問題解決が評価されない'
-                ],
-                unsuitable: [
-                    '営業職（特に飛び込み型）',
-                    'スタートアップの立ち上げ業務',
-                    'イベント運営の現場担当'
-                ],
-                unsuitableReason: '秩序がなく、正確さを保てない環境ではストレスが溜まりやすいため',
-                tips: [
-                    '明確な手順と安定したルーティンがあると力を発揮',
-                    '※融通が利かず、変化に対応できないとストレスを抱えやすいので注意',
-                    '※変化が急すぎると不安になる、丁寧に伝えることが大切',
-                    '※変化を押しつけず、徐々に巻き込む工夫をする',
-                    '※安心感が大切なので、常にフィードバックし、プロセスや努力をほめてあげる',
-                    '行動がゆっくりの傾向もあるため「ちゃんと見ている」「理解している」ことを伝えることが大切'
-                ],
-                goodTypes: ['アーキテクト型、メディエーター型（安定志向で価値観が合う）'],
-                badTypes: ['ビジョナリー型（勢い重視で精度を軽視することがある）'],
-                badTypeAdvice: '相性が悪い相手には「品質を守る→理由」を具体的に説明する',
-                stress: [
-                    '作業スペースを整理整頓する',
-                    '完成度の高い作品や成果物を鑑賞する',
-                    '自分の作業記録や改善履歴を振り返る'
-                ]
-            }
-        };
-
-        // 結果を表示
-        if (type && typeData[type]) {
-            const data = typeData[type];
-            const container = document.getElementById('results-container');
-            
-            // スコア情報があれば表示
-            let scoresHTML = '';
-            if (extraversion && neuroticism && openness && agreeableness && conscientiousness) {
-                scoresHTML = `
-                    <div class="section page-break-after" style="background-color: #fffef0; border-left: 5px solid #ffff00;">
-                        <h2>各特性のスコア</h2>
-                        <div style="margin-top: 20px;">
-                            <!-- 外向性 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>外向性：${extraversion}点／8点（${extraversionType || ''}）</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- 神経症傾向 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>神経症傾向：${neuroticism}点／8点（${neuroticismType || ''}）</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- 開放性 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>開放性：${openness}点／8点（${opennessType || ''}）</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; height: 100%; width: ${(openness/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- 協調性 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>協調性：${agreeableness}点／8点</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- 誠実性 -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                    <strong>誠実性：${conscientiousness}点／8点</strong>
-                                </div>
-                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
-                                    <div style="background: #ffff00; height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #000000;
+                margin-bottom: 20px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             
-            // 相性の良いタイプの表示（配列があれば）
-            let goodTypesHTML = '';
-            if (data.goodTypes && data.goodTypes.length > 0) {
-                goodTypesHTML = `
-                    <div style="margin-top: 15px;">
-                        <strong>・相性が良いタイプ：</strong><br>
-                        ${data.goodTypes.map(item => `${item}`).join('<br>')}
-                    </div>
-                `;
+            h1 {
+                display: none;
             }
             
-            // 相性の悪いタイプの表示（配列があれば）
-            let badTypesHTML = '';
-            if (data.badTypes && data.badTypes.length > 0) {
-                badTypesHTML = `
-                    <div style="margin-top: 15px;">
-                        <strong>・相性が悪いタイプ：</strong><br>
-                        ${data.badTypes.map(item => `${item}`).join('<br>')}
-                        ${data.badTypeReason ? `<br>→理由：${data.badTypeReason}` : ''}
-                        ${data.badTypeAdvice ? `<br>→対応のコツ：${data.badTypeAdvice}` : ''}
-                    </div>
-                `;
+            .section {
+                page-break-inside: avoid;
+                background-color: #fafafa !important;
+                border-left: 4px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding-top: 30px;
             }
-
-            container.innerHTML = `
-                <div class="type-header">
-                    <div class="type-title">${data.title}</div>
-                    <div class="type-subtitle">${data.subtitle}</div>
-                    <div class="type-combination">${data.combination}</div>
-                </div>
-
-                ${scoresHTML}
-
-                <div class="section">
-                    <h2>①特性の説明</h2>
-                    <p>${data.description}</p>
-                </div>
-
-                <div class="section">
-                    <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
-                    ${data.environmentConditions ? `
-                        <div style="margin-bottom: 20px;">
-                            <strong>環境条件</strong>
-                            <ul>
-                                ${data.environmentConditions.map(item => `<li>${item}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    <div style="margin-bottom: 15px;">
-                        <strong>職種例</strong>
-                        <ul>
-                            ${data.suitable.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                    ${data.suitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.suitableReason}</p>` : ''}
-                </div>
-
-                <div class="section page-break-before">
-                    <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
-                    ${data.unsuitableEnvironment ? `
-                        <div style="margin-bottom: 20px;">
-                            <strong>環境条件</strong>
-                            <ul>
-                                ${data.unsuitableEnvironment.map(item => `<li>${item}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    <div style="margin-bottom: 15px;">
-                        <strong>職種例</strong>
-                        <ul>
-                            ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                    ${data.unsuitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.unsuitableReason}</p>` : ''}
-                </div>
-
-                <div class="section">
-                    <h2>④能力を最大化する方法</h2>
-                    <ul>
-                        ${data.tips.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                </div>
-
-                <div class="section page-break-before">
-                    <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
-                    ${goodTypesHTML}
-                    ${badTypesHTML}
-                </div>
-
-                <div class="section">
-                    <h2>⑥即効性のあるストレス軽減法</h2>
-                    <ul>
-                        ${data.stress.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                </div>
-            `;
-        } else {
-            document.getElementById('results-container').innerHTML = `
-                <div class="section">
-                    <p>診断結果が見つかりません。診断ページからやり直してください。</p>
-                </div>
-            `;
-        }
-    </script>
-
-    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© Takeyuki Nishi</p>
-    </div>
-
-    <style>
-        @media print {
+            
+            .section:first-of-type {
+                padding-top: 25px;
+            }
+            
+            .chart-container {
+                background-color: #f9f9f9 !important;
+                border: 1px solid #e0e0e0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .chart-bar-container {
+                background-color: #e0e0e0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .chart-bar {
+                background-color: #ffff00 !important;
+                border-right: 2px solid #000000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .alternative-link {
+                background-color: #fff8dc !important;
+                border-left: 4px solid #ffa500 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .button-group, .back-button {
+                display: none !important;
+            }
+            
+            .pdf-button {
+                display: none !important;
+            }
+            
+            div[style*="position: fixed"] {
+                display: none !important;
+            }
+            
             .footer-print {
                 display: block !important;
-                position: relative;
-                margin-top: 40px;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
                 width: 100%;
                 text-align: center;
                 border-top: 1px solid #000;
@@ -740,6 +274,747 @@
                 color: #000 !important;
             }
         }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .pdf-button, .back-button {
+                width: 100%;
+            }
+        }
     </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-title">ビッグファイブ診断 詳細結果</div>
+
+        <h1>ビッグファイブ診断 詳細結果</h1>
+
+        <div class="result-header">
+            <h2 id="typeName">4. 着実な道を築くアーキテクト</h2>
+            <div class="subtitle" id="typeSubtitle">現在と未来を守る人・丁寧に、確実に</div>
+            <div>
+                <span class="type-label" id="extraversionType">内向型</span>
+                <span class="type-label" id="neuroticismType">楽観型</span>
+                <span class="type-label" id="opennessType">実行型</span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">各特性のスコア</div>
+            
+            <div class="chart-item">
+                <div class="chart-label">
+                    <span>外向性：<span id="extraversionScore">1</span>点／8点（<span id="extraversionLabel">内向型</span>）</span>
+                </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar" id="extraversionBar" style="width: 12.5%"></div>
+                </div>
+            </div>
+
+            <div class="chart-item">
+                <div class="chart-label">
+                    <span>神経症傾向：<span id="neuroticismScore">1</span>点／8点（<span id="neuroticismLabel">楽観型</span>）</span>
+                </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar" id="neuroticismBar" style="width: 12.5%"></div>
+                </div>
+            </div>
+
+            <div class="chart-item">
+                <div class="chart-label">
+                    <span>開放性：<span id="opennessScore">4</span>点／8点（<span id="opennessLabel">実行型</span>）</span>
+                </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar" id="opennessBar" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="chart-item">
+                <div class="chart-label">
+                    <span>協調性：<span id="agreeablenessScore">2</span>点／8点</span>
+                </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar" id="agreeablenessBar" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <div class="chart-item">
+                <div class="chart-label">
+                    <span>誠実性：<span id="conscientiousnessScore">8</span>点／8点</span>
+                </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar" id="conscientiousnessBar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>①特性の説明</h3>
+            <div class="section-content" id="description">
+                あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。
+            </div>
+            <div id="alternativeLinks"></div>
+        </div>
+
+        <div class="section">
+            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <div class="section-content" id="suitableJobs">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>最初にやるべきこと（とっかかり）が明確な作業</li>
+                    <li>一人でコツコツと進める、着実に積み上げられる</li>
+                    <li>失敗よりも"できた！"という達成感を感じやすい</li>
+                    <li>静かで落ち着いた場所で行える、一人で静かに突き詰められる</li>
+                    <li>継続的にしくみやシステムを改善できる努力</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>ルーティン作業をモクモクと一人でできる仕事（データ入力、検品作業、仕分け、文字起こし、パッケージ、事務、経理・会計アシスタント、組み立てライン、採点、写真や画像のトリミング、図書館司書、製造オンラインオペレーター、商品管理、校正・チェック業務、加工など）</li>
+                    <li>管理作業が多い仕事など</li>
+                </ul>
+                <p>→理由：手順が明確で、自分のペースで精度を高められる業務が多く、達成感を得やすいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <div class="section-content" id="unsuitableJobs">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>本番一発勝負が求められる、飛躍的な変化が必要な努力</li>
+                    <li>人と会う機会が多い作業の努力、問題解決ばかりを求められる努力</li>
+                    <li>ルールがない環境でシステムをつくる努力、自分のペースで作業ができない</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>営業職全般（飛び込み営業、テレアポ、訪問販売など）</li>
+                    <li>イベント運営・司会・接客メインの販売業務</li>
+                    <li>スタートアップ立ち上げや、ルールのない組織での業務構築</li>
+                    <li>突発的なトラブル対応を繰り返すカスタマーサポート・クレーム処理</li>
+                    <li>常に変化のあるプロジェクトマネジメント（期限変更や仕様変更が多い）</li>
+                </ul>
+                <p>→理由：突発対応や対人負荷、環境変化の多い業務はエネルギーを消耗しやすく、アーキテクト型の持ち味である「安定的・継続的な成果」を発揮しにくいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>④能力を最大化する方法</h3>
+            <div class="section-content" id="maximization">
+                <ul>
+                    <li>日課やルーティンが評価される仕組みに乗せると◎</li>
+                    <li>進捗状況が見える化できる努力はうまくいきやすい</li>
+                    <li>※感謝やフィードバックがないと自信を失いやすい</li>
+                    <li>目標が達成できないときに、落ち込みやすい傾向</li>
+                    <li>継続すること自体を成功として定義できると、イキイキするタイプ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <div class="section-content" id="compatibility">
+                <p><strong>・相性が良いタイプ：</strong><br>
+                メディエーター型・ガーディアン型（段取りや調整力が高く、安心感をくれる）</p>
+                
+                <p><strong>・相性が悪いタイプ：</strong><br>
+                ファシリテーター型（細かい方向転換を押しつけられると疲弊しやすい）</p>
+                
+                <p>→対応のコツ：相性が悪い相手とは、事前に手順や期日を明確にし、突発的な依頼は範囲を限定して受ける</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑥即効性のあるストレス軽減法</h3>
+            <div class="section-content" id="stressRelief">
+                <ul>
+                    <li>デスクに観葉植物や花を飾る（安心感を与え、集中力を高める）</li>
+                    <li>ハッピーエンドの映画・ドラマや小説に触れる（楽観性を強化する）</li>
+                    <li>毎日の小さな成功を記録する習慣をつける（継続力を自己評価につなげる）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
+            <a href="4_bigfive.html" class="back-button">← 診断に戻る</a>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+        <p>© Takeyuki Nishi</p>
+    </div>
+
+    <script>
+        // 8タイプの定義
+        const typeData = {
+            1: {
+                name: "1. 発想で導くビジョナリー",
+                subtitle: "元気を運ぶ人・火をつけて走る人",
+                types: ["外向型", "楽観型", "創造型"],
+                description: "あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。新しい情報や人との出会いをエネルギーに変え、場の空気を盛り上げながらゴールを目指すことができます。起業家に多いタイプです。ただし勢いあまって計画が粗くなることもあるため、定期的な方向確認が成果の継続に欠かせません。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>みんなと一緒に攻めをベースにゴール実現を目指せる</li>
+                        <li>楽観的に未来をイメージしながら作業できる</li>
+                        <li>ビジョンや想いを多くの人に発信できる、柔軟な企画ができる</li>
+                        <li>多くの人や情報に触れて、場所が移動できる、意思決定が自由にできる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>人と一緒に新しいものを作り出していく仕事（新規事業のプランナー、ベンチャー、プランディング、プロモーション、プロデューサー、企画開発、営業企画、チームリーダー、セールスリーダー、広告ディレクター、起業家、プロジェクトリーダーなど）</li>
+                    </ul>
+                    <p>→理由：新しい刺激や多様な人脈がモチベーションの源泉となり、創造力を最大限に発揮できるため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>ルーティン作業が多い環境、数字管理が多い仕事</li>
+                        <li>新しい情報や刺激が少ない環境、孤独な環境</li>
+                        <li>移動の少ない環境、人とのつながりが乏しいリモートワーク</li>
+                        <li>行動するまでに事前の準備が多い、問題解決ばかりの作業</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>経理、工場ライン作業員、スーパーのレジ係、財務担当、一般事務、倉庫内ピッキングスタッフ、データ入力専任スタッフ、受信専門（図書館の資料整理スタッフ、チケット発券窓口）、郵便物仕分け業務など</li>
+                    </ul>
+                    <p>→理由：刺激や人との交流が少ないと、エネルギーが低下しやすく、行動の勢いが鈍ってしまうため</p>`,
+                maximization: `<ul>
+                        <li>新しいプロジェクトを動かす自由と裁量を与えると火がつく</li>
+                        <li>ノリと勢いだけで突っ走って後工程が破綻することがあるため注意が必要</li>
+                        <li>実務管理や数字管理は苦手なので、サポートが必要なことも</li>
+                        <li>リスクをあまり考えない傾向があるため、方向性がずれていないか定期的に確認が必要（情熱と方向性の確認）</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    プランナー型（創造的刺激を与えてくれる）、コンダクター型（チーム運営を支えてくれる）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    ガーディアン型（変化やスピードに慎重すぎてペースが合わないことがある）</p>
+                    <p>→理由：刺激や人との交流が少ないと、エネルギーが低下しやすく、行動の勢いが鈍ってしまうため</p>`,
+                stressRelief: `<ul>
+                        <li>新しい情報に大量に触れる</li>
+                        <li>人と話す頻度を1日1回でも増やす</li>
+                        <li>1日の終わりに今日あったいいことを5つ書き出す</li>
+                    </ul>`
+            },
+            2: {
+                name: "2. 信頼でまとめるコンダクター",
+                subtitle: "チームを動かす実行屋・安心を届ける人",
+                types: ["外向型", "楽観型", "実行型"],
+                description: "あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。ルールや指示が明確な環境で、テンポよく行動できると、大きな成果を出せます。コンダクターとは指揮者を意味します。ただし「ゼロからの創造が苦手」という特徴があります。人を動かす安定性が大きな魅力です。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>マニュアルがある、楽しくテンポよくルーティンを回すことができる</li>
+                        <li>ルールを守りながら、人を巻き込むことができる</li>
+                        <li>人を明るくすることでチームビルディングができる</li>
+                        <li>人と関わるスキルがアップできる、イベント的な作業を盛り上げることができる</li>
+                        <li>場所が移動できて人と会える、意思決定を自分でするより指示に従う</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>人に決まったものを提示することで安心感を与える仕事（営業職、マネージャー、副社長的な存在、サービス指導、接客業、販売、案内業、ガイド、ホテル、レストラン、秘書など）</li>
+                    </ul>
+                    <p>→理由：定期的な自己評価で行動を見直すとなおよい、周りとの信頼関係の構築が強み</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>指示があいまいな中で進む、自分の役割が不明確</li>
+                        <li>新しい情報を常に学ぶ必要がある、ゼロから何かを生み出す</li>
+                        <li>人とのつながりが乏しいリモートワーク、孤独な環境</li>
+                        <li>問題解決ばかりを求められて、結果ばかりを求められる</li>
+                        <li>移動の少ない環境</li>
+                        <li>行動するまでに事前準備が多い</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>研究職（長期の一人作業中心）</li>
+                        <li>フルリモートのデスクワーク</li>
+                        <li>ITエンジニア（要件不明確な開発案件）</li>
+                        <li>新規事業の企画立ち上げなど不確実性が高い業務</li>
+                    </ul>
+                    <p>→理由：孤立や不明確さが続くとモチベーションが下がりやすいため</p>`,
+                maximization: `<ul>
+                        <li>ルールを守りながら、人を巻き込める環境に身を置く</li>
+                        <li>動きながら学ぶスタイルが合う。チームの空気を作る役割を与える</li>
+                        <li>※役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する</li>
+                        <li>※目に見える結果だけでなく、周りへの影響も評価してあげることが大切</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    メディエーター型、アーキテクト型（安定感と調整力で行動をサポートしてくれる）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    ストラテジスト型（提案が斬新すぎてついていけないことがある）</p>
+                    <p>→対応のコツ：相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>`,
+                stressRelief: `<ul>
+                        <li>定期的なルーティンワークの時間を確保する</li>
+                        <li>外出や人と話す機会を意図的に増やす</li>
+                        <li>チーム内での役割を確認・明確化する</li>
+                    </ul>`
+            },
+            3: {
+                name: "3. 新しい種をまくプランナー",
+                subtitle: "発想を届ける人・静かに広げる着想力",
+                types: ["内向型", "楽観型", "創造型"],
+                description: "あなたは落ち着いた観察力と独自の着想をもち、新しいアイデアを静かに形にしていく力があります。内向性の高さが深い集中を生み、楽観性が失敗を恐れず試せる姿勢を支え、開放性が柔軟な発想をもたらします。未来を静かにデザインする、粘り強くアイディアを練るタイプです。じわじわと成果を広げるのが得意です。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>ゼロから構想できる、静かに革新を生み出せる</li>
+                        <li>まだ誰も知らない未来に出会える、インプットを絶やさず未来を描ける</li>
+                        <li>深掘りと新規発見の繰り返しに触れる、一人で静かに突き詰められる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>一人で創造的な作業ができる仕事（デザイナー、コンテンツ制作、作家など）</li>
+                        <li>雑誌や書籍の制作</li>
+                        <li>戦略を裏方で指示する仕事</li>
+                        <li>※CMプランナーだと顧客の意向に制限されるため向いていない</li>
+                    </ul>
+                    <p>→理由：ロジカルで先見性のある構想家、静かに革新を生む。情報やアイデアを集め、整理し、形にする過程で脳が活性化するため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>意思決定が早く求められる、あまり深く考えなくてもできる作業や行動</li>
+                        <li>みんなと行う作業の頻度が多い、問題解決ばかりを求められる</li>
+                        <li>細かいルールで縛られる、アイディアが採用されにくい環境でがんばる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>営業職、接客販売（特に新規開拓）、イベント司会</li>
+                        <li>タレントなどの人前業務・役者</li>
+                        <li>緊急対応が多い現場作業（救急、現場施工など）</li>
+                    </ul>
+                    <p>→理由：常時対人刺激の多い業務では集中力と創造力が削がれやすいため</p>`,
+                maximization: `<ul>
+                        <li>一人で考える時間と、誰かが拾ってくれる安心感が必要</li>
+                        <li>※チーム内で理解されずらいこともあるので、定期的な共有の場をつくる</li>
+                        <li>妄想で終わってしまいやすいので注意、実行するためのフォローがないと</li>
+                        <li>チームとの連携を助けることが大切</li>
+                        <li>※共感されないと心を閉ざす傾向は注意。思いつくけど提案できないことも</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    ファシリテーター型、ビジョナリー型（発想を刺激してくれる）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    メディエーター型（細かい管理を求められて窮屈に感じる）</p>
+                    <p>→対応のコツ：相性が悪い相手とは、完成品や実績で説得する</p>`,
+                stressRelief: `<ul>
+                        <li>自然のあるカフェや静かな図書館で作業する</li>
+                        <li>好きな分野の本や資料をまとめて読む時間を作る</li>
+                        <li>小さな達成感を毎週確認できるチェックリストを作る</li>
+                    </ul>`
+            },
+            4: {
+                name: "4. 着実な道を築くアーキテクト",
+                subtitle: "現在と未来を守る人・丁寧に、確実に",
+                types: ["内向型", "楽観型", "実行型"],
+                description: "あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>最初にやるべきこと（とっかかり）が明確な作業</li>
+                        <li>一人でコツコツと進める、着実に積み上げられる</li>
+                        <li>失敗よりも"できた！"という達成感を感じやすい</li>
+                        <li>静かで落ち着いた場所で行える、一人で静かに突き詰められる</li>
+                        <li>継続的にしくみやシステムを改善できる努力</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>ルーティン作業をモクモクと一人でできる仕事（データ入力、検品作業、仕分け、文字起こし、パッケージ、事務、経理・会計アシスタント、組み立てライン、採点、写真や画像のトリミング、図書館司書、製造オンラインオペレーター、商品管理、校正・チェック業務、加工など）</li>
+                        <li>管理作業が多い仕事など</li>
+                    </ul>
+                    <p>→理由：手順が明確で、自分のペースで精度を高められる業務が多く、達成感を得やすいため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>本番一発勝負が求められる、飛躍的な変化が必要な努力</li>
+                        <li>人と会う機会が多い作業の努力、問題解決ばかりを求められる努力</li>
+                        <li>ルールがない環境でシステムをつくる努力、自分のペースで作業ができない</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>営業職全般（飛び込み営業、テレアポ、訪問販売など）</li>
+                        <li>イベント運営・司会・接客メインの販売業務</li>
+                        <li>スタートアップ立ち上げや、ルールのない組織での業務構築</li>
+                        <li>突発的なトラブル対応を繰り返すカスタマーサポート・クレーム処理</li>
+                        <li>常に変化のあるプロジェクトマネジメント（期限変更や仕様変更が多い）</li>
+                    </ul>
+                    <p>→理由：突発対応や対人負荷、環境変化の多い業務はエネルギーを消耗しやすく、アーキテクト型の持ち味である「安定的・継続的な成果」を発揮しにくいため</p>`,
+                maximization: `<ul>
+                        <li>日課やルーティンが評価される仕組みに乗せると◎</li>
+                        <li>進捗状況が見える化できる努力はうまくいきやすい</li>
+                        <li>※感謝やフィードバックがないと自信を失いやすい</li>
+                        <li>目標が達成できないときに、落ち込みやすい傾向</li>
+                        <li>継続すること自体を成功として定義できると、イキイキするタイプ</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    メディエーター型・ガーディアン型（段取りや調整力が高く、安心感をくれる）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    ファシリテーター型（細かい方向転換を押しつけられると疲弊しやすい）</p>
+                    <p>→対応のコツ：相性が悪い相手とは、事前に手順や期日を明確にし、突発的な依頼は範囲を限定して受ける</p>`,
+                stressRelief: `<ul>
+                        <li>デスクに観葉植物や花を飾る（安心感を与え、集中力を高める）</li>
+                        <li>ハッピーエンドの映画・ドラマや小説に触れる（楽観性を強化する）</li>
+                        <li>毎日の小さな成功を記録する習慣をつける（継続力を自己評価につなげる）</li>
+                    </ul>`
+            },
+            5: {
+                name: "5. 見えない課題を照らすファシリテーター",
+                subtitle: "挑戦を導く人・危機をチャンスに変える",
+                types: ["外向型", "問題志向型", "創造型"],
+                description: "あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を理解し、目的を達成するのための計画立案を支援する人のことです。状況が変化しても臨機応変に動ける柔軟さがあります。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>みんなで行動しながら、問題を解決できる</li>
+                        <li>リスク回避を目標にできる、新しいことにチャレンジできる</li>
+                        <li>複数のアイディアを考えられる、意思決定が自分でできる</li>
+                        <li>幅広い情報を調べることができる、場所を移動できる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>予測できないリスクを先取りしてみんなと管理する仕事（番組ディレクター、イベントディレクター、リスク管理リーダー、プロジェクトマネージャー（IT、建設、医療現場のリーダー）、危機管理、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど）</li>
+                    </ul>
+                    <p>→理由：本知の課題や変化にワクワクできる環境で能力が引き出されるため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>あまりに専門性が高い知識のみが必要とされる作業や行動</li>
+                        <li>一人で行う作業が多い、同じ場所で作業をすること</li>
+                        <li>問題解決が評価されない、結果ばかりを求められて</li>
+                        <li>細かいルールで縛られる、行動するまでに事前の準備が多い</li>
+                        <li>アイディアが採用されにくい環境でがんばる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>定型事務、工場のライン作業</li>
+                        <li>公的機関の定例業務</li>
+                        <li>規定が厳しい大企業の一部門</li>
+                    </ul>
+                    <p>→理由：自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため</p>`,
+                maximization: `<ul>
+                        <li>問題を分析しながら、仲間と新しい道を切り拓く機会を与える</li>
+                        <li>※細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    ストラテジスト型、プランナー型（発想と行動が噛み合う）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    アーキテクト型（安定重視で変化を嫌がることがある）</p>
+                    <p>→対応のコツ：アーキテクト型には段階的な変化を提案する</p>`,
+                stressRelief: `<ul>
+                        <li>新しい場所や人に会いに行く</li>
+                        <li>役立ちそうなアイデアをSNSやノートに記録する</li>
+                        <li>小さな成功体験を意識的に積む</li>
+                    </ul>`
+            },
+            6: {
+                name: "6. チームを守るメディエーター",
+                subtitle: "陰で支える実行力・安定を支える人",
+                types: ["外向型", "問題志向型", "実行型"],
+                description: "あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。メディエーターとは調停者を意味しており、問題を決まった方法でさばいて人を助ける人のことです。後方から支えてチームを成功に導くことにやりがいを感じます。前線に立って成果を奪うよりも。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>ルーティン化された工程がある、既存のアイディアを組み合わせて工夫できる</li>
+                        <li>問題を先に把握して解決できる、多くの情報を扱わなくてすむ</li>
+                        <li>場所が移動できる、リスクを最小化できる</li>
+                        <li>慎重に現場を回しながら、いろいろな人と会える</li>
+                        <li>意思決定を自分でするより指示に従う</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>みんなと一緒にルーティン作業でリスクをなくしていく仕事（企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、在庫管理、清掃チーム、メンテナンススタッフ、監視員、問題対応の現場リーダー、人材育成、ジョブトレーニング（OJT）、医療測定、士業全般（税理士、行政書士、公認会計士など）</li>
+                    </ul>
+                    <p>→理由：人とのやり取りを通じ、秩序や安定を守る場面で力を発揮しやすいため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>想定外の急な変化が起きる環境、新しいことをゼロから生み出す</li>
+                        <li>多くの新しい情報を扱わなければいけない</li>
+                        <li>人とのつながりが乏しいリモートワーク、移動の少ない環境</li>
+                        <li>問題解決が評価されない、結果ばかりを求められて</li>
+                        <li>行動するまでに事前準備が多い、空気を読みすぎて自分の改善案を出せなくなる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>完全歩合制の営業職</li>
+                        <li>スタートアップの立ち上げ（仕組みなし・制度なし）</li>
+                        <li>研究職（単独での長期研究）</li>
+                    </ul>
+                    <p>→理由：秩序がなく、サポートや安定化の役割を果たせない場面ではエネルギーが下がりやすいため</p>`,
+                maximization: `<ul>
+                        <li>現場での問題発見と改善を任せる</li>
+                        <li>◎裏方でも成果が見える設計が。※地味な役割になりがちなので、努力やプロセスを評価してあげることが大切</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    ガーディアン型、アーキテクト型（秩序を大事にする）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    プランナー型（急な変化が多い）</p>
+                    <p>→対応のコツ：変化を求める相手には「安全策を添えて提案」する</p>`,
+                stressRelief: `<ul>
+                        <li>信頼できる同僚と短時間雑談をする</li>
+                        <li>達成できたサポート事例をメモする</li>
+                        <li>チェックリストや進行表を整理して安心感を得る</li>
+                    </ul>`
+            },
+            7: {
+                name: "7. 解の地図を描くストラテジスト",
+                subtitle: "分析で導く人・静かな戦略家",
+                types: ["内向型", "問題志向型", "創造型"],
+                description: "あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。ストラテジストとは、情勢などを分析し、戦略（ストラテジー）や方針を立案する立案者を意味します。即行動よりも、情報収集と計画立案を経て着実に進めるスタイルです。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>一人で深く探究できる、まだ誰も知らない課題に出会える</li>
+                        <li>人の見落とす違和感や矛盾を拾って、創造的に解決できる</li>
+                        <li>推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる</li>
+                        <li>幅広い情報を得てアイディアを生み出せる、問題解決を目標にできる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>一人で問題をつきつめて創造的に解決できる仕事（プロダクトデザイナー／発明家、システム開発、データサイエンティスト、リサーチャー、エンジニア、探偵業、臨床心理士、サステナブル修復家、都市設計、プロダクト開発、特許戦略コンサルタント、問題解決コピーライティング、社会派ジャーナリスト、法務リスクアナリスト、投資家、戦略立案業、法務医学者）</li>
+                    </ul>
+                    <p>→理由：情報の整理と先読み力が活かせる環境で成果を出しやすいため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>あまり深く考えなくてもできる作業や行動、意思決定が早く求められる</li>
+                        <li>人と会う頻度が多い、結果ばかりで問題解決が評価されない</li>
+                        <li>アイディアが採用されにくい環境でがんばる、細かいルールで縛られる</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>飛び込み営業、接客業</li>
+                        <li>突発対応が多いイベントスタッフ</li>
+                        <li>スタートアップの現場責任者</li>
+                    </ul>
+                    <p>→理由：熟考と計画ができない場面では本領を発揮できないため</p>`,
+                maximization: `<ul>
+                        <li>静かな環境で深く考える時間と、アウトプットの場を明確にする</li>
+                        <li>未来や現在の課題を冷静に分析して新しい方法を考えさせる</li>
+                        <li>※「ちゃんと見ている」「理解している」ことを伝えることが大切。表に出るのは嫌い</li>
+                        <li>プレゼンや即答が苦手な傾向、チーム内の雑談が苦手、空気を読むのが負担になる</li>
+                        <li>孤立や過剰思考、人との接点が少なすぎると。行動が遅く見えることもある。傾向になる可能性</li>
+                        <li>考えすぎて動けなくなる。完璧を求めて公開できない</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    ファシリテーター型、ガーディアン型（問題を一緒に考えることができる）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    コンダクター型（勢い重視で計画を押しつけてくる）</p>
+                    <p>→理由：熟考と計画ができない場面では本領を発揮できない</p>`,
+                stressRelief: `<ul>
+                        <li>静かな場所で思考整理をする</li>
+                        <li>情報をマインドマップにまとめる</li>
+                        <li>信頼できる人と戦略について語る時間を持つ</li>
+                    </ul>`
+            },
+            8: {
+                name: "8. 精度を磨くガーディアン",
+                subtitle: "緻密さで支える人・完成度の職人",
+                types: ["内向型", "問題志向型", "実行型"],
+                description: "あなたは緻密さと正確さを武器に、着実に物事を作り上げます。内向性の高さが集中力を生み、問題志向型の特性がミスやリスクを最小限にし、実行型の特性が計画を確実に遂行します。ガーディアンとは守護者を意味します。妥協せず高品質を追求する姿勢が信頼を生みます。安定せず高品質を追求する姿勢が信頼を生みます。",
+                suitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>規則や手順を守ることで行える、正確性が求められる</li>
+                        <li>早期に問題点を発見して、ルールをもとに解決できる</li>
+                        <li>ミスやリスクを検知する作業、ダブルチェックできる</li>
+                        <li>一人で静かに突き詰めることができる、意思決定を自分でするより指示に従う</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>人と会わずに日々の作業を繰り返してリスクから守る仕事（経理、法務、監査、品質保証、システム保守、リスク管理などの「正確性×慎重さ」が求められる業務、ミス防止、チェック業務、校正、トラブル防止に進化を発揮、縁の下の力持ちの職種とも言える、堅実な業務改善の担い手）</li>
+                    </ul>
+                    <p>→理由：基準やルールのある中で、正確さを磨ける環境で力を発揮しやすいため</p>`,
+                unsuitableJobs: `<strong>環境条件</strong>
+                    <ul>
+                        <li>意思決定が早く求められる、創造性の高い作業</li>
+                        <li>指示があいまいな中で進む、自分の役割が不明確</li>
+                        <li>結果ばかりで問題解決が評価されない、みんなと行う作業の頻度が多い</li>
+                    </ul>
+                    <strong>職種例</strong>
+                    <ul>
+                        <li>営業職全般（特に飛び込み型）</li>
+                        <li>スタートアップの立ち上げ業務</li>
+                        <li>イベント運営の現場担当</li>
+                    </ul>
+                    <p>→理由：秩序がなく、正確さを保てない環境ではストレスが溜まりやすいため</p>`,
+                maximization: `<ul>
+                        <li>明確な手順と安定したルーティンがあると力を発揮</li>
+                        <li>※融通が利かず、変化に対応できないとストレスを抱えやすいので注意、融通が利かず</li>
+                        <li>※変化を押しつけず、徐々に巻き込む工夫をする</li>
+                        <li>変化が急すぎると不安になる。※丁寧に伝えることが大切</li>
+                        <li>プロセスや努力をほめてあげる、常にフィードバックし、安心感が大切なので</li>
+                        <li>※「ちゃんと見ている」「理解している」ことを伝えることが大切</li>
+                        <li>※行動がゆっくりの傾向もあるため、「ちゃんと見ている」「理解している」ことを伝えることが大切</li>
+                    </ul>`,
+                compatibility: `<p><strong>・相性が良いタイプ：</strong><br>
+                    メディエーター型、アーキテクト型（安定志向で価値観が合う）</p>
+                    <p><strong>・相性が悪いタイプ：</strong><br>
+                    ビジョナリー型（勢い重視で精度を軽視することがある）</p>
+                    <p>→対応のコツ：相性が悪い相手とは「品質を守る理由」を具体的に説明する</p>`,
+                stressRelief: `<ul>
+                        <li>作業スペースを整理整頓する</li>
+                        <li>完成度の高い作品や成果物を鑑賞する</li>
+                        <li>自分の作業記録や改善履歴を振り返る</li>
+                    </ul>`
+            }
+        };
+
+        // URLパラメータから診断結果を取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const typeNum = parseInt(urlParams.get('type')) || 4;
+        const extraversion = parseInt(urlParams.get('extraversion')) || 1;
+        const neuroticism = parseInt(urlParams.get('neuroticism')) || 1;
+        const openness = parseInt(urlParams.get('openness')) || 4;
+        const agreeableness = parseInt(urlParams.get('agreeableness')) || 2;
+        const conscientiousness = parseInt(urlParams.get('conscientiousness')) || 8;
+
+        // ページ読み込み時にデータを表示
+        window.addEventListener('DOMContentLoaded', function() {
+            displayResults(typeNum, extraversion, neuroticism, openness, agreeableness, conscientiousness);
+        });
+
+        function displayResults(typeNum, extraversion, neuroticism, openness, agreeableness, conscientiousness) {
+            const type = typeData[typeNum];
+            
+            // タイプ情報を表示
+            document.getElementById('typeName').textContent = type.name;
+            document.getElementById('typeSubtitle').textContent = type.subtitle;
+            document.getElementById('extraversionType').textContent = type.types[0];
+            document.getElementById('neuroticismType').textContent = type.types[1];
+            document.getElementById('opennessType').textContent = type.types[2];
+            
+            // スコアを表示
+            document.getElementById('extraversionScore').textContent = extraversion;
+            document.getElementById('neuroticismScore').textContent = neuroticism;
+            document.getElementById('opennessScore').textContent = openness;
+            document.getElementById('agreeablenessScore').textContent = agreeableness;
+            document.getElementById('conscientiousnessScore').textContent = conscientiousness;
+            
+            // ラベルを表示
+            document.getElementById('extraversionLabel').textContent = extraversion >= 5 ? '外向型' : '内向型';
+            document.getElementById('neuroticismLabel').textContent = neuroticism >= 5 ? '問題志向型' : '楽観型';
+            document.getElementById('opennessLabel').textContent = openness >= 5 ? '創造型' : '実行型';
+            
+            // グラフを表示
+            document.getElementById('extraversionBar').style.width = (extraversion / 8 * 100) + '%';
+            document.getElementById('neuroticismBar').style.width = (neuroticism / 8 * 100) + '%';
+            document.getElementById('opennessBar').style.width = (openness / 8 * 100) + '%';
+            document.getElementById('agreeablenessBar').style.width = (agreeableness / 8 * 100) + '%';
+            document.getElementById('conscientiousnessBar').style.width = (conscientiousness / 8 * 100) + '%';
+            
+            // 各セクションの内容を表示
+            document.getElementById('description').innerHTML = type.description;
+            document.getElementById('suitableJobs').innerHTML = type.suitableJobs;
+            document.getElementById('unsuitableJobs').innerHTML = type.unsuitableJobs;
+            document.getElementById('maximization').innerHTML = type.maximization;
+            document.getElementById('compatibility').innerHTML = type.compatibility;
+            document.getElementById('stressRelief').innerHTML = type.stressRelief;
+            
+            // 両向型のリンクを生成
+            generateAlternativeLinks(typeNum, extraversion, neuroticism, openness);
+        }
+
+        function generateAlternativeLinks(currentType, extraversion, neuroticism, openness) {
+            const linksContainer = document.getElementById('alternativeLinks');
+            const links = [];
+            
+            // 外向性が4または5の場合
+            if (extraversion === 4 || extraversion === 5) {
+                const alternativeType = getAlternativeType(currentType, 'extraversion');
+                if (alternativeType) {
+                    const traitName = extraversion >= 5 ? '外向、内向' : '内向、外向';
+                    links.push({
+                        trait: '外向性',
+                        traitType: traitName,
+                        typeNum: alternativeType,
+                        typeName: typeData[alternativeType].name
+                    });
+                }
+            }
+            
+            // 神経症傾向が4または5の場合
+            if (neuroticism === 4 || neuroticism === 5) {
+                const alternativeType = getAlternativeType(currentType, 'neuroticism');
+                if (alternativeType) {
+                    const traitName = neuroticism >= 5 ? '問題志向、楽観' : '楽観、問題志向';
+                    links.push({
+                        trait: '神経症傾向',
+                        traitType: traitName,
+                        typeNum: alternativeType,
+                        typeName: typeData[alternativeType].name
+                    });
+                }
+            }
+            
+            // 開放性が4または5の場合
+            if (openness === 4 || openness === 5) {
+                const alternativeType = getAlternativeType(currentType, 'openness');
+                if (alternativeType) {
+                    const traitName = openness >= 5 ? '創造型、実行型' : '実行型、創造型';
+                    links.push({
+                        trait: '開放性',
+                        traitType: traitName,
+                        typeNum: alternativeType,
+                        typeName: typeData[alternativeType].name
+                    });
+                }
+            }
+            
+            // リンクを表示
+            if (links.length > 0) {
+                let html = '';
+                links.forEach(link => {
+                    html += `<div class="alternative-link">
+                        また、あなたは、${link.trait}が${link.traitType}の両向型の傾向がある為、<a href="4_bigfive-result-sub-type${link.typeNum}.html" target="_blank">「${link.typeName}」<span class="external-icon">🔗</span></a>の項目も参考にしてみてください。
+                    </div>`;
+                });
+                linksContainer.innerHTML = html;
+            }
+        }
+
+        function getAlternativeType(currentType, trait) {
+            // タイプマッピング表
+            const typeMapping = {
+                // 外向性を反転
+                'extraversion': {
+                    1: 3,  // ビジョナリー → プランナー
+                    2: 4,  // コンダクター → アーキテクト
+                    3: 1,  // プランナー → ビジョナリー
+                    4: 2,  // アーキテクト → コンダクター
+                    5: 7,  // ファシリテーター → ストラテジスト
+                    6: 8,  // メディエーター → ガーディアン
+                    7: 5,  // ストラテジスト → ファシリテーター
+                    8: 6   // ガーディアン → メディエーター
+                },
+                // 神経症傾向を反転
+                'neuroticism': {
+                    1: 5,  // ビジョナリー → ファシリテーター
+                    2: 6,  // コンダクター → メディエーター
+                    3: 7,  // プランナー → ストラテジスト
+                    4: 8,  // アーキテクト → ガーディアン
+                    5: 1,  // ファシリテーター → ビジョナリー
+                    6: 2,  // メディエーター → コンダクター
+                    7: 3,  // ストラテジスト → プランナー
+                    8: 4   // ガーディアン → アーキテクト
+                },
+                // 開放性を反転
+                'openness': {
+                    1: 2,  // ビジョナリー → コンダクター
+                    2: 1,  // コンダクター → ビジョナリー
+                    3: 4,  // プランナー → アーキテクト
+                    4: 3,  // アーキテクト → プランナー
+                    5: 6,  // ファシリテーター → メディエーター
+                    6: 5,  // メディエーター → ファシリテーター
+                    7: 8,  // ストラテジスト → ガーディアン
+                    8: 7   // ガーディアン → ストラテジスト
+                }
+            };
+            
+            return typeMapping[trait][currentType];
+        }
+    </script>
 </body>
 </html>

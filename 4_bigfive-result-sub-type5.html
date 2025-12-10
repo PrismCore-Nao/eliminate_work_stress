@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビッグファイブ診断 サブ結果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .print-title {
+            display: none;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .result-header .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .type-label {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-left: 4px solid #ffff00;
+        }
+
+        .section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .section-content {
+            line-height: 1.8;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .pdf-button, .back-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pdf-button:hover, .back-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .container {
+                position: relative;
+            }
+            
+            .print-title {
+                display: block;
+                background-color: #ffff00 !important;
+                color: #000000 !important;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #000000;
+                margin-bottom: 20px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            h1 {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                background-color: #fafafa !important;
+                border-left: 4px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section:nth-of-type(2),
+            .section:nth-of-type(3),
+            .section:nth-of-type(4) {
+                padding-top: 30px;
+            }
+            
+            .button-group, .back-button {
+                display: none !important;
+            }
+            
+            .pdf-button {
+                display: none !important;
+            }
+            
+            div[style*="position: fixed"] {
+                display: none !important;
+            }
+            
+            .footer-print {
+                display: block !important;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .pdf-button, .back-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-title">ビッグファイブ診断 サブ結果</div>
+
+        <h1>ビッグファイブ診断 サブ結果</h1>
+
+        <div class="result-header">
+            <h2>5. 見えない課題を照らすファシリテーター</h2>
+            <div class="subtitle">挑戦を導く人・危機をチャンスに変える</div>
+            <div>
+                <span class="type-label">外向型</span>
+                <span class="type-label">問題志向型</span>
+                <span class="type-label">創造型</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>①特性の説明</h3>
+            <div class="section-content">
+                あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を理解し、目的を達成するのための計画立案を支援する人のことです。状況が変化しても臨機応変に動ける柔軟さがあります。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>みんなで行動しながら、問題を解決できる</li>
+                    <li>リスク回避を目標にできる、新しいことにチャレンジできる</li>
+                    <li>複数のアイディアを考えられる、意思決定が自分でできる</li>
+                    <li>幅広い情報を調べることができる、場所を移動できる</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>予測できないリスクを先取りしてみんなと管理する仕事（番組ディレクター、イベントディレクター、リスク管理リーダー、プロジェクトマネージャー（IT、建設、医療現場のリーダー）、危機管理、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど）</li>
+                </ul>
+                <p>→理由：未知の課題や変化にワクワクできる環境で能力が引き出されるため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>あまりに専門性が高い知識のみが必要とされる作業や行動</li>
+                    <li>一人で行う作業が多い、同じ場所で作業をすること</li>
+                    <li>問題解決が評価されない、結果ばかりを求められて</li>
+                    <li>細かいルールで縛られる、行動するまでに事前の準備が多い</li>
+                    <li>アイディアが採用されにくい環境でがんばる</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>定型事務、工場のライン作業</li>
+                    <li>公的機関の定例業務</li>
+                    <li>規定が厳しい大企業の一部門</li>
+                </ul>
+                <p>→理由：自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>④能力を最大化する方法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>問題を分析しながら、仲間と新しい道を切り拓く機会を与える</li>
+                    <li>※細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <div class="section-content">
+                <p><strong>・相性が良いタイプ：</strong><br>
+                ストラテジスト型、プランナー型（発想と行動が噛み合う）</p>
+                
+                <p><strong>・相性が悪いタイプ：</strong><br>
+                アーキテクト型（安定重視で変化を嫌がることがある）</p>
+                
+                <p>→対応のコツ：アーキテクト型には段階的な変化を提案する</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑥即効性のあるストレス軽減法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>新しい場所や人に会いに行く</li>
+                    <li>役立ちそうなアイデアをSNSやノートに記録する</li>
+                    <li>小さな成功体験を意識的に積む</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
+            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+        <p>© Takeyuki Nishi</p>
+    </div>
+</body>
+</html>

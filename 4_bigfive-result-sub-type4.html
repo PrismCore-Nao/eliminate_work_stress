@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビッグファイブ診断 サブ結果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .print-title {
+            display: none;
+        }
+
+        h1 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            border: 2px solid #000000;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .result-header .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .type-label {
+            display: inline-block;
+            background-color: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #fafafa;
+            border-left: 4px solid #ffff00;
+        }
+
+        .section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+
+        .section-content {
+            line-height: 1.8;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .pdf-button, .back-button {
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pdf-button:hover, .back-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .container {
+                position: relative;
+            }
+            
+            .print-title {
+                display: block;
+                background-color: #ffff00 !important;
+                color: #000000 !important;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #000000;
+                margin-bottom: 20px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            h1 {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                background-color: #fafafa !important;
+                border-left: 4px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section:nth-of-type(2),
+            .section:nth-of-type(3),
+            .section:nth-of-type(4) {
+                padding-top: 30px;
+            }
+            
+            .button-group, .back-button {
+                display: none !important;
+            }
+            
+            .pdf-button {
+                display: none !important;
+            }
+            
+            div[style*="position: fixed"] {
+                display: none !important;
+            }
+            
+            .footer-print {
+                display: block !important;
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+                padding: 20px 15px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .pdf-button, .back-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-title">ビッグファイブ診断 サブ結果</div>
+
+        <h1>ビッグファイブ診断 サブ結果</h1>
+
+        <div class="result-header">
+            <h2>4. 着実な道を築くアーキテクト</h2>
+            <div class="subtitle">現在と未来を守る人・丁寧に、確実に</div>
+            <div>
+                <span class="type-label">内向型</span>
+                <span class="type-label">楽観型</span>
+                <span class="type-label">実行型</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>①特性の説明</h3>
+            <div class="section-content">
+                あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>最初にやるべきこと（とっかかり）が明確な作業</li>
+                    <li>一人でコツコツと進める、着実に積み上げられる</li>
+                    <li>失敗よりも"できた！"という達成感を感じやすい</li>
+                    <li>静かで落ち着いた場所で行える、一人で静かに突き詰められる</li>
+                    <li>継続的にしくみやシステムを改善できる努力</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>ルーティン作業をモクモクと一人でできる仕事（データ入力、検品作業、仕分け、文字起こし、パッケージ、事務、経理・会計アシスタント、組み立てライン、採点、写真や画像のトリミング、図書館司書、製造オンラインオペレーター、商品管理、校正・チェック業務、加工など）</li>
+                    <li>管理作業が多い仕事など</li>
+                </ul>
+                <p>→理由：手順が明確で、自分のペースで精度を高められる業務が多く、達成感を得やすいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <div class="section-content">
+                <strong>環境条件</strong>
+                <ul>
+                    <li>本番一発勝負が求められる、飛躍的な変化が必要な努力</li>
+                    <li>人と会う機会が多い作業の努力、問題解決ばかりを求められる努力</li>
+                    <li>ルールがない環境でシステムをつくる努力、自分のペースで作業ができない</li>
+                </ul>
+                <strong>職種例</strong>
+                <ul>
+                    <li>営業職全般（飛び込み営業、テレアポ、訪問販売など）</li>
+                    <li>イベント運営・司会・接客メインの販売業務</li>
+                    <li>スタートアップ立ち上げや、ルールのない組織での業務構築</li>
+                    <li>突発的なトラブル対応を繰り返すカスタマーサポート・クレーム処理</li>
+                    <li>常に変化のあるプロジェクトマネジメント（期限変更や仕様変更が多い）</li>
+                </ul>
+                <p>→理由：突発対応や対人負荷、環境変化の多い業務はエネルギーを消耗しやすく、アーキテクト型の持ち味である「安定的・継続的な成果」を発揮しにくいため</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>④能力を最大化する方法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>日課やルーティンが評価される仕組みに乗せると◎</li>
+                    <li>進捗状況が見える化できる努力はうまくいきやすい</li>
+                    <li>※感謝やフィードバックがないと自信を失いやすい</li>
+                    <li>目標が達成できないときに、落ち込みやすい傾向</li>
+                    <li>継続すること自体を成功として定義できると、イキイキするタイプ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <div class="section-content">
+                <p><strong>・相性が良いタイプ：</strong><br>
+                メディエーター型・ガーディアン型（段取りや調整力が高く、安心感をくれる）</p>
+                
+                <p><strong>・相性が悪いタイプ：</strong><br>
+                ファシリテーター型（細かい方向転換を押しつけられると疲弊しやすい）</p>
+                
+                <p>→対応のコツ：相性が悪い相手とは、事前に手順や期日を明確にし、突発的な依頼は範囲を限定して受ける</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>⑥即効性のあるストレス軽減法</h3>
+            <div class="section-content">
+                <ul>
+                    <li>デスクに観葉植物や花を飾る（安心感を与え、集中力を高める）</li>
+                    <li>ハッピーエンドの映画・ドラマや小説に触れる（楽観性を強化する）</li>
+                    <li>毎日の小さな成功を記録する習慣をつける（継続力を自己評価につなげる）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
+            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+        <p>© Takeyuki Nishi</p>
+    </div>
+</body>
+</html>
