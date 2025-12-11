@@ -110,10 +110,6 @@
             margin-bottom: 8px;
         }
 
-        .section strong {
-            font-weight: bold;
-        }
-
         .subsection-title {
             background-color: #ffff00;
             color: #000000;
@@ -140,8 +136,6 @@
             cursor: pointer;
             transition: all 0.3s;
             width: fit-content;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
         }
 
         .pdf-button:hover {
@@ -241,25 +235,25 @@
             .page-break-before-3 {
                 page-break-before: always;
                 break-before: page;
-                margin-top: 20pt !important;
-                border-left: none !important;
-            }
-            
-            .page-break-before-3 h2 {
-                border-left: 5px solid #ffff00 !important;
-                margin-left: -5px;
+                padding-top: 20pt !important;
             }
             
             .page-break-before-6 {
                 page-break-before: always;
                 break-before: page;
-                margin-top: 20pt !important;
-                border-left: none !important;
+                padding-top: 20pt !important;
             }
             
-            .page-break-before-6 h2 {
-                border-left: 5px solid #ffff00 !important;
-                margin-left: -5px;
+            .footer-print {
+                display: block !important;
+                position: relative;
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
             }
         }
 
@@ -334,7 +328,7 @@
                 <div style="margin-bottom: 15px;">
                     <div class="subsection-title">職種例</div>
                     <ul>
-                        <li>スーパーのレジ係、工場ライン作業員、倉庫内ピッキングスタッフ経理・財務担当、一般事務、図書館の資料整理スタッフ（受信専門）、データ入力専任スタッフ、チケット発券窓口、郵便物仕分け業務など</li>
+                        <li>スーパーのレジ係、工場ライン作業員、倉庫内ピッキングスタッフ、経理・財務担当、一般事務、図書館の資料整理スタッフ（受信専門）、データ入力専任スタッフ、チケット発券窓口、郵便物仕分け業務など</li>
                     </ul>
                 </div>
                 <p style="margin-top: 15px;">→理由：刺激や人との交流が少ないと、エネルギーが低下しやすく、行動の勢いが鈍ってしまうため</p>
@@ -387,7 +381,6 @@
         </div>
     </div>
 
-    <!-- TOPに戻る -->
     <div class="back-link no-print">
         <a href="index.html">← TOPに戻る</a>
     </div>
@@ -395,21 +388,5 @@
     <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
         <p>© T&R Self-Image Design LLC</p>
     </div>
-
-    <style>
-        @media print {
-            .footer-print {
-                display: block !important;
-                position: relative;
-                margin-top: 40px;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #000;
-                padding-top: 10px;
-                background: white;
-                color: #000 !important;
-            }
-        }
-    </style>
 </body>
 </html>

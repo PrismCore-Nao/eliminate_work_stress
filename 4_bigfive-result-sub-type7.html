@@ -12,290 +12,373 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
             line-height: 1.8;
+            color: #333;
+            background: #f8f8f8;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: #ffffff;
-        }
-
-        .print-title {
-            display: none;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         h1 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 30px 20px;
-            text-align: center;
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 40px;
-            border: 2px solid #000000;
-        }
-
-        .result-header {
             text-align: center;
             margin-bottom: 40px;
+            color: #333;
         }
 
-        .result-header h2 {
-            font-size: 24px;
+        .type-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 40px -40px;
+            text-align: center;
+        }
+
+        .type-title h2 {
+            font-size: 32px;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
-        .result-header .subtitle {
+        .type-title .subtitle {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
+            opacity: 0.95;
         }
 
-        .type-label {
+        .type-badge {
             display: inline-block;
-            background-color: #f0f0f0;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 16px;
-            margin: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin: 10px 5px 0 5px;
+            font-size: 14px;
         }
 
         .section {
             margin-bottom: 40px;
-            padding: 25px;
-            background-color: #fafafa;
-            border-left: 4px solid #ffff00;
+            padding-left: 20px;
+            border-left: 5px solid #ffff00;
         }
 
-        .section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #000000;
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #ffff00;
+            color: #333;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
 
         .section-content {
+            padding-left: 44px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.9;
+        }
+
+        .highlight-box {
+            background: #fffbea;
+            border-left: 4px solid #ffeb3b;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .conditions, .jobs {
+            padding-left: 20px;
+        }
+
+        .conditions li, .jobs li {
+            margin-bottom: 12px;
             line-height: 1.8;
         }
 
-        .section ul {
-            margin-left: 20px;
-            margin-top: 10px;
+        .reason {
+            background: #f0f7ff;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: 500;
         }
 
-        .section li {
-            margin-bottom: 8px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .pdf-button, .back-button {
-            background-color: #ffff00;
-            color: #000000;
-            border: 2px solid #000000;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+        .back-link {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            display: inline-block;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .pdf-button:hover, .back-button:hover {
-            background-color: #000000;
-            color: #ffff00;
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
         }
 
         @media print {
             body {
+                background: white;
                 padding: 0;
-                margin: 0;
-            }
-            
-            .container {
-                position: relative;
-            }
-            
-            .print-title {
-                display: block;
-                background-color: #ffff00 !important;
-                color: #000000 !important;
-                padding: 20px;
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                border: 2px solid #000000;
-                margin-bottom: 20px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            h1 {
-                display: none;
-            }
-            
-            .section {
-                page-break-inside: avoid;
-                background-color: #fafafa !important;
-                border-left: 4px solid #ffff00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
 
-            .section:nth-of-type(2),
-            .section:nth-of-type(3),
-            .section:nth-of-type(4) {
+            .container {
+                max-width: 100%;
+                padding: 15px;
+                box-shadow: none;
+            }
+
+            .type-title {
+                margin: -15px -15px 20px -15px;
+                padding: 20px;
+                page-break-after: avoid;
+            }
+
+            .type-title h2 {
+                font-size: 24px;
+            }
+
+            .type-title .subtitle {
+                font-size: 14px;
+            }
+
+            .type-badge {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+
+            .section {
+                margin-bottom: 25px;
+                padding-left: 15px;
+                page-break-inside: avoid;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .section-number {
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+                margin-right: 8px;
+            }
+
+            .section-content {
+                padding-left: 32px;
+                font-size: 11px;
+            }
+
+            .section-content p {
+                margin-bottom: 8px;
+                line-height: 1.6;
+            }
+
+            .highlight-box {
+                padding: 12px;
+                margin: 12px 0;
+                font-size: 11px;
+            }
+
+            .conditions, .jobs {
+                padding-left: 15px;
+            }
+
+            .conditions li, .jobs li {
+                margin-bottom: 6px;
+                line-height: 1.5;
+                font-size: 11px;
+            }
+
+            .reason {
+                padding: 10px;
+                margin: 10px 0;
+                font-size: 11px;
+            }
+
+            .section:nth-child(3) {
                 padding-top: 30px;
             }
-            
-            .button-group, .back-button {
-                display: none !important;
-            }
-            
-            .pdf-button {
-                display: none !important;
-            }
-            
-            div[style*="position: fixed"] {
-                display: none !important;
-            }
-            
-            .footer-print {
-                display: block !important;
-                position: absolute;
-                bottom: 20px;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #000;
-                padding-top: 10px;
-                background: white;
-                color: #000 !important;
-            }
-        }
 
-        @media (max-width: 768px) {
+            .section:nth-child(6) {
+                padding-top: 30px;
+            }
+
+            .back-link {
+                display: none;
+            }
+
+            .copyright {
+                margin-top: 30px;
+                padding-top: 20px;
+                font-size: 10px;
+            }
+
             h1 {
-                font-size: 22px;
-                padding: 20px 15px;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            .pdf-button, .back-button {
-                width: 100%;
+                font-size: 20px;
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="print-title">ビッグファイブ診断 サブ結果</div>
-
-        <h1>ビッグファイブ診断 サブ結果</h1>
-
-        <div class="result-header">
+        <div class="type-title">
             <h2>7. 解の地図を描くストラテジスト</h2>
-            <div class="subtitle">分析で導く人・静かな戦略家</div>
+            <p class="subtitle">分析で導く人・静かな戦略家</p>
             <div>
-                <span class="type-label">内向型</span>
-                <span class="type-label">問題志向型</span>
-                <span class="type-label">創造型</span>
+                <span class="type-badge">内向型</span>
+                <span class="type-badge">問題志向型</span>
+                <span class="type-badge">創造型</span>
             </div>
         </div>
 
         <div class="section">
-            <h3>①特性の説明</h3>
+            <h3 class="section-title">
+                <span class="section-number">①</span>
+                特性の説明
+            </h3>
             <div class="section-content">
-                あなたは冷静な分析力と、先を見据えた戦略構築に優れています。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。ストラテジストとは、情勢などを分析し、戦略（ストラテジー）や方針を立案する立案者を意味します。即行動よりも、情報収集と計画立案を経て着実に進めるスタイルです。
+                <p>あなたは<strong>冷静な分析力と、先を見据えた戦略構築に優れて</strong>います。内向性の高さが集中力を生み、問題志向型の特性がリスクを事前に察知し、開放性が新しい視点を戦略に組み込みます。ストラテジストとは、情勢などを分析し、戦略（ストラテジー）や方針を立案する立案者を意味します。</p>
+                <p>即行動よりも、情報収集と計画立案を経て着実に進めるスタイルです。</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <h3 class="section-title">
+                <span class="section-number">②</span>
+                向いている職種・環境
+            </h3>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>一人で深く探究できる、まだ誰も知らない課題に出会える</li>
-                    <li>人の見落とす違和感や矛盾を拾って、創造的に解決できる</li>
-                    <li>推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる</li>
-                    <li>幅広い情報を得てアイディアを生み出せる、問題解決を目標にできる</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>一人で問題をつきつめて創造的に解決できる仕事（プロダクトデザイナー／発明家、システム開発、データサイエンティスト、リサーチャー、エンジニア、探偵業、臨床心理士、サステナブル修復家、都市設計、プロダクト開発、特許戦略コンサルタント、問題解決コピーライティング、社会派ジャーナリスト、法務リスクアナリスト、投資家、戦略立案業、法務医学者）</li>
-                </ul>
-                <p>→理由：情報の整理と先読み力が活かせる環境で成果を出しやすいため</p>
+                <div class="highlight-box">
+                    <strong>【環境条件】</strong>
+                    <ul class="conditions">
+                        <li>一人で深く探究できる、まだ誰も知らない課題に出会える</li>
+                        <li>人の見落とす違和感や矛盾を拾って、創造的に解決できる</li>
+                        <li>推理の要素が含まれる作業、深掘りと新規発見の繰り返しができる</li>
+                        <li>問題解決を目標にできる、幅広い情報を得てアイディアを生み出せる</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>【職種例】</strong>
+                    <ul class="jobs">
+                        <li>一人で問題をつきつめて創造的に解決できる仕事（発明家／プロダクトデザイナー、データサイエンティスト、リサーチャー、システム開発エンジニア、臨床心理士、問題解決コピーライティング、特許戦略コンサルタント、サステナブルプロダクト開発、都市設計、修復家、法務リスクアナリスト、社会派ジャーナリスト、投資家、戦略立案業、法務医学者）</li>
+                    </ul>
+                </div>
+
+                <div class="reason">
+                    <strong>理由：</strong>情報の整理と先読み力が活かせる環境で成果を出しやすいため
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <h3 class="section-title">
+                <span class="section-number">③</span>
+                苦手な職種・環境
+            </h3>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>あまり深く考えなくてもできる作業や行動、意思決定が早く求められる</li>
-                    <li>人と会う頻度が多い、結果ばかりで問題解決が評価されない</li>
-                    <li>アイディアが採用されにくい環境でがんばる、細かいルールで縛られる</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>飛び込み営業、接客業</li>
-                    <li>突発対応が多いイベントスタッフ</li>
-                    <li>スタートアップの現場責任者</li>
-                </ul>
-                <p>→理由：熟考と計画ができない場面では本領を発揮できないため</p>
+                <div class="highlight-box">
+                    <strong>【環境条件】</strong>
+                    <ul class="conditions">
+                        <li>意思決定が早く求められる、あまり深く考えなくてもできる作業や行動</li>
+                        <li>人と会う頻度が多い、結果ばかりで問題解決が評価されない</li>
+                        <li>アイディアが採用されにくい環境でがんばる、細かいルールで縛られる</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>【職種例】</strong>
+                    <ul class="jobs">
+                        <li>飛び込み営業、接客業</li>
+                        <li>突発対応が多いイベントスタッフ</li>
+                        <li>スタートアップの現場責任者</li>
+                    </ul>
+                </div>
+
+                <div class="reason">
+                    <strong>理由：</strong>熟考と計画ができない場面では本領を発揮できないため
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h3>④能力を最大化する方法</h3>
+            <h3 class="section-title">
+                <span class="section-number">④</span>
+                能力を最大化する方法
+            </h3>
             <div class="section-content">
-                <ul>
-                    <li>静かな環境で深く考える時間と、アウトプットの場を明確にする</li>
-                    <li>未来や現在の課題を冷静に分析して新しい方法を考えさせる</li>
-                    <li>※「ちゃんと見ている」「理解している」ことを伝えることが大切。表に出るのは嫌い</li>
-                    <li>プレゼンや即答が苦手な傾向、チーム内の雑談が苦手、空気を読むのが負担になる</li>
-                    <li>孤立や過剰思考、人との接点が少なすぎると。行動が遅く見えることもある。傾向になる可能性</li>
-                    <li>考えすぎて動けなくなる。完璧を求めて公開できない</li>
-                </ul>
+                <p>・静かな環境で深く考える時間と、アウトプットの場を明確にする</p>
+                <p>・未来や現在の課題を冷静に分析して新しい方法を考えさせる</p>
+                <p>＊表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切</p>
+                <p>・チーム内の雑談が苦手、プレゼンや即答が苦手な傾向・空気を読むのが負担になる</p>
+                <p>・人との接点が少なすぎると、孤立や過剰思考、行動が遅く見えることもある、傾向になる可能性</p>
+                <p>・考えすぎて動けなくなる。完璧を求めて公開できない</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <h3 class="section-title">
+                <span class="section-number">⑤</span>
+                相性の良いタイプ／悪いタイプとの接し方
+            </h3>
             <div class="section-content">
-                <p><strong>・相性が良いタイプ：</strong><br>
-                ファシリテーター型、ガーディアン型（問題を一緒に考えることができる）</p>
+                <p><strong>・相性が良いタイプ：</strong>ガーディアン型、ファシリテーター型<br>
+                （問題を一緒に考えることができる）</p>
                 
-                <p><strong>・相性が悪いタイプ：</strong><br>
-                コンダクター型（勢い重視で計画を押しつけてくる）</p>
-                
-                <p>→理由：熟考と計画ができない場面では本領を発揮できない</p>
+                <p><strong>・相性が悪いタイプ：</strong>コンダクター型<br>
+                （勢い重視で計画を押しつけてくる）</p>
+
+                <p><strong>→ 対応のコツ：</strong>熟考と計画ができない場面では本領を発揮できない</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>⑥即効性のあるストレス軽減法</h3>
+            <h3 class="section-title">
+                <span class="section-number">⑥</span>
+                即効性のあるストレス軽減法
+            </h3>
             <div class="section-content">
-                <ul>
+                <ul class="conditions">
                     <li>静かな場所で思考整理をする</li>
                     <li>情報をマインドマップにまとめる</li>
                     <li>信頼できる人と戦略について語る時間を持つ</li>
@@ -303,21 +386,11 @@
             </div>
         </div>
 
-        <div class="button-group">
-            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
-            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        <div class="copyright">
+            © 2025 T&R Self-Image Design LLC. All rights reserved.
         </div>
     </div>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
-    </div>
-
-    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
-        <p>© T&R Self-Image Design LLC</p>
-    </div>
+    <a href="4_bigfive-result.html" class="back-link">← TOPに戻る</a>
 </body>
 </html>

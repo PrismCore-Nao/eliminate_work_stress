@@ -12,288 +12,371 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
             line-height: 1.8;
+            color: #333;
+            background: #f8f8f8;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: #ffffff;
-        }
-
-        .print-title {
-            display: none;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         h1 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 30px 20px;
-            text-align: center;
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 40px;
-            border: 2px solid #000000;
-        }
-
-        .result-header {
             text-align: center;
             margin-bottom: 40px;
+            color: #333;
         }
 
-        .result-header h2 {
-            font-size: 24px;
+        .type-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 40px -40px;
+            text-align: center;
+        }
+
+        .type-title h2 {
+            font-size: 32px;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
-        .result-header .subtitle {
+        .type-title .subtitle {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
+            opacity: 0.95;
         }
 
-        .type-label {
+        .type-badge {
             display: inline-block;
-            background-color: #f0f0f0;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 16px;
-            margin: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin: 10px 5px 0 5px;
+            font-size: 14px;
         }
 
         .section {
             margin-bottom: 40px;
-            padding: 25px;
-            background-color: #fafafa;
-            border-left: 4px solid #ffff00;
+            padding-left: 20px;
+            border-left: 5px solid #ffff00;
         }
 
-        .section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #000000;
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #ffff00;
+            color: #333;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
 
         .section-content {
+            padding-left: 44px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.9;
+        }
+
+        .highlight-box {
+            background: #fffbea;
+            border-left: 4px solid #ffeb3b;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .conditions, .jobs {
+            padding-left: 20px;
+        }
+
+        .conditions li, .jobs li {
+            margin-bottom: 12px;
             line-height: 1.8;
         }
 
-        .section ul {
-            margin-left: 20px;
-            margin-top: 10px;
+        .reason {
+            background: #f0f7ff;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: 500;
         }
 
-        .section li {
-            margin-bottom: 8px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .pdf-button, .back-button {
-            background-color: #ffff00;
-            color: #000000;
-            border: 2px solid #000000;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+        .back-link {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            display: inline-block;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .pdf-button:hover, .back-button:hover {
-            background-color: #000000;
-            color: #ffff00;
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
         }
 
         @media print {
             body {
+                background: white;
                 padding: 0;
-                margin: 0;
-            }
-            
-            .container {
-                position: relative;
-            }
-            
-            .print-title {
-                display: block;
-                background-color: #ffff00 !important;
-                color: #000000 !important;
-                padding: 20px;
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                border: 2px solid #000000;
-                margin-bottom: 20px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            h1 {
-                display: none;
-            }
-            
-            .section {
-                page-break-inside: avoid;
-                background-color: #fafafa !important;
-                border-left: 4px solid #ffff00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
 
-            .section:nth-of-type(2),
-            .section:nth-of-type(3),
-            .section:nth-of-type(4) {
+            .container {
+                max-width: 100%;
+                padding: 15px;
+                box-shadow: none;
+            }
+
+            .type-title {
+                margin: -15px -15px 20px -15px;
+                padding: 20px;
+                page-break-after: avoid;
+            }
+
+            .type-title h2 {
+                font-size: 24px;
+            }
+
+            .type-title .subtitle {
+                font-size: 14px;
+            }
+
+            .type-badge {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+
+            .section {
+                margin-bottom: 25px;
+                padding-left: 15px;
+                page-break-inside: avoid;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .section-number {
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+                margin-right: 8px;
+            }
+
+            .section-content {
+                padding-left: 32px;
+                font-size: 11px;
+            }
+
+            .section-content p {
+                margin-bottom: 8px;
+                line-height: 1.6;
+            }
+
+            .highlight-box {
+                padding: 12px;
+                margin: 12px 0;
+                font-size: 11px;
+            }
+
+            .conditions, .jobs {
+                padding-left: 15px;
+            }
+
+            .conditions li, .jobs li {
+                margin-bottom: 6px;
+                line-height: 1.5;
+                font-size: 11px;
+            }
+
+            .reason {
+                padding: 10px;
+                margin: 10px 0;
+                font-size: 11px;
+            }
+
+            .section:nth-child(3) {
                 padding-top: 30px;
             }
-            
-            .button-group, .back-button {
-                display: none !important;
-            }
-            
-            .pdf-button {
-                display: none !important;
-            }
-            
-            div[style*="position: fixed"] {
-                display: none !important;
-            }
-            
-            .footer-print {
-                display: block !important;
-                position: absolute;
-                bottom: 20px;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #000;
-                padding-top: 10px;
-                background: white;
-                color: #000 !important;
-            }
-        }
 
-        @media (max-width: 768px) {
+            .section:nth-child(6) {
+                padding-top: 30px;
+            }
+
+            .back-link {
+                display: none;
+            }
+
+            .copyright {
+                margin-top: 30px;
+                padding-top: 20px;
+                font-size: 10px;
+            }
+
             h1 {
-                font-size: 22px;
-                padding: 20px 15px;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            .pdf-button, .back-button {
-                width: 100%;
+                font-size: 20px;
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="print-title">ビッグファイブ診断 サブ結果</div>
-
-        <h1>ビッグファイブ診断 サブ結果</h1>
-
-        <div class="result-header">
+        <div class="type-title">
             <h2>5. 見えない課題を照らすファシリテーター</h2>
-            <div class="subtitle">挑戦を導く人・危機をチャンスに変える</div>
+            <p class="subtitle">挑戦を導く人・危機をチャンスに変える</p>
             <div>
-                <span class="type-label">外向型</span>
-                <span class="type-label">問題志向型</span>
-                <span class="type-label">創造型</span>
+                <span class="type-badge">外向型</span>
+                <span class="type-badge">問題志向型</span>
+                <span class="type-badge">創造型</span>
             </div>
         </div>
 
         <div class="section">
-            <h3>①特性の説明</h3>
+            <h3 class="section-title">
+                <span class="section-number">①</span>
+                特性の説明
+            </h3>
             <div class="section-content">
-                あなたは人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を理解し、目的を達成するのための計画立案を支援する人のことです。状況が変化しても臨機応変に動ける柔軟さがあります。
+                <p>あなたは<strong>人との交流を通じて新しい課題やチャンスを見つけ、解決に向けて動ける力</strong>を持っています。外向性の高さがネットワークを広げ、問題志向型の特性が課題発見力を高め、開放性が新しい解決策を生みます。ファシリテーターとは、グループや組織がより協力し、共通の目的を理解し、目的を達成するのための計画立案を支援する人のことです。</p>
+                <p>状況が変化しても臨機応変に動ける柔軟さがあります。</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <h3 class="section-title">
+                <span class="section-number">②</span>
+                向いている職種・環境
+            </h3>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>みんなで行動しながら、問題を解決できる</li>
-                    <li>リスク回避を目標にできる、新しいことにチャレンジできる</li>
-                    <li>複数のアイディアを考えられる、意思決定が自分でできる</li>
-                    <li>幅広い情報を調べることができる、場所を移動できる</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>予測できないリスクを先取りしてみんなと管理する仕事（番組ディレクター、イベントディレクター、リスク管理リーダー、プロジェクトマネージャー（IT、建設、医療現場のリーダー）、危機管理、空港オペレーション管理、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど）</li>
-                </ul>
-                <p>→理由：未知の課題や変化にワクワクできる環境で能力が引き出されるため</p>
+                <div class="highlight-box">
+                    <strong>【環境条件】</strong>
+                    <ul class="conditions">
+                        <li>みんなで行動しながら、問題を解決できる</li>
+                        <li>リスク回避を目標にできる、新しいことにチャレンジできる</li>
+                        <li>複数のアイディアを考えられる、意思決定が自分でできる</li>
+                        <li>幅広い情報を調べることができる、場所を移動できる</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>【職種例】</strong>
+                    <ul class="jobs">
+                        <li>予測できないリスクを先取りしてみんなと管理する仕事（イベントディレクター、番組ディレクター、リスク管理リーダー、プロジェクトマネージャー（IT、建設、危機管理）、空港オペレーション管理、医療現場のリーダー、セキュリティアナリスト、輸送物流オペレーション、コンプライアンスリーダーなど）</li>
+                    </ul>
+                </div>
+
+                <div class="reason">
+                    <strong>理由：</strong>未知の課題や変化にワクワクできる環境で能力が引き出されるため
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+            <h3 class="section-title">
+                <span class="section-number">③</span>
+                苦手な職種・環境
+            </h3>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>あまりに専門性が高い知識のみが必要とされる作業や行動</li>
-                    <li>一人で行う作業が多い、同じ場所で作業をすること</li>
-                    <li>問題解決が評価されない、結果ばかりを求められて</li>
-                    <li>細かいルールで縛られる、行動するまでに事前の準備が多い</li>
-                    <li>アイディアが採用されにくい環境でがんばる</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>定型事務、工場のライン作業</li>
-                    <li>公的機関の定例業務</li>
-                    <li>規定が厳しい大企業の一部門</li>
-                </ul>
-                <p>→理由：自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため</p>
+                <div class="highlight-box">
+                    <strong>【環境条件】</strong>
+                    <ul class="conditions">
+                        <li>あまりに専門性が高い知識のみが必要とされる作業や行動</li>
+                        <li>一人で行う作業が多い、同じ場所で作業をすること</li>
+                        <li>結果ばかりを求められて、問題解決が評価されない</li>
+                        <li>細かいルールで縛られる、行動するまでに事前の準備が多い</li>
+                        <li>アイディアが採用されにくい環境でがんばる</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>【職種例】</strong>
+                    <ul class="jobs">
+                        <li>工場のライン作業、定型事務</li>
+                        <li>公的機関の定例業務</li>
+                        <li>規定が厳しい大企業の一部門</li>
+                    </ul>
+                </div>
+
+                <div class="reason">
+                    <strong>理由：</strong>自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h3>④能力を最大化する方法</h3>
+            <h3 class="section-title">
+                <span class="section-number">④</span>
+                能力を最大化する方法
+            </h3>
             <div class="section-content">
-                <ul>
-                    <li>問題を分析しながら、仲間と新しい道を切り拓く機会を与える</li>
-                    <li>※細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す</li>
-                </ul>
+                <p>・問題を分析しながら、仲間と新しい道を切り拓く機会を与える</p>
+                <p>＊細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <h3 class="section-title">
+                <span class="section-number">⑤</span>
+                相性の良いタイプ／悪いタイプとの接し方
+            </h3>
             <div class="section-content">
-                <p><strong>・相性が良いタイプ：</strong><br>
-                ストラテジスト型、プランナー型（発想と行動が噛み合う）</p>
+                <p><strong>・相性が良いタイプ：</strong>プランナー型、ストラテジスト型<br>
+                （発想と行動が噛み合う）</p>
                 
-                <p><strong>・相性が悪いタイプ：</strong><br>
-                アーキテクト型（安定重視で変化を嫌がることがある）</p>
-                
-                <p>→対応のコツ：アーキテクト型には段階的な変化を提案する</p>
+                <p><strong>・相性が悪いタイプ：</strong>アーキテクト型<br>
+                （安定重視で変化を嫌がることがある）</p>
+
+                <p><strong>→ 対応のコツ：</strong>アーキテクト型には段階的な変化を提案する</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>⑥即効性のあるストレス軽減法</h3>
+            <h3 class="section-title">
+                <span class="section-number">⑥</span>
+                即効性のあるストレス軽減法
+            </h3>
             <div class="section-content">
-                <ul>
+                <ul class="conditions">
                     <li>新しい場所や人に会いに行く</li>
                     <li>役立ちそうなアイデアをSNSやノートに記録する</li>
                     <li>小さな成功体験を意識的に積む</li>
@@ -301,21 +384,11 @@
             </div>
         </div>
 
-        <div class="button-group">
-            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
-            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        <div class="copyright">
+            © 2025 T&R Self-Image Design LLC. All rights reserved.
         </div>
     </div>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
-    </div>
-
-    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
-        <p>© T&R Self-Image Design LLC</p>
-    </div>
+    <a href="4_bigfive-result.html" class="back-link">← TOPに戻る</a>
 </body>
 </html>
