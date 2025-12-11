@@ -240,6 +240,11 @@
             color: #000;
         }
 
+        /* ページ2の上部余白用 */
+        .page-2-top-spacer {
+            height: 20pt;
+        }
+
         @media print {
             body {
                 padding: 20px;
@@ -259,19 +264,36 @@
                 break-after: page;
             }
             
-            /* ページ2: あなたのスコア（あれば）+ ② */
-            /* ページ3: ③④ - 改ページ前に余白20pt */
+            /* ページ2: 上部余白 + あなたのスコア（あれば）+ ② */
+            .page-2-top-spacer {
+                display: block !important;
+                height: 20pt;
+            }
+            
+            /* ページ3: ③④ - 改ページ前に余白20pt、左上の黄色線を消す */
             .page-break-before-3 {
                 page-break-before: always;
                 break-before: page;
-                padding-top: 20pt !important;
+                margin-top: 20pt !important;
+                border-left: none !important;
             }
             
-            /* ページ4: ⑤⑥ - 改ページ前に余白20pt */
+            .page-break-before-3 h2 {
+                border-left: 5px solid #ffff00 !important;
+                margin-left: -5px;
+            }
+            
+            /* ページ4: ⑤⑥ - 改ページ前に余白20pt、左上の黄色線を消す */
             .page-break-before-4 {
                 page-break-before: always;
                 break-before: page;
-                padding-top: 20pt !important;
+                margin-top: 20pt !important;
+                border-left: none !important;
+            }
+            
+            .page-break-before-4 h2 {
+                border-left: 5px solid #ffff00 !important;
+                margin-left: -5px;
             }
             
             .section {
@@ -806,6 +828,9 @@
                 </div>
             `;
 
+            // ページ2の上部余白（印刷時のみ表示）
+            const page2TopSpacer = '<div class="page-2-top-spacer" style="display: none;"></div>';
+
             // 中間値の注意書き（PDF2枚目の最初、あれば）
             let middleValueNoticeHTML = '';
             if (extraversion && neuroticism && openness && hasMiddleValues(extraversion, neuroticism, openness)) {
@@ -853,7 +878,7 @@
                 `;
             }
 
-            // PDF2枚目：中間値の注意（あれば）+ ②
+            // PDF2枚目：上部余白 + 中間値の注意（あれば）+ ②
             // PDF3枚目：③④
             // PDF4枚目：⑤⑥
             container.innerHTML = `
@@ -866,6 +891,8 @@
                 ${scoresHTML}
                 
                 ${descriptionHTML}
+                
+                ${page2TopSpacer}
                 
                 ${middleValueNoticeHTML}
 
