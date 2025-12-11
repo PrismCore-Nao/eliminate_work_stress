@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断 サブ結果</title>
+    <title>ビッグファイブ診断結果 - 信頼でまとめるコンダクター</title>
     <style>
         * {
             margin: 0;
@@ -17,73 +17,92 @@
             color: #000000;
             line-height: 1.8;
             padding: 20px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: #ffffff;
         }
 
         .print-title {
             display: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px 20px 0 20px;
         }
 
-        h1 {
+        .type-header {
             background-color: #ffff00;
             color: #000000;
-            padding: 30px 20px;
+            padding: 30px;
+            margin-bottom: 30px;
             text-align: center;
+            border: 3px solid #000000;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .type-title {
             font-size: 28px;
             font-weight: bold;
-            margin-bottom: 40px;
-            border: 2px solid #000000;
-        }
-
-        .result-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .result-header h2 {
-            font-size: 24px;
             margin-bottom: 10px;
         }
 
-        .result-header .subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
+        .type-subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
         }
 
-        .type-label {
+        .type-combination {
             display: inline-block;
-            background-color: #f0f0f0;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 16px;
-            margin: 5px;
+            background-color: #000000;
+            color: #ffff00;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .section {
-            margin-bottom: 40px;
-            padding: 25px;
-            background-color: #fafafa;
-            border-left: 4px solid #ffff00;
+            background-color: #ffffff;
+            padding: 0;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffff00;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        .section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #000000;
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 0;
+            padding: 12px 20px;
+            background-color: #000000;
+            color: #ffff00;
+            font-weight: bold;
+            border: none;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .section-content {
+            padding: 20px;
+        }
+
+        .section p, .section ul {
+            font-size: 15px;
             line-height: 1.8;
+            color: #000;
         }
 
         .section ul {
-            margin-left: 20px;
+            list-style-position: outside;
+            padding-left: 20px;
             margin-top: 10px;
         }
 
@@ -91,116 +110,172 @@
             margin-bottom: 8px;
         }
 
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
+        .section strong {
+            font-weight: bold;
         }
 
-        .pdf-button, .back-button {
+        .subsection-title {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 6px 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .pdf-button {
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
             background-color: #ffff00;
             color: #000000;
             border: 2px solid #000000;
-            padding: 15px 40px;
-            font-size: 18px;
+            border-radius: 5px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            width: fit-content;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        .pdf-button:hover, .back-button:hover {
+        .pdf-button:hover {
             background-color: #000000;
             color: #ffff00;
         }
 
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .back-link a:hover {
+            color: #000;
+        }
+
         @media print {
             body {
-                padding: 0;
-                margin: 0;
-            }
-            
-            .container {
-                position: relative;
+                padding: 15px;
             }
             
             .print-title {
-                display: block;
-                background-color: #ffff00 !important;
-                color: #000000 !important;
-                padding: 20px;
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                border: 2px solid #000000;
-                margin-bottom: 20px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                display: block !important;
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                padding: 5px 15px 0 15px !important;
             }
             
-            h1 {
-                display: none;
+            .type-header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .type-title {
+                font-size: 24px;
+            }
+            
+            .type-subtitle {
+                font-size: 14px;
+            }
+            
+            .type-combination {
+                font-size: 13px;
+                padding: 6px 16px;
             }
             
             .section {
-                page-break-inside: avoid;
-                background-color: #fafafa !important;
-                border-left: 4px solid #ffff00 !important;
+                margin-bottom: 20px;
+                border-left: 5px solid #ffff00 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-
-            .section:nth-of-type(2),
-            .section:nth-of-type(3),
-            .section:nth-of-type(4) {
-                padding-top: 30px;
+            
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
             }
             
-            .button-group, .back-button {
+            .section-content {
+                padding: 15px;
+            }
+            
+            .section p, .section ul {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .section li {
+                margin-bottom: 6px;
+            }
+            
+            .subsection-title {
+                font-size: 14px;
+                padding: 5px 10px;
+            }
+            
+            .no-print {
                 display: none !important;
             }
             
-            .pdf-button {
-                display: none !important;
+            .container {
+                padding: 10pt;
             }
             
-            div[style*="position: fixed"] {
-                display: none !important;
+            .page-break-before-3 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
+                border-left: none !important;
             }
             
-            .footer-print {
-                display: block !important;
-                position: absolute;
-                bottom: 20px;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #000;
-                padding-top: 10px;
-                background: white;
-                color: #000 !important;
+            .page-break-before-3 h2 {
+                border-left: 5px solid #ffff00 !important;
+                margin-left: -5px;
+            }
+            
+            .page-break-before-6 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
+                border-left: none !important;
+            }
+            
+            .page-break-before-6 h2 {
+                border-left: 5px solid #ffff00 !important;
+                margin-left: -5px;
             }
         }
 
         @media (max-width: 768px) {
-            h1 {
+            .type-title {
                 font-size: 22px;
-                padding: 20px 15px;
             }
-
-            .section {
-                padding: 20px;
+            .type-subtitle {
+                font-size: 14px;
             }
-
-            .button-group {
-                flex-direction: column;
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
             }
-
-            .pdf-button, .back-button {
-                width: 100%;
+            .section-content {
+                padding: 15px;
             }
         }
     </style>
@@ -208,95 +283,99 @@
 <body>
     <div class="container">
         <div class="print-title">ビッグファイブ診断 サブ結果</div>
-
-        <h1>ビッグファイブ診断 サブ結果</h1>
-
-        <div class="result-header">
-            <h2>2. 信頼でまとめるコンダクター</h2>
-            <div class="subtitle">チームを動かす実行屋・安心を届ける人</div>
-            <div>
-                <span class="type-label">外向型</span>
-                <span class="type-label">楽観型</span>
-                <span class="type-label">実行型</span>
-            </div>
+        
+        <div class="type-header">
+            <div class="type-title">2. 信頼でまとめるコンダクター</div>
+            <div class="type-subtitle">安心を届ける人・チームを動かす実行屋</div>
+            <div class="type-combination">外向型 × 楽観型 × 実行型</div>
         </div>
 
         <div class="section">
-            <h3>①特性の説明</h3>
+            <h2>①特性の説明</h2>
             <div class="section-content">
-                あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。ルールや指示が明確な環境で、テンポよく行動できると、大きな成果を出せます。コンダクターとは指揮者を意味します。ただし「ゼロからの創造が苦手」という特徴があります。人を動かす安定性が大きな魅力です。
+                <p>あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。ルールや指示が明確な環境で、テンポよく行動できると、大きな成果を出せます。コンダクターとは指揮者を意味します。「ゼロからの創造が苦手」ですが、人を動かす安定性が大きな魅力です。</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>②向いている職種・環境（脳内物質が出やすい条件）</h3>
+            <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>マニュアルがある、楽しくテンポよくルーティンを回すことができる</li>
-                    <li>ルールを守りながら、人を巻き込むことができる</li>
-                    <li>人を明るくすることでチームビルディングができる</li>
-                    <li>人と関わるスキルがアップできる、イベント的な作業を盛り上げることができる</li>
-                    <li>場所が移動できて人と会える、意思決定を自分でするより指示に従う</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>人に決まったものを提示することで安心感を与える仕事（営業職、マネージャー、副社長的な存在、サービス指導、接客業、販売、案内業、ガイド、ホテル、レストラン、秘書など）</li>
-                </ul>
-                <p>→理由：定期的な自己評価で行動を見直すとなおよい、周りとの信頼関係の構築が強み</p>
+                <div style="margin-bottom: 20px;">
+                    <div class="subsection-title">環境条件</div>
+                    <ul>
+                        <li>マニュアルがある、楽しくテンポよくルーティンを回すことができる</li>
+                        <li>ルールを守りながら、人を巻き込むことができる</li>
+                        <li>人を明るくすることでチームビルディングができる</li>
+                        <li>イベント的な作業を盛り上げることができる、人と関わるスキルがアップできる</li>
+                        <li>場所が移動できて人と会える、意思決定を自分でするより指示に従う</li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div class="subsection-title">職種例</div>
+                    <ul>
+                        <li>人に決まったものを提示することで安心感を与える仕事（営業職、マネージャー、接客業、販売、案内業、ガイド、ホテル、レストラン、秘書など）</li>
+                        <li>周りとの信頼関係の構築が強み、定期的な自己評価で行動を見直すとなおよい</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 15px;">→理由：人に触れること、ルールに従うことがやる気を生み出し、何事もプラスにとらえる能力が場の雰囲気を生み出すため</p>
             </div>
         </div>
 
-        <div class="section">
-            <h3>③苦手な職種・環境（脳内物質が出にくい条件）</h3>
+        <div class="section page-break-before-3">
+            <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
             <div class="section-content">
-                <strong>環境条件</strong>
-                <ul>
-                    <li>指示があいまいな中で進む、自分の役割が不明確</li>
-                    <li>新しい情報を常に学ぶ必要がある、ゼロから何かを生み出す</li>
-                    <li>人とのつながりが乏しいリモートワーク、孤独な環境</li>
-                    <li>問題解決ばかりを求められて、結果ばかりを求められる</li>
-                    <li>移動の少ない環境</li>
-                    <li>行動するまでに事前準備が多い</li>
-                </ul>
-                <strong>職種例</strong>
-                <ul>
-                    <li>研究職（長期の一人作業中心）</li>
-                    <li>フルリモートのデスクワーク</li>
-                    <li>ITエンジニア（要件不明確な開発案件）</li>
-                    <li>新規事業の企画立ち上げなど不確実性が高い業務</li>
-                </ul>
-                <p>→理由：孤立や不明確さが続くとモチベーションが下がりやすいため</p>
+                <div style="margin-bottom: 20px;">
+                    <div class="subsection-title">環境条件</div>
+                    <ul>
+                        <li>指示があいまいな中で進む、自分の役割が不明確</li>
+                        <li>ゼロから何かを生み出す、新しい情報を常に学ぶ必要がある</li>
+                        <li>孤独な環境、人とのつながりが乏しいリモートワーク</li>
+                        <li>移動の少ない環境、問題解決ばかりの作業</li>
+                        <li>行動するまでに事前準備が多い</li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div class="subsection-title">職種例</div>
+                    <ul>
+                        <li>研究職（長期の一人作業中心）</li>
+                        <li>フルリモートのデスクワーク</li>
+                        <li>ITエンジニア（要件不明確な開発案件）</li>
+                        <li>新規事業の企画立ち上げなど不確実性が高い業務</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 15px;">→理由：孤立や不明確さが続くとモチベーションが下がりやすいため</p>
             </div>
         </div>
 
         <div class="section">
-            <h3>④能力を最大化する方法</h3>
+            <h2>④能力を最大化する方法</h2>
             <div class="section-content">
                 <ul>
                     <li>ルールを守りながら、人を巻き込める環境に身を置く</li>
                     <li>動きながら学ぶスタイルが合う。チームの空気を作る役割を与える</li>
                     <li>※役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する</li>
-                    <li>※目に見える結果だけでなく、周りへの影響も評価してあげることが大切</li>
+                    <li>※人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切</li>
                 </ul>
             </div>
         </div>
 
         <div class="section">
-            <h3>⑤相性の良いタイプ／悪いタイプとの接し方</h3>
+            <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
             <div class="section-content">
-                <p><strong>・相性が良いタイプ：</strong><br>
-                メディエーター型、アーキテクト型（安定感と調整力で行動をサポートしてくれる）</p>
-                
-                <p><strong>・相性が悪いタイプ：</strong><br>
-                ストラテジスト型（提案が斬新すぎてついていけないことがある）</p>
-                
-                <p>→対応のコツ：相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>
+                <div style="margin-top: 15px;">
+                    <div class="subsection-title">相性が良いタイプ</div>
+                    <p>アーキテクト型、メディエーター型（安定感と調整力で行動をサポートしてくれる）</p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div class="subsection-title">相性が悪いタイプ</div>
+                    <p>ストラテジスト型（提案が斬新すぎてついていけないことがある）</p>
+                    <p>→対応のコツ：相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>
+                </div>
             </div>
         </div>
 
-        <div class="section">
-            <h3>⑥即効性のあるストレス軽減法</h3>
+        <div class="section page-break-before-6">
+            <h2>⑥即効性のあるストレス軽減法</h2>
             <div class="section-content">
                 <ul>
                     <li>定期的なルーティンワークの時間を確保する</li>
@@ -306,21 +385,35 @@
             </div>
         </div>
 
-        <div class="button-group">
-            <button type="button" class="pdf-button" onclick="window.print()">📄 PDFで保存</button>
-            <button type="button" class="back-button" onclick="window.close()">← 戻る</button>
+        <div class="no-print" style="text-align: center; margin-top: 50px;">
+            <button onclick="window.print()" class="pdf-button">
+                結果をPDF保存
+            </button>
         </div>
     </div>
 
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
+    <div class="back-link no-print">
+        <a href="index.html">← TOPに戻る</a>
     </div>
 
-    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
         <p>© Takeyuki Nishi</p>
     </div>
+
+    <style>
+        @media print {
+            .footer-print {
+                display: block !important;
+                position: relative;
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
+            }
+        }
+    </style>
 </body>
 </html>
