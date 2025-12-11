@@ -28,11 +28,11 @@
 
         .print-title {
             display: none;
-            font-size: 28px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 20px;
-            padding: 20px 20px 0 20px;
+            margin-bottom: 15px;
+            padding: 10px 20px 0 20px;
         }
 
         .type-header {
@@ -149,31 +149,93 @@
             color: #ffff00;
         }
 
-        .page-2-top-spacer {
-            height: 20pt;
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .back-link a:hover {
+            color: #000;
         }
 
         @media print {
             body {
-                padding: 20px;
+                padding: 15px;
             }
             
             .print-title {
                 display: block !important;
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                padding: 5px 15px 0 15px !important;
+            }
+            
+            .type-header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .type-title {
+                font-size: 24px;
+            }
+            
+            .type-subtitle {
+                font-size: 14px;
+            }
+            
+            .type-combination {
+                font-size: 13px;
+                padding: 6px 16px;
+            }
+            
+            .section {
+                margin-bottom: 20px;
+                border-left: 5px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            
+            .section-content {
+                padding: 15px;
+            }
+            
+            .section p, .section ul {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .section li {
+                margin-bottom: 6px;
+            }
+            
+            .subsection-title {
+                font-size: 14px;
+                padding: 5px 10px;
             }
             
             .no-print {
                 display: none !important;
             }
             
-            .page-break-after {
-                page-break-after: always;
-                break-after: page;
-            }
-            
-            .page-2-top-spacer {
-                display: block !important;
-                height: 20pt;
+            .container {
+                padding: 10pt;
             }
             
             .page-break-before-3 {
@@ -199,17 +261,6 @@
                 border-left: 5px solid #ffff00 !important;
                 margin-left: -5px;
             }
-            
-            .section {
-                border-left: 5px solid #ffff00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin-bottom: 25px;
-            }
-            
-            .container {
-                padding: 20pt;
-            }
         }
 
         @media (max-width: 768px) {
@@ -231,7 +282,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">ビッグファイブ診断 詳細結果</div>
+        <div class="print-title">ビッグファイブ診断 サブ結果</div>
         
         <div class="type-header">
             <div class="type-title">1. 発想で導くビジョナリー</div>
@@ -239,14 +290,12 @@
             <div class="type-combination">外向型 × 楽観型 × 創造型</div>
         </div>
 
-        <div class="section page-break-after">
+        <div class="section">
             <h2>①特性の説明</h2>
             <div class="section-content">
                 <p>あなたは社交性と明るさを武器に、人と一緒に新しい挑戦を推進できるタイプです。外向性が行動力を、楽観性が未来志向を、そして創造性が独自の企画力を生み出します。新しい情報や人との出会いをエネルギーに変え、場の空気を盛り上げながらゴールを目指すことができます。起業家に多いタイプです。ただし勢いあまって計画が粗くなることもあるため、定期的な方向確認が成果の継続に欠かせません。</p>
             </div>
         </div>
-
-        <div class="page-2-top-spacer" style="display: none;"></div>
 
         <div class="section">
             <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
@@ -336,6 +385,11 @@
                 結果をPDF保存
             </button>
         </div>
+    </div>
+
+    <!-- TOPに戻る -->
+    <div class="back-link no-print">
+        <a href="index.html">← TOPに戻る</a>
     </div>
 
     <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
