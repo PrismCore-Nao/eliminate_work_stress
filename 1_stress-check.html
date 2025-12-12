@@ -588,7 +588,7 @@
             // 結果を表示
             let stateDescriptionsHtml = '';
             if (stateDescriptions.length > 0) {
-                stateDescriptionsHtml = '<div class="result-item"><strong>あなたの状態:</strong>';
+                stateDescriptionsHtml = '<div class="result-item"><div class="score-badge">あなたの状態</div>';
                 stateDescriptions.forEach(state => {
                     stateDescriptionsHtml += `<div style="margin-top: 10px;"><strong>${state.questions}にチェックを入れた結果:</strong> ${state.description}</div>`;
                 });
