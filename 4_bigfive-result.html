@@ -782,15 +782,17 @@
                     <div class="type-combination">${data.combination}</div>
                 </div>
 
-                ${scoresHTML}
+                <div class="page-break-after-1">
+                    ${scoresHTML}
+                </div>
                 
-                <div class="section page-break-after-1">
+                <!-- ページ2開始：上部余白 + ①特性の説明 + あなたのスコアについて -->
+                <div class="page-2-spacer"></div>
+                
+                <div class="section">
                     <h2>①特性の説明</h2>
                     <p>${data.description}</p>
                 </div>
-                
-                <!-- ページ2開始：上部余白 + あなたのスコアについて -->
-                <div class="page-2-spacer"></div>
                 
                 ${middleValueNoticeHTML}
 
