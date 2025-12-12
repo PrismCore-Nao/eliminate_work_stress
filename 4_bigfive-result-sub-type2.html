@@ -5,97 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ビッグファイブ診断結果 - 信頼でまとめるコンダクター</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background-color: #ffffff; color: #000000; line-height: 1.8; padding: 20px;
-            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            padding: 20px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .print-title { display: none; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 15px; padding: 10px 20px 0 20px; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .print-title {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px 20px 0 20px;
+        }
+
         .type-header {
-            background-color: #ffff00; color: #000000; padding: 30px; margin-bottom: 30px; text-align: center;
-            border: 3px solid #000000; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 3px solid #000000;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
-        .type-title { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
-        .type-subtitle { font-size: 16px; margin-bottom: 15px; color: #333; }
+
+        .type-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .type-subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
         .type-combination {
-            display: inline-block; background-color: #000000; color: #ffff00; padding: 8px 20px;
-            font-size: 14px; font-weight: bold; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            display: inline-block;
+            background-color: #000000;
+            color: #ffff00;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
+
         .section {
-            background-color: #ffffff; padding: 0; margin-bottom: 30px; border-left: 5px solid #ffff00;
-            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            background-color: #ffffff;
+            padding: 0;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffff00;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
+
         .section h2 {
-            font-size: 18px; margin-bottom: 0; padding: 12px 20px; background-color: #000000;
-            color: #ffff00; font-weight: bold; border: none; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            font-size: 18px;
+            margin-bottom: 0;
+            padding: 12px 20px;
+            background-color: #000000;
+            color: #ffff00;
+            font-weight: bold;
+            border: none;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
-        .section-content { padding: 20px; }
-        .section p, .section ul { font-size: 15px; line-height: 1.8; color: #000; }
-        .section ul { list-style-position: outside; padding-left: 20px; margin-top: 10px; }
-        .section li { margin-bottom: 8px; }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .section p, .section ul {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #000;
+        }
+
+        .section ul {
+            list-style-position: outside;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
         .subsection-title {
-            background-color: #ffff00; color: #000000; padding: 6px 12px; font-weight: bold;
-            display: inline-block; margin-bottom: 10px; margin-top: 5px; font-size: 15px;
-            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 6px 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
+
         .pdf-button {
-            display: block; margin: 40px auto; padding: 15px 40px; background-color: #ffff00;
-            color: #000000; border: 2px solid #000000; border-radius: 5px; font-size: 16px;
-            font-weight: bold; cursor: pointer; transition: all 0.3s; width: fit-content;
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: fit-content;
         }
-        .pdf-button:hover { background-color: #000000; color: #ffff00; }
+
+        .pdf-button:hover {
+            background-color: #000000;
+            color: #ffff00;
+        }
+
         .back-link {
-            position: fixed; bottom: 20px; left: 20px; z-index: 1000;
-            background-color: rgba(255,255,255,0.9); padding: 8px 12px; border-radius: 4px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 4px;
         }
-        .back-link a { color: #666; text-decoration: none; font-size: 14px; transition: color 0.3s; }
-        .back-link a:hover { color: #000; }
+
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .back-link a:hover {
+            color: #000;
+        }
+
         @media print {
-            body { padding: 15px; }
-            .print-title { display: block !important; font-size: 18px !important; margin-bottom: 10px !important; padding: 5px 15px 0 15px !important; }
-            .type-header { padding: 20px; margin-bottom: 20px; }
-            .type-title { font-size: 24px; }
-            .type-subtitle { font-size: 14px; }
-            .type-combination { font-size: 13px; padding: 6px 16px; }
-            .section { margin-bottom: 20px; border-left: 5px solid #ffff00 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .section h2 { font-size: 16px; padding: 10px 15px; }
-            .section-content { padding: 15px; }
-            .section p, .section ul { font-size: 14px; line-height: 1.6; }
-            .section li { margin-bottom: 6px; }
-            .subsection-title { font-size: 14px; padding: 5px 10px; }
-            .no-print { display: none !important; }
-            .container { padding: 10pt; }
-            .page-break-before-3 { page-break-before: always; break-before: page; padding-top: 20pt !important; }
-            .page-break-before-6 { page-break-before: always; break-before: page; padding-top: 20pt !important; }
+            body {
+                padding: 15px;
+            }
+            
+            .print-title {
+                display: block !important;
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                padding: 5px 15px 0 15px !important;
+            }
+            
+            .type-header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .type-title {
+                font-size: 24px;
+            }
+            
+            .type-subtitle {
+                font-size: 14px;
+            }
+            
+            .type-combination {
+                font-size: 13px;
+                padding: 6px 16px;
+            }
+            
+            .section {
+                margin-bottom: 20px;
+                border-left: 5px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            
+            .section-content {
+                padding: 15px;
+            }
+            
+            .section p, .section ul {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .section li {
+                margin-bottom: 6px;
+            }
+            
+            .subsection-title {
+                font-size: 14px;
+                padding: 5px 10px;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .container {
+                padding: 10pt;
+            }
+            
+            .page-break-before-3 {
+                page-break-before: always;
+                break-before: page;
+                padding-top: 20pt !important;
+            }
+            
+            .page-break-before-6 {
+                page-break-before: always;
+                break-before: page;
+                padding-top: 20pt !important;
+            }
+            
             .footer-print {
-                display: block !important; position: relative; margin-top: 40px; width: 100%;
-                text-align: center; border-top: 1px solid #000; padding-top: 10px; background: white; color: #000 !important;
+                display: block !important;
+                position: relative;
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
             }
         }
+
         @media (max-width: 768px) {
-            .type-title { font-size: 22px; }
-            .type-subtitle { font-size: 14px; }
-            .section h2 { font-size: 16px; padding: 10px 15px; }
-            .section-content { padding: 15px; }
+            .type-title {
+                font-size: 22px;
+            }
+            .type-subtitle {
+                font-size: 14px;
+            }
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            .section-content {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="print-title">ビッグファイブ診断 サブ結果</div>
+        
         <div class="type-header">
             <div class="type-title">2. 信頼でまとめるコンダクター</div>
             <div class="type-subtitle">安心を届ける人・チームを動かす実行屋</div>
             <div class="type-combination">外向型 × 楽観型 × 実行型</div>
         </div>
+
         <div class="section">
             <h2>①特性の説明</h2>
             <div class="section-content">
                 <p>あなたは明るさと人懐っこさをもち、周囲を巻き込みながら物事を進める力に長けています。外向性の高さが人間関係を広げ、楽観性がチームの雰囲気を明るく保ち、安定した行動が信頼関係を築きます。ルールや指示が明確な環境で、テンポよく行動できると大きな成果を出せます。コンダクターとは指揮者を意味します。ゼロからの創造が苦手ですが、人を動かす安定性が大きな魅力です。</p>
             </div>
         </div>
+
         <div class="section">
             <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
             <div class="section-content">
@@ -113,12 +308,13 @@
                     <div class="subsection-title">職種例</div>
                     <ul>
                         <li>人に決まったものを提示することで安心感を与える仕事（営業職、マネージャー、販売、接客業、ガイド、案内業、ホテル、レストラン、秘書など）</li>
-                        <li>定期的な自己評価で行動を見直すとなおよい、周りとの信頼関係の構築が強み</li>
                     </ul>
+                    <p style="margin-top: 12px;">※定期的な自己評価で行動を見直すとなおよい、周りとの信頼関係の構築が強み</p>
                 </div>
                 <p style="margin-top: 15px;">→理由：人に触れること、ルールに従うことがやる気を生み出し、何事もプラスにとらえる能力が場の雰囲気を生み出すため</p>
             </div>
         </div>
+
         <div class="section page-break-before-3">
             <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
             <div class="section-content">
@@ -144,6 +340,7 @@
                 <p style="margin-top: 15px;">→理由：孤立や不明確さが続くとモチベーションが下がりやすいため</p>
             </div>
         </div>
+
         <div class="section">
             <h2>④能力を最大化する方法</h2>
             <div class="section-content">
@@ -151,10 +348,11 @@
                     <li>ルールを守りながら、人を巻き込める環境に身を置く</li>
                     <li>動きながら学ぶスタイルが合う。チームの空気を作る役割を与える</li>
                     <li>役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する</li>
-                    <li>＊人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切</li>
+                    <li>※人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切</li>
                 </ul>
             </div>
         </div>
+
         <div class="section">
             <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
             <div class="section-content">
@@ -165,13 +363,11 @@
                 <div style="margin-top: 15px;">
                     <div class="subsection-title">相性が悪いタイプ</div>
                     <p>ストラテジスト型（提案が斬新すぎてついていけないことがある）</p>
-                </div>
-                <div style="margin-top: 15px;">
-                    <div class="subsection-title">対応のコツ</div>
-                    <p>相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>
+                    <p style="margin-top: 10px;">→対応のコツ：相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>
                 </div>
             </div>
         </div>
+
         <div class="section page-break-before-6">
             <h2>⑥即効性のあるストレス軽減法</h2>
             <div class="section-content">
@@ -182,11 +378,18 @@
                 </ul>
             </div>
         </div>
+
         <div class="no-print" style="text-align: center; margin-top: 50px;">
-            <button onclick="window.print()" class="pdf-button">結果をPDF保存</button>
+            <button onclick="window.print()" class="pdf-button">
+                結果をPDF保存
+            </button>
         </div>
     </div>
-    <div class="back-link no-print"><a href="index.html">← TOPに戻る</a></div>
+
+    <div class="back-link no-print">
+        <a href="index.html">← TOPに戻る</a>
+    </div>
+
     <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
         <p>© T&R Self-Image Design LLC</p>
     </div>
