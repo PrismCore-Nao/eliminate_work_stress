@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断結果</title>
+    <title>ビッグファイブ診断</title>
     <style>
         * {
             margin: 0;
@@ -17,13 +17,20 @@
             color: #000000;
             line-height: 1.8;
             padding: 20px;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        h1 {
+            color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .print-title {
@@ -35,6 +42,18 @@
             padding: 20px 20px 0 20px;
         }
 
+        @media print {
+            .print-title {
+                display: block !important;
+            }
+            h1 {
+                display: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
         .type-header {
             background-color: #ffff00;
             color: #000000;
@@ -42,18 +61,16 @@
             margin-bottom: 30px;
             text-align: center;
             border: 3px solid #000000;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
         }
 
         .type-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .type-subtitle {
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 15px;
             color: #333;
         }
@@ -62,139 +79,44 @@
             display: inline-block;
             background-color: #000000;
             color: #ffff00;
-            padding: 8px 20px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 16px;
             font-weight: bold;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            border-radius: 3px;
         }
 
         .section {
-            background-color: #ffffff;
-            padding: 0;
-            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 30px;
+            margin-bottom: 25px;
             border-left: 5px solid #ffff00;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
         }
 
         .section h2 {
-            font-size: 18px;
-            margin-bottom: 0;
-            padding: 12px 20px;
+            font-size: 22px;
+            margin-bottom: 15px;
+            padding: 8px 15px;
             background-color: #000000;
             color: #ffff00;
-            font-weight: bold;
-            border: none;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .section-content {
-            padding: 20px;
+            border-bottom: none;
+            border-radius: 4px;
         }
 
         .section p, .section ul {
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.8;
-            color: #000;
+            color: #333;
         }
 
         .section ul {
-            list-style-position: outside;
-            padding-left: 20px;
-            margin-top: 10px;
+            list-style-position: inside;
+            padding-left: 0;
         }
 
         .section li {
-            margin-bottom: 8px;
-        }
-
-        .section strong {
-            font-weight: bold;
-        }
-
-        /* 小見出しのスタイル */
-        .subsection-title {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 6px 12px;
-            font-weight: bold;
-            display: inline-block;
             margin-bottom: 10px;
-            margin-top: 5px;
-            font-size: 15px;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        /* グラフスタイル */
-        .score-item {
-            margin-bottom: 15px;
-        }
-
-        .score-label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .score-bar-container {
-            background: #e0e0e0;
-            height: 25px;
-            border-radius: 0;
-            overflow: hidden;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .score-bar {
-            background: #ffff00;
-            height: 100%;
-            transition: width 0.5s;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        /* 中間値の注意書き */
-        .ambivert-notice {
-            background-color: #ffffff;
-            padding: 0;
-            margin-bottom: 30px;
-            border-left: 5px solid #ffff00;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .ambivert-notice h3 {
-            font-size: 18px;
-            margin-bottom: 0;
-            padding: 12px 20px;
-            background-color: #ffff00;
-            color: #000000;
-            font-weight: bold;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .ambivert-notice-content {
-            padding: 20px;
-        }
-
-        .ambivert-notice p {
-            margin-bottom: 12px;
-            color: #000000;
-            font-size: 15px;
-            line-height: 1.8;
-        }
-
-        .ambivert-notice a {
-            color: #0066cc;
-            text-decoration: underline;
-        }
-
-        .ambivert-notice a:hover {
-            color: #004499;
+            padding-left: 20px;
+            text-indent: -20px;
         }
 
         .pdf-button {
@@ -205,13 +127,11 @@
             color: #000000;
             border: 2px solid #000000;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             width: fit-content;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
         }
 
         .pdf-button:hover {
@@ -219,139 +139,59 @@
             color: #ffff00;
         }
 
-        .back-link {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
-            background-color: rgba(255,255,255,0.9);
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
+        @media (max-width: 768px) {
+            .type-title {
+                font-size: 24px;
+            }
 
-        .back-link a {
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
+            .type-subtitle {
+                font-size: 16px;
+            }
 
-        .back-link a:hover {
-            color: #000;
-        }
-
-        /* ページ2の上部余白用 */
-        .page-2-top-spacer {
-            height: 20pt;
-        }
-
-        @media print {
-            body {
+            .section {
                 padding: 20px;
             }
-            
-            .print-title {
-                display: block !important;
+
+            .section h2 {
+                font-size: 20px;
             }
-            
-            .no-print {
-                display: none !important;
+        }
+    
+        @media print {
+            .page-break-before {
+                page-break-before: always;
+                break-before: page;
             }
-            
-            /* ページ1: タイトル、グラフ、①（page-break-after） */
             .page-break-after {
                 page-break-after: always;
                 break-after: page;
             }
-            
-            /* ページ2: 上部余白 + あなたのスコア（あれば）+ ② */
-            .page-2-top-spacer {
-                display: block !important;
-                height: 20pt;
-            }
-            
-            /* ページ3: ③④ - 改ページ前に余白20pt、左上の黄色線を消す */
-            .page-break-before-3 {
-                page-break-before: always;
-                break-before: page;
-                margin-top: 20pt !important;
-                border-left: none !important;
-            }
-            
-            .page-break-before-3 h2 {
-                border-left: 5px solid #ffff00 !important;
-                margin-left: -5px;
-            }
-            
-            /* ページ4: ⑤⑥ - 改ページ前に余白20pt、左上の黄色線を消す */
-            .page-break-before-4 {
-                page-break-before: always;
-                break-before: page;
-                margin-top: 20pt !important;
-                border-left: none !important;
-            }
-            
-            .page-break-before-4 h2 {
-                border-left: 5px solid #ffff00 !important;
-                margin-left: -5px;
-            }
-            
-            .section {
-                border-left: 5px solid #ffff00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin-bottom: 25px;
-            }
-            
-            .ambivert-notice {
-                border-left: 5px solid #ffff00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin-bottom: 25px;
-            }
-            
-            /* 全体の余白を確保 */
-            .container {
-                padding: 20pt;
-            }
         }
-
-        @media (max-width: 768px) {
-            .type-title {
-                font-size: 22px;
-            }
-            .type-subtitle {
-                font-size: 14px;
-            }
-            .section h2 {
-                font-size: 16px;
-                padding: 10px 15px;
-            }
-            .section-content {
-                padding: 15px;
-            }
-        }
-    </style>
+</style>
 </head>
 <body>
     <div class="container">
         <div class="print-title">ビッグファイブ診断 詳細結果</div>
+
         
         <div id="results-container">
             <!-- JavaScriptで動的に挿入 -->
         </div>
 
-        <!-- PDF保存ボタン -->
+        <!-- PDF保存ボタン（一番下、黄色系） -->
         <div class="no-print" style="text-align: center; margin-top: 50px;">
             <button onclick="window.print()" class="pdf-button">
-                結果をPDF保存
+                📄 結果をPDF保存
             </button>
         </div>
     </div>
 
-    <!-- TOPに戻る -->
-    <div class="back-link no-print">
-        <a href="index.html">← TOPに戻る</a>
+    <!-- ← TOPに戻る -->
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;" class="no-print">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
+           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            ← TOPに戻る
+        </a>
     </div>
 
     <script>
@@ -387,8 +227,7 @@
                 unsuitableEnvironment: [
                     '数字管理が多い仕事、ルーティン作業が多い環境',
                     '孤独な環境、新しい情報や刺激が少ない環境',
-                    '人とのつながりが乏しいリモートワーク、移動の少ない環境',
-                    '問題解決ばかりの作業、行動するまでに事前の準備が多い'
+                    '人とのつながりが乏しいリモートワーク、移動の少ない環境・問題解決ばかりの作業、行動するまでに事前の準備が多い'
                 ],
                 unsuitable: [
                     'スーパーのレジ係、工場ライン作業員、倉庫内ピッキングスタッフ経理・財務担当、一般事務、図書館の資料整理スタッフ（受信専門）、データ入力専任スタッフ、チケット発券窓口、郵便物仕分け業務など'
@@ -443,8 +282,8 @@
                 tips: [
                     'ルールを守りながら、人を巻き込める環境に身を置く',
                     '動きながら学ぶスタイルが合う。チームの空気を作る役割を与える',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切'
+                    '※役割を与えると燃えるタイプだが、逆に指示が曖昧だと混乱する',
+                    '※人の雰囲気を変える力が高いため、目に見える結果だけでなく、周りへの影響も評価してあげることが大切'
                 ],
                 goodTypes: ['アーキテクト型、メディエーター型（安定感と調整力で行動をサポートしてくれる）'],
                 badTypes: ['ストラテジスト型（提案が斬新すぎてついていけないことがある）'],
@@ -473,8 +312,7 @@
                 suitableReason: '情報やアイデアを集め、整理し、形にする過程で脳が活性化するため',
                 unsuitableEnvironment: [
                     '意思決定が早く求められる、あまり深く考えなくてもできる作業や行動',
-                    'みんなと行う作業の頻度が多い、問題解決ばかりを求められる',
-                    '細かいルールで縛られる、アイディアが採用されにくい環境でがんばる'
+                    'みんなと行う作業の頻度が多い、問題解決ばかりを求められる、細かいルールで縛られる、アイディアが採用されにくい環境でがんばる'
                 ],
                 unsuitable: [
                     'イベント司会、接客販売、営業職（特に新規開拓）',
@@ -484,10 +322,10 @@
                 unsuitableReason: '常時対人刺激の多い業務では集中力と創造力が削がれやすいため',
                 tips: [
                     '一人で考える時間と、誰かが拾ってくれる安心感が必要',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>チーム内で理解されづらいこともあるので、定期的な共有の場をつくる',
+                    '※チーム内で理解されずらいこともあるので、定期的な共有の場をつくる',
                     '実行するためのフォローがないと、妄想で終わってしまいやすいので注意',
                     'チームとの連携を助けることが大切',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>思いつくけど提案できないことも。共感されないと心を閉ざす傾向は注意'
+                    '※思いつくけど提案できないことも。共感されないと心を閉ざす傾向は注意'
                 ],
                 goodTypes: ['ビジョナリー型、ファシリテーター型（発想を刺激してくれる）'],
                 badTypes: ['メディエーター型（細かい管理を求められて窮屈に感じる）'],
@@ -531,7 +369,7 @@
                 tips: [
                     '日課やルーティンが評価される仕組みに乗せると◎',
                     '進捗状況が見える化できる努力はうまくいきやすい',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>感謝やフィードバックがないと自信を失いやすい',
+                    '※感謝やフィードバックがないと自信を失いやすい',
                     '目標が達成できないときに、落ち込みやすい傾向',
                     '継続すること自体を成功として定義できると、イキイキするタイプ'
                 ],
@@ -574,7 +412,7 @@
                 unsuitableReason: '自由度が低く、課題発見や改善提案の余地がない環境ではエネルギーが落ちやすいため',
                 tips: [
                     '問題を分析しながら、仲間と新しい道を切り拓く機会を与える',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す'
+                    '※細かく縛ると嫌になるため、自由にやらせたり、裁量権を部分的だけでも渡す'
                 ],
                 goodTypes: ['プランナー型、ストラテジスト型（発想と行動が噛み合う）'],
                 badTypes: ['アーキテクト型（安定重視で変化を嫌がることがある）'],
@@ -615,7 +453,7 @@
                 unsuitableReason: '秩序がなく、サポートや安定化の役割を果たせない場面ではエネルギーが下がりやすいため',
                 tips: [
                     '現場での問題発見と改善を任せる。裏方でも成果が見える設計が◎',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>地味な役割になりがちなので、努力やプロセスを評価してあげることが大切'
+                    '※地味な役割になりがちなので、努力やプロセスを評価してあげることが大切'
                 ],
                 goodTypes: ['アーキテクト型、ガーディアン型（秩序を大事にする）'],
                 badTypes: ['プランナー型（急な変化が多い）'],
@@ -655,7 +493,7 @@
                 tips: [
                     '静かな環境で深く考える時間と、アウトプットの場を明確にする',
                     '未来や現在の課題を冷静に分析して新しい方法を考えさせる',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切',
+                    '※表に出るのは嫌い。「ちゃんと見ている」「理解している」ことを伝えることが大切。',
                     'プレゼンや即答が苦手な傾向、チーム内の雑談が苦手、空気を読むのが負担になる傾向、行動が遅く見えることもある。人との接点が少なすぎると、孤立や過剰思考になる可能性。考えすぎて動けなくなる。完璧を求めて公開できない'
                 ],
                 goodTypes: ['ガーディアン型、ファシリテーター型（問題を一緒に考えることができる）'],
@@ -696,15 +534,15 @@
                 unsuitableReason: '秩序がなく、正確さを保てない環境ではストレスが溜まりやすいため',
                 tips: [
                     '明確な手順と安定したルーティンがあると力を発揮',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>融通が利かず、変化に対応できないとストレスを抱えやすいので注意',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>変化が急すぎると不安になる、丁寧に伝えることが大切',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>変化を押しつけず、徐々に巻き込む工夫をする',
-                    '<span style="display: inline-block; margin-left: -1em; padding-left: 0;">※</span>安心感が大切なので、常にフィードバックし、プロセスや努力をほめてあげる',
+                    '※融通が利かず、変化に対応できないとストレスを抱えやすいので注意',
+                    '※変化が急すぎると不安になる、丁寧に伝えることが大切',
+                    '※変化を押しつけず、徐々に巻き込む工夫をする',
+                    '※安心感が大切なので、常にフィードバックし、プロセスや努力をほめてあげる',
                     '行動がゆっくりの傾向もあるため「ちゃんと見ている」「理解している」ことを伝えることが大切'
                 ],
                 goodTypes: ['アーキテクト型、メディエーター型（安定志向で価値観が合う）'],
                 badTypes: ['ビジョナリー型（勢い重視で精度を軽視することがある）'],
-                badTypeAdvice: '相性が悪い相手には「品質を守る理由」を具体的に説明する',
+                badTypeAdvice: '相性が悪い相手には「品質を守る→理由」を具体的に説明する',
                 stress: [
                     '作業スペースを整理整頓する',
                     '完成度の高い作品や成果物を鑑賞する',
@@ -712,60 +550,6 @@
                 ]
             }
         };
-
-        // 中間値チェック関数
-        function hasMiddleValues(ext, neu, opn) {
-            return (ext == 4 || ext == 5) || (neu == 4 || neu == 5) || (opn == 4 || opn == 5);
-        }
-
-        // 中間値の特性名を取得
-        function getMiddleValueNames(ext, neu, opn) {
-            const names = [];
-            if (ext == 4 || ext == 5) names.push('外向性');
-            if (neu == 4 || neu == 5) names.push('神経症傾向');
-            if (opn == 4 || opn == 5) names.push('開放性');
-            return names;
-        }
-
-        // 中間値の診断タイプを取得
-        function getMiddleValueTypes(ext, neu, opn, currentType) {
-            const types = [];
-            
-            // 外向性が中間値の場合
-            if (ext == 4 || ext == 5) {
-                if (currentType == '1' || currentType == '2' || currentType == '5' || currentType == '6') {
-                    const mapping = {'1': '3', '2': '4', '5': '7', '6': '8'};
-                    types.push(mapping[currentType]);
-                } else {
-                    const mapping = {'3': '1', '4': '2', '7': '5', '8': '6'};
-                    types.push(mapping[currentType]);
-                }
-            }
-            
-            // 神経症傾向が中間値の場合
-            if (neu == 4 || neu == 5) {
-                if (currentType == '1' || currentType == '2' || currentType == '3' || currentType == '4') {
-                    const mapping = {'1': '5', '2': '6', '3': '7', '4': '8'};
-                    types.push(mapping[currentType]);
-                } else {
-                    const mapping = {'5': '1', '6': '2', '7': '3', '8': '4'};
-                    types.push(mapping[currentType]);
-                }
-            }
-            
-            // 開放性が中間値の場合
-            if (opn == 4 || opn == 5) {
-                if (currentType == '1' || currentType == '3' || currentType == '5' || currentType == '7') {
-                    const mapping = {'1': '2', '3': '4', '5': '6', '7': '8'};
-                    types.push(mapping[currentType]);
-                } else {
-                    const mapping = {'2': '1', '4': '3', '6': '5', '8': '7'};
-                    types.push(mapping[currentType]);
-                }
-            }
-            
-            return [...new Set(types)];
-        }
 
         // 結果を表示
         if (type && typeData[type]) {
@@ -776,111 +560,87 @@
             let scoresHTML = '';
             if (extraversion && neuroticism && openness && agreeableness && conscientiousness) {
                 scoresHTML = `
-                    <div class="section">
+                    <div class="section page-break-after" style="background-color: #fffef0; border-left: 5px solid #ffff00;">
                         <h2>各特性のスコア</h2>
-                        <div class="section-content">
-                            <div class="score-item">
-                                <div class="score-label">外向性：${extraversion}点／8点（${extraversionType || ''}）</div>
-                                <div class="score-bar-container">
-                                    <div class="score-bar" style="width: ${(extraversion/8)*100}%;"></div>
+                        <div style="margin-top: 20px;">
+                            <!-- 外向性 -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong>外向性：${extraversion}点／8点（${extraversionType || ''}）</strong>
+                                </div>
+                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: #ffff00; height: 100%; width: ${(extraversion/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-item">
-                                <div class="score-label">神経症傾向：${neuroticism}点／8点（${neuroticismType || ''}）</div>
-                                <div class="score-bar-container">
-                                    <div class="score-bar" style="width: ${(neuroticism/8)*100}%;"></div>
+                            <!-- 神経症傾向 -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong>神経症傾向：${neuroticism}点／8点（${neuroticismType || ''}）</strong>
+                                </div>
+                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: #ffff00; height: 100%; width: ${(neuroticism/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-item">
-                                <div class="score-label">開放性：${openness}点／8点（${opennessType || ''}）</div>
-                                <div class="score-bar-container">
-                                    <div class="score-bar" style="width: ${(openness/8)*100}%;"></div>
+                            <!-- 開放性 -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong>開放性：${openness}点／8点（${opennessType || ''}）</strong>
+                                </div>
+                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: #ffff00; height: 100%; width: ${(openness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-item">
-                                <div class="score-label">協調性：${agreeableness}点／8点</div>
-                                <div class="score-bar-container">
-                                    <div class="score-bar" style="width: ${(agreeableness/8)*100}%;"></div>
+                            <!-- 協調性 -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong>協調性：${agreeableness}点／8点</strong>
+                                </div>
+                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: #ffff00; height: 100%; width: ${(agreeableness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-item">
-                                <div class="score-label">誠実性：${conscientiousness}点／8点</div>
-                                <div class="score-bar-container">
-                                    <div class="score-bar" style="width: ${(conscientiousness/8)*100}%;"></div>
+                            <!-- 誠実性 -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong>誠実性：${conscientiousness}点／8点</strong>
+                                </div>
+                                <div style="background: #e0e0e0; height: 30px; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: #ffff00; height: 100%; width: ${(conscientiousness/8)*100}%; transition: width 0.5s;"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // ①特性の説明（PDF1枚目）
-            const descriptionHTML = `
-                <div class="section page-break-after">
-                    <h2>①特性の説明</h2>
-                    <div class="section-content">
-                        <p>${data.description}</p>
-                    </div>
-                </div>
-            `;
-
-            // ページ2の上部余白（印刷時のみ表示）
-            const page2TopSpacer = '<div class="page-2-top-spacer" style="display: none;"></div>';
-
-            // 中間値の注意書き（PDF2枚目の最初、あれば）
-            let middleValueNoticeHTML = '';
-            if (extraversion && neuroticism && openness && hasMiddleValues(extraversion, neuroticism, openness)) {
-                const middleNames = getMiddleValueNames(extraversion, neuroticism, openness);
-                const middleNamesText = middleNames.join('・');
-                const otherTypes = getMiddleValueTypes(extraversion, neuroticism, openness, type);
-                const typeLinks = otherTypes.map(t => {
-                    const typeTitle = typeData[t].title;
-                    return `<a href="4_bigfive-result-sub-type${t}.html?extraversion=${extraversion}&neuroticism=${neuroticism}&openness=${openness}&agreeableness=${agreeableness}&conscientiousness=${conscientiousness}&extraversionType=${extraversionType}&neuroticismType=${neuroticismType}&opennessType=${opennessType}" target="_blank">${typeTitle} ↗</a>`;
-                }).join('、');
-                
-                middleValueNoticeHTML = `
-                    <div class="ambivert-notice">
-                        <h3>あなたのスコアについて</h3>
-                        <div class="ambivert-notice-content">
-                            <p>診断結果、<strong>${middleNamesText}が中間値（4～5点）</strong>でした。中間値の方は状況によって両方の特性を使い分けている可能性があります。</p>
-                            <p>このページでは「<strong>${data.title}</strong>」タイプを表示していますが、以下のタイプも読んでみて、よりしっくりくる方を参考にしてください。</p>
-                            <p><strong>他に該当する可能性があるタイプ：</strong><br>${typeLinks}</p>
                         </div>
                     </div>
                 `;
             }
             
-            // 相性の良いタイプの表示
+            // 相性の良いタイプの表示（配列があれば）
             let goodTypesHTML = '';
             if (data.goodTypes && data.goodTypes.length > 0) {
                 goodTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <div class="subsection-title">相性が良いタイプ</div>
-                        ${data.goodTypes.map(item => `<p>${item}</p>`).join('')}
+                        <strong>・相性が良いタイプ：</strong><br>
+                        ${data.goodTypes.map(item => `${item}`).join('<br>')}
                     </div>
                 `;
             }
             
-            // 相性の悪いタイプの表示
+            // 相性の悪いタイプの表示（配列があれば）
             let badTypesHTML = '';
             if (data.badTypes && data.badTypes.length > 0) {
                 badTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <div class="subsection-title">相性が悪いタイプ</div>
-                        ${data.badTypes.map(item => `<p>${item}</p>`).join('')}
-                        ${data.badTypeReason ? `<p style="margin-top: 15px; margin-left: 1em;"><span style="color: #ffff00;">➡</span>理由：${data.badTypeReason}</p>` : ''}
-                        ${data.badTypeAdvice ? `<p style="margin-top: 15px; margin-left: 1em;"><span style="color: #ffff00;">➡</span>対応のコツ：${data.badTypeAdvice}</p>` : ''}
+                        <strong>・相性が悪いタイプ：</strong><br>
+                        ${data.badTypes.map(item => `${item}`).join('<br>')}
+                        ${data.badTypeReason ? `<br>→理由：${data.badTypeReason}` : ''}
+                        ${data.badTypeAdvice ? `<br>→対応のコツ：${data.badTypeAdvice}` : ''}
                     </div>
                 `;
             }
 
-            // PDF2枚目：上部余白 + 中間値の注意（あれば）+ ②
-            // PDF3枚目：③④
-            // PDF4枚目：⑤⑥
             container.innerHTML = `
                 <div class="type-header">
                     <div class="type-title">${data.title}</div>
@@ -889,94 +649,91 @@
                 </div>
 
                 ${scoresHTML}
-                
-                ${descriptionHTML}
-                
-                ${page2TopSpacer}
-                
-                ${middleValueNoticeHTML}
+
+                <div class="section">
+                    <h2>①特性の説明</h2>
+                    <p>${data.description}</p>
+                </div>
 
                 <div class="section">
                     <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
-                    <div class="section-content">
-                        ${data.environmentConditions ? `
-                            <div style="margin-bottom: 20px;">
-                                <div class="subsection-title">環境条件</div>
-                                <ul>
-                                    ${data.environmentConditions.map(item => `<li>${item}</li>`).join('')}
-                                </ul>
-                            </div>
-                        ` : ''}
-                        <div style="margin-bottom: 15px;">
-                            <div class="subsection-title">職種例</div>
+                    ${data.environmentConditions ? `
+                        <div style="margin-bottom: 20px;">
+                            <strong>環境条件</strong>
                             <ul>
-                                ${data.suitable.map(item => `<li>${item}</li>`).join('')}
+                                ${data.environmentConditions.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
-                        ${data.suitableReason ? `<p style="margin-top: 15px; margin-left: 1em;"><span style="color: #ffff00;">➡</span> 理由：${data.suitableReason}</p>` : ''}
+                    ` : ''}
+                    <div style="margin-bottom: 15px;">
+                        <strong>職種例</strong>
+                        <ul>
+                            ${data.suitable.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
                     </div>
+                    ${data.suitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.suitableReason}</p>` : ''}
                 </div>
 
-                <div class="section page-break-before-3">
+                <div class="section page-break-before">
                     <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
-                    <div class="section-content">
-                        ${data.unsuitableEnvironment ? `
-                            <div style="margin-bottom: 20px;">
-                                <div class="subsection-title">環境条件</div>
-                                <ul>
-                                    ${data.unsuitableEnvironment.map(item => `<li>${item}</li>`).join('')}
-                                </ul>
-                            </div>
-                        ` : ''}
-                        <div style="margin-bottom: 15px;">
-                            <div class="subsection-title">職種例</div>
+                    ${data.unsuitableEnvironment ? `
+                        <div style="margin-bottom: 20px;">
+                            <strong>環境条件</strong>
                             <ul>
-                                ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
+                                ${data.unsuitableEnvironment.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
-                        ${data.unsuitableReason ? `<p style="margin-top: 15px; margin-left: 1em;"><span style="color: #ffff00;">➡</span> 理由：${data.unsuitableReason}</p>` : ''}
+                    ` : ''}
+                    <div style="margin-bottom: 15px;">
+                        <strong>職種例</strong>
+                        <ul>
+                            ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
                     </div>
+                    ${data.unsuitableReason ? `<p style="margin-top: 15px;"><strong>→理由：</strong>${data.unsuitableReason}</p>` : ''}
                 </div>
 
                 <div class="section">
                     <h2>④能力を最大化する方法</h2>
-                    <div class="section-content">
-                        <ul>
-                            ${data.tips.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
+                    <ul>
+                        ${data.tips.map(item => {
+                            if (item.startsWith('※') || item.startsWith('＊')) {
+                                return `<li style="list-style: none; margin-left: 1em;">${item}</li>`;
+                            }
+                            return `<li>${item}</li>`;
+                        }).join('')}
+                    </ul>
                 </div>
 
-                <div class="section page-break-before-4">
+                <div class="section page-break-before">
                     <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
-                    <div class="section-content">
-                        ${goodTypesHTML}
-                        ${badTypesHTML}
-                    </div>
+                    ${goodTypesHTML}
+                    ${badTypesHTML}
                 </div>
 
                 <div class="section">
                     <h2>⑥即効性のあるストレス軽減法</h2>
-                    <div class="section-content">
-                        <ul>
-                            ${data.stress.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
+                    <ul>
+                        ${data.stress.map(item => {
+                            if (item.startsWith('※') || item.startsWith('＊')) {
+                                return `<li style="list-style: none; margin-left: 1em;">${item}</li>`;
+                            }
+                            return `<li>${item}</li>`;
+                        }).join('')}
+                    </ul>
                 </div>
             `;
         } else {
             document.getElementById('results-container').innerHTML = `
                 <div class="section">
-                    <div class="section-content">
-                        <p>診断結果が見つかりません。診断ページからやり直してください。</p>
-                    </div>
+                    <p>診断結果が見つかりません。診断ページからやり直してください。</p>
                 </div>
             `;
         }
     </script>
 
     <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© T&R Self-Image Design LLC</p>
+        <p>© Takeyuki Nishi</p>
     </div>
 
     <style>
