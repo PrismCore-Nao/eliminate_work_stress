@@ -59,9 +59,13 @@
             print-color-adjust: exact;
         }
 
+        .question-section {
+            margin-bottom: 40px;
+        }
+
         .question {
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
             background-color: #fafafa;
             border-left: 3px solid #ffff00;
             -webkit-print-color-adjust: exact;
@@ -73,21 +77,19 @@
             align-items: center;
             cursor: pointer;
             font-size: 16px;
-            line-height: 1.6;
         }
 
         .question input[type="checkbox"] {
-            margin-right: 15px;
+            margin-right: 12px;
             width: 20px;
             height: 20px;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         .result-box {
             background-color: #ffffff;
             border: 3px solid #ffff00;
-            padding: 0;
+            padding: 30px;
             margin-top: 40px;
             display: none;
             -webkit-print-color-adjust: exact;
@@ -96,21 +98,6 @@
 
         .result-box.show {
             display: block;
-        }
-
-        .result-box h2 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 15px 20px;
-            margin: 0;
-            font-size: 22px;
-            font-weight: bold;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .result-content {
-            padding: 30px;
         }
 
         .result-item {
@@ -129,6 +116,18 @@
             margin-bottom: 10px;
         }
 
+        .count-badge {
+            display: inline-block;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
         .level-badge {
             display: inline-block;
             background-color: #000000;
@@ -145,7 +144,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
-            margin-top: 40px;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
 
@@ -165,16 +164,16 @@
             color: #ffff00;
         }
 
+        .submit-button.hide {
+            display: none;
+        }
+
         .pdf-button {
             display: none;
         }
 
         .pdf-button.show {
             display: inline-block;
-        }
-
-        .submit-button.hide {
-            display: none;
         }
 
         .back-link {
@@ -201,32 +200,26 @@
         @media print {
             body {
                 padding: 15px;
+                padding-top: 30px;
             }
             
             .print-title {
                 display: block !important;
                 font-size: 18px !important;
-                margin-bottom: 10px !important;
-                padding: 5px 15px 0 15px !important;
+                margin-bottom: 20px !important;
+                padding: 0 !important;
             }
 
-            .pdf-button, .submit-button, .question, .instruction, h1, .back-link {
+            h1, .question, .instruction, .button-group, .back-link {
                 display: none !important;
             }
 
             .result-box {
                 display: block !important;
                 margin-top: 0;
+                border: none !important;
+                padding: 0 !important;
                 page-break-inside: avoid;
-            }
-
-            .result-box h2 {
-                font-size: 20px;
-                padding: 12px 15px;
-            }
-
-            .result-content {
-                padding: 20px;
             }
 
             .result-item {
@@ -239,7 +232,7 @@
                 font-size: 16px;
             }
 
-            .level-badge {
+            .count-badge, .level-badge {
                 font-size: 14px;
                 padding: 6px 16px;
             }
@@ -264,7 +257,7 @@
             }
 
             .question {
-                padding: 15px;
+                padding: 12px 15px;
             }
 
             .button-group {
@@ -279,7 +272,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">適職度診断</div>
+        <div class="print-title">適職度診断 結果</div>
 
         <h1>適職度診断</h1>
 
@@ -288,79 +281,80 @@
         </div>
 
         <form id="diagnosisForm">
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q1" value="1">
-                    得意分野や強みが仕事で活かせていない
-                </label>
-            </div>
+            <div class="question-section">
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q1" value="1">
+                        得意分野や強みが仕事で活かせていない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q2" value="1">
-                    苦手な作業に多くの時間を取られている
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q2" value="1">
+                        苦手な作業に多くの時間を取られている
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q3" value="1">
-                    「この仕事は自分に向いていない」と感じることがある
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q3" value="1">
+                        「この仕事は自分に向いていない」と感じることがある
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q4" value="1">
-                    周囲と比べて同じ業務でも時間がかかる
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q4" value="1">
+                        周囲と比べて同じ業務でも時間がかかる
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q5" value="1">
-                    会社の評価軸と自分の価値観がズレている
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q5" value="1">
+                        会社の評価軸と自分の価値観がズレている
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q6" value="1">
-                    心からやりたいと思える業務が少ない
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q6" value="1">
+                        心からやりたいと思える業務が少ない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q7" value="1">
-                    成長実感が持てない
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q7" value="1">
+                        成長実感が持てない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q8" value="1">
-                    自分らしさを出す余地がない
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q8" value="1">
+                        自分らしさを出す余地がない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q9" value="1">
-                    将来この仕事を続けたいと思えない
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q9" value="1">
+                        将来この仕事を続けたいと思えない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q10" value="1">
-                    別の職種や職場を想像してしまう
-                </label>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q10" value="1">
+                        別の職種や職場を想像してしまう
+                    </label>
+                </div>
             </div>
 
             <div class="result-box" id="resultBox">
-                <h2>診断結果</h2>
-                <div class="result-content" id="resultContent"></div>
+                <div id="resultContent"></div>
             </div>
 
             <div class="button-group">
@@ -379,17 +373,11 @@
     </div>
 
     <script>
-        function calculateTotal() {
-            const form = document.getElementById('diagnosisForm');
-            const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
-            return checkboxes.length;
-        }
-
         document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const totalCount = calculateTotal();
             const formData = new FormData(this);
+            let checkCount = 0;
             const data = {
                 test_type: '3_job-fit',
                 date: new Date().toLocaleDateString('ja-JP'),
@@ -399,35 +387,46 @@
             
             // 各質問の回答を取得
             for (let i = 1; i <= 10; i++) {
-                const isChecked = formData.get(`q${i}`) ? true : false;
-                data[`q${i}`] = isChecked;
+                const value = formData.get(`q${i}`);
+                const checked = value ? 1 : 0;
+                data[`q${i}`] = checked;
+                checkCount += checked;
             }
-            data.checked_count = totalCount;
+            
+            data.check_count = checkCount;
             
             // 結果判定
-            let resultText = '';
             let resultLevel = '';
+            let resultDescription = '';
+            let advice = '';
             
-            if (totalCount >= 0 && totalCount <= 5) {
+            if (checkCount >= 0 && checkCount <= 5) {
                 resultLevel = '適職度【高】';
-                resultText = 'あなたの特性が活かされやすい仕事です。この強みをさらに伸ばしましょう。';
+                resultDescription = 'あなたの特性が活かされやすい仕事です。この強みをさらに伸ばしましょう。';
+                advice = '現在の仕事環境を大切にしながら、さらなる成長のために新しいチャレンジを取り入れることをお勧めします。';
             } else {
                 resultLevel = '適職度【低】';
-                resultText = '脳の特性と仕事内容が合っていない可能性大。業務内容の調整や環境変更を検討しましょう。';
+                resultDescription = '脳の特性と仕事内容が合っていない可能性大。業務内容の調整や環境変更を検討しましょう。';
+                advice = '適職度を上げるために：\n• 上司に現在の業務の適性について相談する\n• 得意分野を活かせる業務への配置転換を検討\n• スキルアップで苦手分野を克服する\n• 転職も視野に入れてキャリアプランを再考する';
             }
             
-            data.level = resultLevel;
-            data.result_level = resultLevel;
-            data.result_text = resultText;
+            data.result = resultLevel;
+            data.description = resultDescription;
+            data.advice = advice;
             
             // 結果を表示
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
-                    <strong>チェック数：${totalCount}個</strong>
+                    <div class="count-badge">チェック数：${checkCount}個</div>
                 </div>
                 <div class="result-item">
+                    <strong>適職度</strong>
                     <div class="level-badge">${resultLevel}</div>
-                    <div style="margin-top: 15px;">${resultText}</div>
+                    <div style="margin-top: 15px;">${resultDescription}</div>
+                </div>
+                <div class="result-item">
+                    <strong>アドバイス</strong>
+                    <div style="margin-top: 10px; white-space: pre-line;">${advice}</div>
                 </div>
             `;
             
@@ -437,7 +436,6 @@
             
             // スプレッドシートに送信
             const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-            
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),

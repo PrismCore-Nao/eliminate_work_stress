@@ -75,7 +75,7 @@
         .question-text {
             font-size: 16px;
             margin-bottom: 15px;
-            font-weight: 500;
+            font-weight: bold;
             line-height: 1.6;
         }
 
@@ -102,7 +102,7 @@
         .result-box {
             background-color: #ffffff;
             border: 3px solid #ffff00;
-            padding: 0;
+            padding: 30px;
             margin-top: 40px;
             display: none;
             -webkit-print-color-adjust: exact;
@@ -111,21 +111,6 @@
 
         .result-box.show {
             display: block;
-        }
-
-        .result-box h2 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 15px 20px;
-            margin: 0;
-            font-size: 22px;
-            font-weight: bold;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .result-content {
-            padding: 30px;
         }
 
         .result-item {
@@ -142,6 +127,18 @@
             color: #000000;
             display: block;
             margin-bottom: 10px;
+        }
+
+        .score-badge {
+            display: inline-block;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .level-badge {
@@ -216,13 +213,14 @@
         @media print {
             body {
                 padding: 15px;
+                padding-top: 30px;
             }
             
             .print-title {
                 display: block !important;
                 font-size: 18px !important;
-                margin-bottom: 10px !important;
-                padding: 5px 15px 0 15px !important;
+                margin-bottom: 20px !important;
+                padding: 0 !important;
             }
 
             h1, .question, .instruction, .button-group, .back-link {
@@ -232,16 +230,9 @@
             .result-box {
                 display: block !important;
                 margin-top: 0;
+                border: none !important;
+                padding: 0 !important;
                 page-break-inside: avoid;
-            }
-
-            .result-box h2 {
-                font-size: 20px;
-                padding: 12px 15px;
-            }
-
-            .result-content {
-                padding: 20px;
             }
 
             .result-item {
@@ -254,7 +245,7 @@
                 font-size: 16px;
             }
 
-            .level-badge {
+            .score-badge, .level-badge {
                 font-size: 14px;
                 padding: 6px 16px;
             }
@@ -299,7 +290,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">仕事のストレスと脳疲労度診断</div>
+        <div class="print-title">仕事のストレスと脳疲労度診断 結果</div>
 
         <h1>仕事のストレスと脳疲労度診断<br>あなたの扁桃体の警報レベルをチェック</h1>
 
@@ -447,8 +438,7 @@
             </div>
 
             <div class="result-box" id="resultBox">
-                <h2>診断結果</h2>
-                <div class="result-content" id="resultContent"></div>
+                <div id="resultContent"></div>
             </div>
 
             <div class="button-group">
@@ -472,6 +462,7 @@
             
             const formData = new FormData(this);
             let totalScore = 0;
+            const checkedQuestions = [];
             const data = {
                 test_type: '1_stress-check',
                 date: new Date().toLocaleDateString('ja-JP'),
@@ -481,51 +472,136 @@
             
             // 各質問の回答を取得
             for (let i = 1; i <= 15; i++) {
-                const value = parseInt(formData.get(`q${i}`)) || 0;
-                data[`q${i}`] = value;
-                totalScore += value;
+                const value = formData.get(`q${i}`);
+                const score = value ? parseInt(value) : 0;
+                data[`q${i}`] = score;
+                totalScore += score;
+                
+                // 2点または1点がついた質問を記録
+                if (score > 0) {
+                    checkedQuestions.push(i);
+                }
             }
             
             data.total_score = totalScore;
             
             // 結果判定
-            let level = '';
+            let levelName = '';
             let levelDescription = '';
-            let stateDescription = '';
             
             if (totalScore >= 0 && totalScore <= 6) {
-                level = '安定モード（発火なし）';
-                stateDescription = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い。';
+                levelName = '安定モード（発火なし）';
+                levelDescription = '前頭前野が正常に働き、扁桃体は沈静。冷静で判断力が高い。';
             } else if (totalScore >= 7 && totalScore <= 12) {
-                level = '軽度警戒モード（低発火）';
-                stateDescription = 'ストレス刺激に軽く反応。集中力に波がある。';
+                levelName = '軽度警戒モード（低発火）';
+                levelDescription = 'ストレス刺激に軽く反応。集中力に波がある。';
             } else if (totalScore >= 13 && totalScore <= 18) {
-                level = '中度警報モード（発火持続）';
-                stateDescription = '扁桃体が断続的に発火。イライラ・思考のブレが出始める。';
+                levelName = '中度警報モード（発火持続）';
+                levelDescription = '扁桃体が断続的に発火。イライラ・思考のブレが出始める。';
             } else if (totalScore >= 19 && totalScore <= 24) {
-                level = '高警報モード（常時発火）';
-                stateDescription = '扁桃体が警報ボタンを押しっぱなし。前頭前野の制御が低下。';
+                levelName = '高警報モード（常時発火）';
+                levelDescription = '扁桃体が警報ボタンを押しっぱなし。前頭前野の制御が低下。';
             } else {
-                level = '危険モード（過発火・暴走状態）';
-                stateDescription = '感情と理性の回路がショート。心身の異変が出ている可能性あり。';
+                levelName = '危険モード（過発火・暴走状態）';
+                levelDescription = '感情と理性の回路がショート。心身の異変が出ている可能性あり。';
             }
             
-            data.level = level;
-            data.state_description = stateDescription;
+            data.level = levelName;
+            data.level_description = levelDescription;
+            
+            // 該当する状態説明を生成
+            const stateDescriptions = [];
+            
+            // Q1, Q6, Q13のチェック
+            if (checkedQuestions.includes(1) || checkedQuestions.includes(6) || checkedQuestions.includes(13)) {
+                const matchedQs = [1, 6, 13].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '今の仕事が合っておらず、脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）も出ていない状態です。'
+                    });
+                }
+            }
+            
+            // Q3, Q4, Q12のチェック
+            if (checkedQuestions.includes(3) || checkedQuestions.includes(4) || checkedQuestions.includes(12)) {
+                const matchedQs = [3, 4, 12].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '前頭前野が疲弊し、感情コントロールがダウンしている可能性があります。'
+                    });
+                }
+            }
+            
+            // Q7のチェック
+            if (checkedQuestions.includes(7)) {
+                stateDescriptions.push({
+                    questions: 'Q7',
+                    description: '人間関係のストレスを強く感じているようです（協調性がストレスを増やしています）。'
+                });
+            }
+            
+            // Q8のチェック
+            if (checkedQuestions.includes(8)) {
+                stateDescriptions.push({
+                    questions: 'Q8',
+                    description: '海馬が萎縮し、記憶力が落ちている可能性があります。'
+                });
+            }
+            
+            // Q14のチェック
+            if (checkedQuestions.includes(14)) {
+                stateDescriptions.push({
+                    questions: 'Q14',
+                    description: '長期ストレスで脳内物質のDOS（ドーパミン、オキシトシン、セロトニン）が出ておらず、集中力が切れている状態です。'
+                });
+            }
+            
+            // Q9, Q10のチェック
+            if (checkedQuestions.includes(9) || checkedQuestions.includes(10)) {
+                const matchedQs = [9, 10].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '脳にバリアを張れていません（刺激が少ないことがストレスを増やしています）。'
+                    });
+                }
+            }
+            
+            // Q2, Q5, Q11, Q15のチェック
+            if (checkedQuestions.includes(2) || checkedQuestions.includes(5) || checkedQuestions.includes(11) || checkedQuestions.includes(15)) {
+                const matchedQs = [2, 5, 11, 15].filter(q => checkedQuestions.includes(q));
+                if (matchedQs.length > 0) {
+                    stateDescriptions.push({
+                        questions: matchedQs.map(q => `Q${q}`).join('、'),
+                        description: '長期ストレスが身体や生理反応（睡眠）にまで影響している状態です。'
+                    });
+                }
+            }
+            
+            data.state_descriptions = stateDescriptions;
             
             // 結果を表示
+            let stateDescriptionsHtml = '';
+            if (stateDescriptions.length > 0) {
+                stateDescriptionsHtml = '<div class="result-item"><strong>あなたの状態:</strong>';
+                stateDescriptions.forEach(state => {
+                    stateDescriptionsHtml += `<div style="margin-top: 15px;"><strong>${state.questions}にチェックを入れた結果:</strong><br>${state.description}</div>`;
+                });
+                stateDescriptionsHtml += '</div>';
+            }
+            
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
-                    <strong>合計点数：${totalScore}点</strong>
+                    <div class="score-badge">合計点数：${totalScore}点</div>
                 </div>
                 <div class="result-item">
                     <strong>警報レベル（扁桃体発火レベル）</strong>
-                    <div class="level-badge">${level}</div>
+                    <div class="level-badge">${levelName}</div>
+                    <div style="margin-top: 15px;">${levelDescription}</div>
                 </div>
-                <div class="result-item">
-                    <strong>脳の状態イメージ</strong><br>
-                    ${stateDescription}
-                </div>
+                ${stateDescriptionsHtml}
             `;
             
             document.getElementById('resultBox').classList.add('show');

@@ -59,9 +59,13 @@
             print-color-adjust: exact;
         }
 
+        .question-section {
+            margin-bottom: 40px;
+        }
+
         .question {
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
             background-color: #fafafa;
             border-left: 3px solid #ffff00;
             -webkit-print-color-adjust: exact;
@@ -73,21 +77,19 @@
             align-items: center;
             cursor: pointer;
             font-size: 16px;
-            line-height: 1.6;
         }
 
         .question input[type="checkbox"] {
+            margin-right: 12px;
             width: 20px;
             height: 20px;
-            margin-right: 15px;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         .result-box {
             background-color: #ffffff;
             border: 3px solid #ffff00;
-            padding: 0;
+            padding: 30px;
             margin-top: 40px;
             display: none;
             -webkit-print-color-adjust: exact;
@@ -98,27 +100,11 @@
             display: block;
         }
 
-        .result-box h2 {
-            background-color: #ffff00;
-            color: #000000;
-            padding: 15px 20px;
-            margin: 0;
-            font-size: 22px;
-            font-weight: bold;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-
-        .result-content {
-            padding: 30px;
-        }
-
         .result-item {
             margin: 20px 0;
             padding: 20px;
             background-color: #fafafa;
             border-left: 5px solid #ffff00;
-            line-height: 1.8;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -128,6 +114,18 @@
             color: #000000;
             display: block;
             margin-bottom: 10px;
+        }
+
+        .count-badge {
+            display: inline-block;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .level-badge {
@@ -202,13 +200,14 @@
         @media print {
             body {
                 padding: 15px;
+                padding-top: 30px;
             }
             
             .print-title {
                 display: block !important;
                 font-size: 18px !important;
-                margin-bottom: 10px !important;
-                padding: 5px 15px 0 15px !important;
+                margin-bottom: 20px !important;
+                padding: 0 !important;
             }
 
             h1, .question, .instruction, .button-group, .back-link {
@@ -218,16 +217,9 @@
             .result-box {
                 display: block !important;
                 margin-top: 0;
+                border: none !important;
+                padding: 0 !important;
                 page-break-inside: avoid;
-            }
-
-            .result-box h2 {
-                font-size: 20px;
-                padding: 12px 15px;
-            }
-
-            .result-content {
-                padding: 20px;
             }
 
             .result-item {
@@ -240,7 +232,7 @@
                 font-size: 16px;
             }
 
-            .level-badge {
+            .count-badge, .level-badge {
                 font-size: 14px;
                 padding: 6px 16px;
             }
@@ -265,7 +257,7 @@
             }
 
             .question {
-                padding: 15px;
+                padding: 12px 15px;
             }
 
             .button-group {
@@ -280,7 +272,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="print-title">脳の状態診断</div>
+        <div class="print-title">脳の状態診断 結果</div>
 
         <h1>脳の状態診断</h1>
 
@@ -289,79 +281,80 @@
         </div>
 
         <form id="diagnosisForm">
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q1" value="1">
-                    朝起きても「仕事モード」に切り替わらない
-                </label>
-            </div>
+            <div class="question-section">
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q1" value="1">
+                        朝起きても「仕事モード」に切り替わらない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q2" value="1">
-                    新しいことに挑戦する意欲がわかない
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q2" value="1">
+                        新しいことに挑戦する意欲がわかない
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q3" value="1">
-                    目の前の仕事に集中できず、気が散る
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q3" value="1">
+                        目の前の仕事に集中できず、気が散る
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q4" value="1">
-                    「やっても意味がない」と感じることが増えた
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q4" value="1">
+                        「やっても意味がない」と感じることが増えた
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q5" value="1">
-                    以前は楽しかった作業が、ただの義務になっている
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q5" value="1">
+                        以前は楽しかった作業が、ただの義務になっている
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q6" value="1">
-                    気分の浮き沈みが激しい
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q6" value="1">
+                        気分の浮き沈みが激しい
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q7" value="1">
-                    仕事中、焦りやイライラを感じやすい
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q7" value="1">
+                        仕事中、焦りやイライラを感じやすい
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q8" value="1">
-                    睡眠の質が落ちた（眠れない／途中で目が覚める）
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q8" value="1">
+                        睡眠の質が落ちた（眠れない／途中で目が覚める）
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q9" value="1">
-                    小さなことで不安になる
-                </label>
-            </div>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q9" value="1">
+                        小さなことで不安になる
+                    </label>
+                </div>
 
-            <div class="question">
-                <label>
-                    <input type="checkbox" name="q10" value="1">
-                    週末になっても疲れが抜けない
-                </label>
+                <div class="question">
+                    <label>
+                        <input type="checkbox" name="q10" value="1">
+                        週末になっても疲れが抜けない
+                    </label>
+                </div>
             </div>
 
             <div class="result-box" id="resultBox">
-                <h2>診断結果</h2>
-                <div class="result-content" id="resultContent"></div>
+                <div id="resultContent"></div>
             </div>
 
             <div class="button-group">
@@ -384,6 +377,7 @@
             e.preventDefault();
             
             const formData = new FormData(this);
+            let checkCount = 0;
             const data = {
                 test_type: '2_brain-state',
                 date: new Date().toLocaleDateString('ja-JP'),
@@ -391,39 +385,48 @@
                 timestamp: new Date().toLocaleString('ja-JP')
             };
             
-            // チェック数をカウント
-            let totalCount = 0;
+            // 各質問の回答を取得
             for (let i = 1; i <= 10; i++) {
-                const isChecked = formData.get(`q${i}`) ? true : false;
-                data[`q${i}`] = isChecked;
-                if (isChecked) totalCount++;
+                const value = formData.get(`q${i}`);
+                const checked = value ? 1 : 0;
+                data[`q${i}`] = checked;
+                checkCount += checked;
             }
-            data.checked_count = totalCount;
+            
+            data.check_count = checkCount;
             
             // 結果判定
-            let result = '';
-            let explanation = '';
+            let resultLevel = '';
+            let resultDescription = '';
+            let advice = '';
             
-            if (totalCount >= 0 && totalCount <= 5) {
-                result = '脳内物質量【高】';
-                explanation = 'やる気や集中力が十分に保たれています。この状態を維持できれば、成果も出やすくなります。';
+            if (checkCount >= 0 && checkCount <= 5) {
+                resultLevel = '脳内物質量【高】';
+                resultDescription = 'やる気や集中力が十分に保たれています。この状態を維持できれば、成果も出やすくなります。';
+                advice = '現在の良い状態を保つために、規則正しい生活リズムと適度な運動を続けましょう。';
             } else {
-                result = '脳内物質量【低】';
-                explanation = 'ドーパミンやセロトニングが不足傾向です。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
+                resultLevel = '脳内物質量【低】';
+                resultDescription = 'ドーパミンやセロトニングが不足傾向。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
+                advice = '脳内物質を回復させるために：\n• 7時間以上の睡眠を確保\n• 朝日を浴びる（セロトニン分泌）\n• 軽い運動（ウォーキング20分程度）\n• 小さな達成感を毎日積む\n• タンパク質とビタミンB群を意識的に摂取';
             }
             
-            data.level = result;
-            data.result = result;
-            data.explanation = explanation;
+            data.result = resultLevel;
+            data.description = resultDescription;
+            data.advice = advice;
             
             // 結果を表示
             document.getElementById('resultContent').innerHTML = `
                 <div class="result-item">
-                    <strong>チェック数：${totalCount}個</strong>
+                    <div class="count-badge">チェック数：${checkCount}個</div>
                 </div>
                 <div class="result-item">
-                    <div class="level-badge">${result}</div>
-                    <div style="margin-top: 15px;">${explanation}</div>
+                    <strong>脳内物質量</strong>
+                    <div class="level-badge">${resultLevel}</div>
+                    <div style="margin-top: 15px;">${resultDescription}</div>
+                </div>
+                <div class="result-item">
+                    <strong>アドバイス</strong>
+                    <div style="margin-top: 10px; white-space: pre-line;">${advice}</div>
                 </div>
             `;
             
@@ -448,7 +451,7 @@
                 console.error('送信エラー:', error);
             });
             
-            // 結果までスクロール
+            // 結果まで自動スクロール
             document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
