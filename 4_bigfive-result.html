@@ -158,13 +158,59 @@
         }
     
         @media print {
-            .page-break-before {
-                page-break-before: always;
-                break-before: page;
+            body {
+                padding: 15px;
             }
-            .page-break-after {
+            
+            .print-title {
+                display: block !important;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .container {
+                padding: 15pt;
+            }
+            
+            /* ページ1の終わり：①特性の説明の後で改ページ */
+            .page-break-after-1 {
                 page-break-after: always;
                 break-after: page;
+            }
+            
+            /* ページ2の始まり：上部余白あり */
+            .page-2-spacer {
+                height: 0;
+                margin-top: 20pt;
+                border-left: none !important;
+                background: none !important;
+            }
+            
+            /* ページ3の始まり：②向いている職種 */
+            .page-break-before-3 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
+            }
+            
+            /* ページ4の始まり：③苦手な職種 */
+            .page-break-before-4 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
+            }
+            
+            /* ページ5の始まり：⑤相性 */
+            .page-break-before-5 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
+            }
+            
+            .section {
+                border-left: 5px solid #ffff00 !important;
             }
         }
 </style>
@@ -340,7 +386,7 @@
                 title: '4. 着実な道を築くアーキテクト',
                 subtitle: '現在と未来を守る人・丁寧に、確実に',
                 combination: '内向型 × 楽観型 × 実行型',
-                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。アーキテクトとは建設者を意味します。これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。',
+                description: 'あなたは落ち着きと穏やかさをもち、物事をコツコツと未来に向かって積み上げる力に長けています。<br>内向性の高さが集中力を生み、楽観性が多少の失敗を軽やかに受け流し、誠実性がその行動を長く続けさせます。<br>安定した環境で、最初の一歩が明確な仕事に取り組むと、大きな成果を出せます。<br>アーキテクトとは建設者を意味します。<br>これは「変化に弱い」という欠点ではなく、着実さという強力な武器です。',
                 environmentConditions: [
                     '最初にやるべきこと（とっかかり）が明確な作業',
                     '一人でコツコツと進める、着実に積み上げられる',
@@ -697,8 +743,8 @@
             if (data.goodTypes && data.goodTypes.length > 0) {
                 goodTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <strong>・相性が良いタイプ：</strong><br>
-                        ${data.goodTypes.map(item => `${item}`).join('<br>')}
+                        <div class="subsection-title">相性が良いタイプ</div>
+                        ${data.goodTypes.map(item => `<p>${item}</p>`).join('')}
                     </div>
                 `;
             }
@@ -708,10 +754,10 @@
             if (data.badTypes && data.badTypes.length > 0) {
                 badTypesHTML = `
                     <div style="margin-top: 15px;">
-                        <strong>・相性が悪いタイプ：</strong><br>
-                        ${data.badTypes.map(item => `${item}`).join('<br>')}
-                        ${data.badTypeReason ? `<br><span style="color: #ffff00;">➡</span> 理由：${data.badTypeReason}` : ''}
-                        ${data.badTypeAdvice ? `<br><span style="color: #ffff00;">➡</span> 対応のコツ：${data.badTypeAdvice}` : ''}
+                        <div class="subsection-title">相性が悪いタイプ</div>
+                        ${data.badTypes.map(item => `<p>${item}</p>`).join('')}
+                        ${data.badTypeReason ? `<p style="margin-left: 1em;"><span style="color: #ffff00;">➡</span> 理由：${data.badTypeReason}</p>` : ''}
+                        ${data.badTypeAdvice ? `<p style="margin-left: 1em;"><span style="color: #ffff00;">➡</span> 対応のコツ：${data.badTypeAdvice}</p>` : ''}
                     </div>
                 `;
             }
@@ -725,25 +771,30 @@
 
                 ${scoresHTML}
                 
+                <!-- ページ1はここまで -->
+                
+                <!-- ページ2開始：上部余白 + 中間値 + ①特性の説明 -->
+                <div class="page-2-spacer"></div>
+                
                 ${middleValueNoticeHTML}
 
-                <div class="section">
+                <div class="section page-break-after-1">
                     <h2>①特性の説明</h2>
                     <p>${data.description}</p>
                 </div>
 
-                <div class="section">
+                <div class="section page-break-before-3">
                     <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
                     ${data.environmentConditions ? `
                         <div style="margin-bottom: 20px;">
-                            <strong>環境条件</strong>
+                            <div class="subsection-title">環境条件</div>
                             <ul>
                                 ${data.environmentConditions.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
                     ` : ''}
                     <div style="margin-bottom: 15px;">
-                        <strong>職種例</strong>
+                        <div class="subsection-title">職種例</div>
                         <ul>
                             ${data.suitable.map(item => `<li>${item}</li>`).join('')}
                         </ul>
@@ -751,18 +802,18 @@
                     ${data.suitableReason ? `<p style="margin-top: 15px; margin-left: 1em;"><span style="color: #ffff00;">➡</span> 理由：${data.suitableReason}</p>` : ''}
                 </div>
 
-                <div class="section page-break-before">
+                <div class="section page-break-before-4">
                     <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
                     ${data.unsuitableEnvironment ? `
                         <div style="margin-bottom: 20px;">
-                            <strong>環境条件</strong>
+                            <div class="subsection-title">環境条件</div>
                             <ul>
                                 ${data.unsuitableEnvironment.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
                     ` : ''}
                     <div style="margin-bottom: 15px;">
-                        <strong>職種例</strong>
+                        <div class="subsection-title">職種例</div>
                         <ul>
                             ${data.unsuitable.map(item => `<li>${item}</li>`).join('')}
                         </ul>
@@ -782,7 +833,7 @@
                     </ul>
                 </div>
 
-                <div class="section page-break-before">
+                <div class="section page-break-before-5">
                     <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
                     ${goodTypesHTML}
                     ${badTypesHTML}
