@@ -17,6 +17,8 @@
             color: #000000;
             line-height: 1.8;
             padding: 20px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .container {
@@ -25,9 +27,13 @@
             background: #ffffff;
         }
 
-        /* PDF印刷時のタイトル（非表示→印刷時のみ表示） */
         .print-title {
             display: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px 20px 0 20px;
         }
 
         h1 {
@@ -38,22 +44,28 @@
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 40px;
-            border: 2px solid #000000;
+            border: 3px solid #000000;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .instruction {
             background-color: #f9f9f9;
-            border-left: 4px solid #ffff00;
+            border-left: 5px solid #ffff00;
             padding: 15px 20px;
             margin-bottom: 30px;
             font-size: 14px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .question {
             margin-bottom: 30px;
             padding: 20px;
             background-color: #fafafa;
-            border: 1px solid #e0e0e0;
+            border-left: 3px solid #ffff00;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .question label {
@@ -61,14 +73,73 @@
             align-items: center;
             cursor: pointer;
             font-size: 16px;
+            line-height: 1.6;
         }
 
         .question input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             margin-right: 15px;
             cursor: pointer;
             flex-shrink: 0;
+        }
+
+        .result-box {
+            background-color: #ffffff;
+            border: 3px solid #ffff00;
+            padding: 0;
+            margin-top: 40px;
+            display: none;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h2 {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 15px 20px;
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .result-content {
+            padding: 30px;
+        }
+
+        .result-item {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fafafa;
+            border-left: 5px solid #ffff00;
+            line-height: 1.8;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .result-item strong {
+            font-size: 18px;
+            color: #000000;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background-color: #000000;
+            color: #ffff00;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .button-group {
@@ -76,6 +147,7 @@
             gap: 20px;
             justify-content: center;
             margin: 40px 0;
+            flex-wrap: wrap;
         }
 
         .submit-button, .pdf-button {
@@ -106,73 +178,83 @@
             display: inline-block;
         }
 
-        .result-box {
-            background-color: #fffef0;
-            border: 3px solid #ffff00;
-            padding: 30px;
-            margin: 30px 0;
-            display: none;
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
-        .result-box.show {
-            display: block;
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
         }
 
-        .result-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #000000;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ffff00;
+        .back-link a:hover {
+            color: #000;
         }
 
-        .result-item {
-            margin: 15px 0;
-            padding: 15px;
-            background-color: #ffffff;
-            border-left: 4px solid #ffff00;
-            line-height: 1.8;
-        }
-
-        .result-item strong {
-            font-size: 18px;
-            color: #000000;
-        }
-
-        /* PDF印刷用スタイル */
         @media print {
             body {
-                padding: 0;
-                margin: 0;
+                padding: 15px;
             }
-            .container {
-                position: relative;
-                padding-top: 100px;
-            }
+            
             .print-title {
-                display: block;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background-color: #ffff00;
-                color: #000000;
-                padding: 20px;
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                border: 2px solid #000000;
+                display: block !important;
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                padding: 5px 15px 0 15px !important;
             }
-            .result-box {
-                position: absolute;
-                left: 0;
-                top: 80px;
-                width: 100%;
-            }
-            .pdf-button, .submit-button, .question, .instruction, h1 {
+
+            h1, .question, .instruction, .button-group, .back-link {
                 display: none !important;
+            }
+
+            .result-box {
+                display: block !important;
+                margin-top: 0;
+                page-break-inside: avoid;
+            }
+
+            .result-box h2 {
+                font-size: 20px;
+                padding: 12px 15px;
+            }
+
+            .result-content {
+                padding: 20px;
+            }
+
+            .result-item {
+                padding: 15px;
+                margin: 15px 0;
+                page-break-inside: avoid;
+            }
+
+            .result-item strong {
+                font-size: 16px;
+            }
+
+            .level-badge {
+                font-size: 14px;
+                padding: 6px 16px;
+            }
+
+            .footer-print {
+                display: block !important;
+                position: relative;
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
             }
         }
 
@@ -278,15 +360,23 @@
             </div>
 
             <div class="result-box" id="resultBox">
-                <div class="result-title">診断結果</div>
-                <div id="resultContent"></div>
+                <h2>診断結果</h2>
+                <div class="result-content" id="resultContent"></div>
             </div>
 
             <div class="button-group">
                 <button type="submit" class="submit-button" id="submitButton">診断結果を表示</button>
-                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">📄 PDFで保存</button>
+                <button type="button" class="pdf-button" id="pdfButton" onclick="window.print()">結果をPDF保存</button>
             </div>
         </form>
+    </div>
+
+    <div class="back-link">
+        <a href="index.html">← TOPに戻る</a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd; display: none;">
+        <p>© T&R Self-Image Design LLC</p>
     </div>
 
     <script>
@@ -308,7 +398,8 @@
                 data[`q${i}`] = isChecked;
                 if (isChecked) totalCount++;
             }
-            data.checked_count = totalCount;  // ← チェック数
+            data.checked_count = totalCount;
+            
             // 結果判定
             let result = '';
             let explanation = '';
@@ -321,7 +412,7 @@
                 explanation = 'ドーパミンやセロトニングが不足傾向です。まずは睡眠・運動・食事・小さな成功体験で脳を回復させましょう。';
             }
             
-            data.level = result;        // ← 判定
+            data.level = result;
             data.result = result;
             data.explanation = explanation;
             
@@ -331,8 +422,8 @@
                     <strong>チェック数：${totalCount}個</strong>
                 </div>
                 <div class="result-item">
-                    <strong>結果：${result}</strong><br>
-                    ${explanation}
+                    <div class="level-badge">${result}</div>
+                    <div style="margin-top: 15px;">${explanation}</div>
                 </div>
             `;
             
@@ -341,14 +432,14 @@
             document.getElementById('submitButton').classList.add('hide');
             
             // スプレッドシートに送信
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxxcn1ErmEeJlrAhXudKsQN0y5ZGtzLm_klYWGb5kCa0dO0QAY_sq2PPorezE1r9MjPQw/exec';
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                mode: 'no-cors'  // CORSエラー回避
+                mode: 'no-cors'
             })
             .then(() => {
                 console.log('データ送信完了');
@@ -361,33 +452,5 @@
             document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
-        <a href="index.html" style="color: #666; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.3s;" 
-           onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-            ← TOPに戻る
-        </a>
-    </div>
-
-    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
-        <p>© T&R Self-Image Design LLC</p>
-    </div>
-
-    <style>
-        @media print {
-            div[style*="position: fixed"] { display: none !important; }
-            .footer-print {
-                display: block !important;
-                position: absolute;
-                bottom: 20px;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                border-top: 1px solid #000;
-                padding-top: 10px;
-                background: white;
-                color: #000 !important;
-            }
-        }
-    </style>
 </body>
 </html>
