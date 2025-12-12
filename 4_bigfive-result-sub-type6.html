@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビッグファイブ診断 サブ結果</title>
+    <title>ビッグファイブ診断結果 - チームを守るメディエーター</title>
     <style>
         * {
             margin: 0;
@@ -12,371 +12,361 @@
         }
 
         body {
-            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
             line-height: 1.8;
-            color: #333;
-            background: #f8f8f8;
             padding: 20px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            font-size: 28px;
+        .print-title {
+            display: none;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 40px;
-            color: #333;
+            margin-bottom: 15px;
+            padding: 10px 20px 0 20px;
+        }
+
+        .type-header {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 3px solid #000000;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .type-title {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            margin: -40px -40px 40px -40px;
-            text-align: center;
-        }
-
-        .type-title h2 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
-        .type-title .subtitle {
-            font-size: 18px;
-            opacity: 0.95;
+        .type-subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
         }
 
-        .type-badge {
+        .type-combination {
             display: inline-block;
-            background: rgba(255,255,255,0.2);
+            background-color: #000000;
+            color: #ffff00;
             padding: 8px 20px;
-            border-radius: 20px;
-            margin: 10px 5px 0 5px;
             font-size: 14px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .section {
-            margin-bottom: 40px;
-            padding-left: 20px;
+            background-color: #ffffff;
+            padding: 0;
+            margin-bottom: 30px;
             border-left: 5px solid #ffff00;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        .section-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: #ffff00;
-            color: #333;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-right: 12px;
+        .section h2 {
             font-size: 18px;
-        }
-
-        .section-title {
-            font-size: 22px;
+            margin-bottom: 0;
+            padding: 12px 20px;
+            background-color: #000000;
+            color: #ffff00;
             font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+            border: none;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .section-content {
-            padding-left: 44px;
-        }
-
-        .section-content p {
-            margin-bottom: 15px;
-            line-height: 1.9;
-        }
-
-        .highlight-box {
-            background: #fffbea;
-            border-left: 4px solid #ffeb3b;
             padding: 20px;
-            margin: 20px 0;
         }
 
-        .conditions, .jobs {
-            padding-left: 20px;
-        }
-
-        .conditions li, .jobs li {
-            margin-bottom: 12px;
+        .section p, .section ul {
+            font-size: 15px;
             line-height: 1.8;
+            color: #000;
         }
 
-        .reason {
-            background: #f0f7ff;
-            border-left: 4px solid #2196f3;
-            padding: 15px;
-            margin: 15px 0;
-            font-weight: 500;
+        .section ul {
+            list-style-position: outside;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .subsection-title {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 6px 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .pdf-button {
+            display: block;
+            margin: 40px auto;
+            padding: 15px 40px;
+            background-color: #ffff00;
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: fit-content;
+        }
+
+        .pdf-button:hover {
+            background-color: #000000;
+            color: #ffff00;
         }
 
         .back-link {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: #667eea;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 25px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            font-weight: 500;
-            transition: all 0.3s ease;
+            bottom: 20px;
+            left: 20px;
             z-index: 1000;
+            background-color: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
-        .back-link:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
+        .back-link a {
             color: #666;
+            text-decoration: none;
             font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .back-link a:hover {
+            color: #000;
         }
 
         @media print {
             body {
-                background: white;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 100%;
                 padding: 15px;
-                box-shadow: none;
             }
-
-            .type-title {
-                margin: -15px -15px 20px -15px;
+            
+            .print-title {
+                display: block !important;
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                padding: 5px 15px 0 15px !important;
+            }
+            
+            .type-header {
                 padding: 20px;
-                page-break-after: avoid;
+                margin-bottom: 20px;
             }
-
-            .type-title h2 {
+            
+            .type-title {
                 font-size: 24px;
             }
-
-            .type-title .subtitle {
+            
+            .type-subtitle {
                 font-size: 14px;
             }
-
-            .type-badge {
-                font-size: 11px;
-                padding: 4px 12px;
+            
+            .type-combination {
+                font-size: 13px;
+                padding: 6px 16px;
             }
-
+            
             .section {
-                margin-bottom: 25px;
-                padding-left: 15px;
-                page-break-inside: avoid;
+                margin-bottom: 20px;
+                border-left: 5px solid #ffff00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
-
-            .section-title {
+            
+            .section h2 {
                 font-size: 16px;
+                padding: 10px 15px;
             }
-
-            .section-number {
-                width: 24px;
-                height: 24px;
-                font-size: 14px;
-                margin-right: 8px;
-            }
-
+            
             .section-content {
-                padding-left: 32px;
-                font-size: 11px;
+                padding: 15px;
             }
-
-            .section-content p {
-                margin-bottom: 8px;
+            
+            .section p, .section ul {
+                font-size: 14px;
                 line-height: 1.6;
             }
-
-            .highlight-box {
-                padding: 12px;
-                margin: 12px 0;
-                font-size: 11px;
-            }
-
-            .conditions, .jobs {
-                padding-left: 15px;
-            }
-
-            .conditions li, .jobs li {
+            
+            .section li {
                 margin-bottom: 6px;
-                line-height: 1.5;
-                font-size: 11px;
             }
-
-            .reason {
-                padding: 10px;
-                margin: 10px 0;
-                font-size: 11px;
+            
+            .subsection-title {
+                font-size: 14px;
+                padding: 5px 10px;
             }
-
-            .section:nth-child(3) {
-                padding-top: 30px;
+            
+            .no-print {
+                display: none !important;
             }
-
-            .section:nth-child(6) {
-                padding-top: 30px;
+            
+            .container {
+                padding: 10pt;
             }
-
-            .back-link {
-                display: none;
+            
+            .page-break-before-3 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
             }
-
-            .copyright {
-                margin-top: 30px;
-                padding-top: 20px;
-                font-size: 10px;
+            
+            .page-break-before-6 {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 20pt !important;
             }
+            
+            .footer-print {
+                display: block !important;
+                position: relative;
+                margin-top: 40px;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid #000;
+                padding-top: 10px;
+                background: white;
+                color: #000 !important;
+            }
+        }
 
-            h1 {
-                font-size: 20px;
-                margin-bottom: 20px;
+        @media (max-width: 768px) {
+            .type-title {
+                font-size: 22px;
+            }
+            .type-subtitle {
+                font-size: 14px;
+            }
+            .section h2 {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            .section-content {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="type-title">
-            <h2>6. チームを守るメディエーター</h2>
-            <p class="subtitle">安定を支える人・陰で支える実行力</p>
-            <div>
-                <span class="type-badge">外向型</span>
-                <span class="type-badge">問題志向型</span>
-                <span class="type-badge">実行型</span>
+        <div class="print-title">ビッグファイブ診断 サブ結果</div>
+        
+        <div class="type-header">
+            <div class="type-title">6. チームを守るメディエーター</div>
+            <div class="type-subtitle">安定を支える人・陰で支える実行力</div>
+            <div class="type-combination">外向型 × 問題志向型 × 実行型</div>
+        </div>
+
+        <div class="section">
+            <h2>①特性の説明</h2>
+            <div class="section-content">
+                <p>あなたは人との関わりの中で、現場を安定させるための行動力を発揮します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。メディエーターとは調停者を意味しており、問題を決まった方法でさばいて人を助ける人のことです。前線に立って成果を奪うよりも、後方から支えてチームを成功に導くことにやりがいを感じます。</p>
             </div>
         </div>
 
         <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">①</span>
-                特性の説明
-            </h3>
+            <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
             <div class="section-content">
-                <p>あなたは<strong>人との関わりの中で、現場を安定させるための行動力を発揮</strong>します。外向性の高さが対人調整力を生み、問題志向型の特性がリスク回避や課題発見を可能にし、実行型の特性が素早い行動を支えます。メディエーターとは調停者を意味しており、問題を決まった方法でさばいて人を助ける人のことです。</p>
-                <p>前線に立って成果を奪うよりも、後方から支えてチームを成功に導くことにやりがいを感じます。</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">②</span>
-                向いている職種・環境
-            </h3>
-            <div class="section-content">
-                <div class="highlight-box">
-                    <strong>【環境条件】</strong>
-                    <ul class="conditions">
+                <div style="margin-bottom: 20px;">
+                    <div class="subsection-title">環境条件</div>
+                    <ul>
                         <li>ルーティン化された工程がある、既存のアイディアを組み合わせて工夫できる</li>
                         <li>問題を先に把握して解決できる、多くの情報を扱わなくてすむ、場所が移動できる</li>
                         <li>いろいろな人と会える、慎重に現場を回しながら、リスクを最小化できる</li>
                         <li>意思決定を自分でするより、指示に従う</li>
                     </ul>
                 </div>
-
-                <div class="highlight-box">
-                    <strong>【職種例】</strong>
-                    <ul class="jobs">
-                        <li>みんなと一緒にルーティン作業でリスクをなくしていく仕事（企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、在庫管理、清掃チーム、メンテナンススタッフ、監視員、問題対応の現場リーダー、人材育成、ジョブトレーニング（OJT）、医療測定）、士業全般（行政書士、税理士、公認会計士など）</li>
+                <div style="margin-bottom: 15px;">
+                    <div class="subsection-title">職種例</div>
+                    <ul>
+                        <li>みんなと一緒にルーティン作業でリスクをなくしていく仕事（企業マネージャー、現場マネージャー、副社長的な存在、サービス指導、製造ラインの品質管理、衛生管理、定期点検、監視オペレーター、検査員、在庫管理、清掃チーム、メンテナンススタッフ、監視員、問題対応の現場リーダー、人材育成、ジョブトレーング（OJT）、医療測定）、士業全般（行政書士、税理士、公認会計士など）</li>
                     </ul>
                 </div>
-
-                <div class="reason">
-                    <strong>理由：</strong>人とのやり取りを通じ、秩序や安定を守る場面で力を発揮しやすいため
-                </div>
+                <p style="margin-top: 15px;">→理由：人とのやり取りを通じ、秩序や安定を守る場面で力を発揮しやすいため</p>
             </div>
         </div>
 
-        <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">③</span>
-                苦手な職種・環境
-            </h3>
+        <div class="section page-break-before-3">
+            <h2>③苦手な職種・環境（脳内物質が出にくい条件）</h2>
             <div class="section-content">
-                <div class="highlight-box">
-                    <strong>【環境条件】</strong>
-                    <ul class="conditions">
+                <div style="margin-bottom: 20px;">
+                    <div class="subsection-title">環境条件</div>
+                    <ul>
                         <li>想定外の急な変化が起きる環境、新しいことをゼロから生み出す</li>
                         <li>多くの新しい情報を扱わなければいけない</li>
                         <li>人とのつながりが乏しいリモートワーク、移動の少ない環境</li>
                         <li>結果ばかりを求められて、問題解決が評価されない</li>
-                        <li>空気を読みすぎて自分の改善案を出せなくなる、行動するまでに事前準備が多い</li>
+                        <li>行動するまでに事前の準備が多い、空気を読みすぎて自分の改善案を出せなくなる</li>
                     </ul>
                 </div>
-
-                <div class="highlight-box">
-                    <strong>【職種例】</strong>
-                    <ul class="jobs">
+                <div style="margin-bottom: 15px;">
+                    <div class="subsection-title">職種例</div>
+                    <ul>
                         <li>完全歩合制の営業職</li>
-                        <li>スタートアップの立ち上げ（仕組みなし・制度なし）</li>
+                        <li>スタートアップの立ち上げ（制度・仕組みなし）</li>
                         <li>研究職（単独での長期研究）</li>
                     </ul>
                 </div>
+                <p style="margin-top: 15px;">→理由：秩序がなく、サポートや安定化の役割を果たせない場面ではエネルギーが下がりやすいため</p>
+            </div>
+        </div>
 
-                <div class="reason">
-                    <strong>理由：</strong>秩序がなく、サポートや安定化の役割を果たせない場面ではエネルギーが下がりやすいため
+        <div class="section">
+            <h2>④能力を最大化する方法</h2>
+            <div class="section-content">
+                <ul>
+                    <li>現場での問題発見と改善を任せる。裏方でも成果が見える設計が◎</li>
+                    <li>※地味な役割になりがちなので、努力やプロセスを評価してあげることが大切</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⑤相性の良いタイプ／悪いタイプとの接し方</h2>
+            <div class="section-content">
+                <div style="margin-top: 15px;">
+                    <div class="subsection-title">相性が良いタイプ</div>
+                    <p>アーキテクト型、ガーディアン型（秩序を大事にする）</p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div class="subsection-title">相性が悪いタイプ</div>
+                    <p>プランナー型（急な変化が多い）</p>
+                    <p style="margin-top: 10px;">→対応のコツ：変化を求める相手には「安全策を添えて提案」する</p>
                 </div>
             </div>
         </div>
 
-        <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">④</span>
-                能力を最大化する方法
-            </h3>
+        <div class="section page-break-before-6">
+            <h2>⑥即効性のあるストレス軽減法</h2>
             <div class="section-content">
-                <p>◎裏方でも成果が見える設計が。現場での問題発見と改善を任せる</p>
-                <p>＊地味な役割になりがちなので、努力やプロセスを評価してあげることが大切</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">⑤</span>
-                相性の良いタイプ／悪いタイプとの接し方
-            </h3>
-            <div class="section-content">
-                <p><strong>・相性が良いタイプ：</strong>アーキテクト型、ガーディアン型<br>
-                （秩序を大事にする）</p>
-                
-                <p><strong>・相性が悪いタイプ：</strong>プランナー型<br>
-                （急な変化が多い）</p>
-
-                <p><strong>→ 対応のコツ：</strong>相性が悪い相手とは、事前にスケジュールや役割を明確にしておく</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">
-                <span class="section-number">⑥</span>
-                即効性のあるストレス軽減法
-            </h3>
-            <div class="section-content">
-                <ul class="conditions">
+                <ul>
                     <li>信頼できる同僚と短時間雑談をする</li>
                     <li>達成できたサポート事例をメモする</li>
                     <li>チェックリストや進行表を整理して安心感を得る</li>
@@ -384,11 +374,19 @@
             </div>
         </div>
 
-        <div class="copyright">
-            © 2025 T&R Self-Image Design LLC. All rights reserved.
+        <div class="no-print" style="text-align: center; margin-top: 50px;">
+            <button onclick="window.print()" class="pdf-button">
+                結果をPDF保存
+            </button>
         </div>
     </div>
 
-    <a href="4_bigfive-result.html" class="back-link">← TOPに戻る</a>
+    <div class="back-link no-print">
+        <a href="index.html">← TOPに戻る</a>
+    </div>
+
+    <div class="footer-print" style="text-align: center; padding: 20px; margin-top: 40px; color: #666; font-size: 14px; border-top: 1px solid #ddd;">
+        <p>© T&R Self-Image Design LLC</p>
+    </div>
 </body>
 </html>
