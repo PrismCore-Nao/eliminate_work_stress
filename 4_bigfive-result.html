@@ -119,6 +119,19 @@
             text-indent: -20px;
         }
 
+        .subsection-title {
+            background-color: #ffff00;
+            color: #000000;
+            padding: 4px 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 8px;
+            margin-top: 5px;
+            font-size: 15px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
         .pdf-button {
             display: block;
             margin: 40px auto;
@@ -771,17 +784,15 @@
 
                 ${scoresHTML}
                 
-                <!-- ページ1はここまで -->
-                
-                <!-- ページ2開始：上部余白 + 中間値 + ①特性の説明 -->
-                <div class="page-2-spacer"></div>
-                
-                ${middleValueNoticeHTML}
-
                 <div class="section page-break-after-1">
                     <h2>①特性の説明</h2>
                     <p>${data.description}</p>
                 </div>
+                
+                <!-- ページ2開始：上部余白 + あなたのスコアについて -->
+                <div class="page-2-spacer"></div>
+                
+                ${middleValueNoticeHTML}
 
                 <div class="section page-break-before-3">
                     <h2>②向いている職種・環境（脳内物質が出やすい条件）</h2>
